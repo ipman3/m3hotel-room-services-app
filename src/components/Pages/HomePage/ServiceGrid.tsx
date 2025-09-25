@@ -1,29 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
+import { serviceItems } from "@/config/serviceItems";
 import { useNavigate } from "@tanstack/react-router";
-import { GridIcons } from "../../../../public/assets/icons/index";
-
-const serviceItems = [
-  {
-    icon: GridIcons.roomService,
-    label: "Room Service",
-    path: "/room-service",
-  },
-  {
-    icon: GridIcons.wellnessSpa,
-    label: "Wellness & Spa",
-    path: "/spa",
-  },
-  {
-    icon: GridIcons.thingToDo,
-    label: "Things to Do",
-    path: "/activities",
-  },
-  {
-    icon: GridIcons.support,
-    label: "Support",
-    path: "/support",
-  },
-];
 
 export default function ServiceGrid() {
   const navigate = useNavigate();

@@ -6,7 +6,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { offerItems } from "@/config/gridItems";
+import { offerItems } from "@/config/offerItems";
 import Autoplay from "embla-carousel-autoplay";
 
 export default function OffersCarousel() {
