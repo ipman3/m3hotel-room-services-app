@@ -10,7 +10,7 @@ export const Route = createFileRoute('/')({
 
 function HomeComponent() {
   return (
-    <div className="bg-background min-h-screen">
+    <div className="flex flex-col justify-center w-full max-w-md min-h-screen mx-auto bg-muted-background">
       <HomeHeader />
       <div className="pt-6 space-y-6">
         <ServiceGrid />

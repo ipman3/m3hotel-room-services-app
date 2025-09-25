@@ -1,14 +1,21 @@
 import HeaderComponent from "@/components/layout/HeaderComponent";
-import MainPage from "@/components/Pages/WellnessAndSpa/MainPage";
+import ViewAllPage from "@/components/Pages/ViewAll/ViewAllPage";
 import useNavbarStore from "@/store/Navbar";
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect } from "react";
 
-export const Route = createFileRoute("/wellness-spa/")({
+export const Route = createFileRoute("/view-all/$viewId")({
   component: RouteComponent,
+  loader: async ({ params }) => {
+    return {
+      viewId: params.viewId,
+    };
+  },
 });
 
 function RouteComponent() {
+  const { viewId } = Route.useLoaderData();
+
   const { hide, show } = useNavbarStore((state) => state);
 
   useEffect(() => {
@@ -19,11 +26,11 @@ function RouteComponent() {
   }, [hide, show]);
 
   return (
-    <div className="w-full max-w-md min-h-screen mx-auto">
-      <HeaderComponent title="Wellness & Spa" />
-      <div className="bg-muted-background">
-        <MainPage />
+      <div>
+        <HeaderComponent title="View All" />
+        <main className="mt-12">
+          <ViewAllPage id={viewId} />
+        </main>
       </div>
-    </div>
-  );
+    );
 }
