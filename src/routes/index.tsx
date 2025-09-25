@@ -1,9 +1,24 @@
+
+import HomeHeader from '@/components/Pages/HomePage/HomeHeader';
+import OffersCarousel from '@/components/Pages/HomePage/OffersCarousel';
+import ServiceGrid from '@/components/Pages/HomePage/ServiceGrid';
 import { createFileRoute } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/')({
-  component: RouteComponent,
+  component: HomeComponent,
 })
 
-function RouteComponent() {
-  return <div>Hello "/"!</div>
+function HomeComponent() {
+  return (
+    <div className="bg-background min-h-screen">
+      <HomeHeader />
+      <div className="pt-6 space-y-6">
+        <ServiceGrid />
+        <OffersCarousel />
+      </div>
+
+      <div className='pb-8' />
+    </div>
+  );
 }
+

@@ -6,7 +6,7 @@ const SplashScreen: React.FC = () => {
         <div className="flex items-center justify-center w-screen h-screen bg-white">
             <img
                 src={Icons.m3Logo}
-                alt="M3 Logo"
+                alt="m3_logo"
                 className="w-32 h-32 animate-spin-slow"
                 width={300}
                 height={300}
