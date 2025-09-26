@@ -20,7 +20,7 @@ const navItems = [
     icon: Menu,
   },
   {
-    path: '/Cart',
+    path: '/cart',
     label: 'Cart',
     icon: ShoppingCart,
   },

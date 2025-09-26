@@ -5,7 +5,7 @@ interface CartItemsProps {
     items: OrderItem[];
 }
 
-export default function CartPage({ items = [] }: CartItemsProps) {
+export default function MainPage({ items = [] }: CartItemsProps) {
     if (items.length === 0) {
         return <p className="p-8 text-center text-muted-foreground">Your cart is empty.</p>
     }
