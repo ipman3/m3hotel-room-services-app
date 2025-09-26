@@ -132,7 +132,7 @@ export default function BottomNav() {
             <Button
             size={"sm"}
               onClick={() => setIsFabOpen(!isFabOpen)}
-              className="w-12 h-12 bg-base-primary rounded-full customShadowXl"
+              className="w-14 h-14 bg-base-primary rounded-full customShadowXl"
             >
               <AnimatePresence initial={false}>
                 <motion.div
