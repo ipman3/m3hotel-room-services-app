@@ -1,28 +1,9 @@
-import { useState } from "react";
-import { Calendar as CalendarIcon, Clock } from "lucide-react";
-
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { Calendar } from "@/components/ui/calendar";
-import { format } from "date-fns";
-import { Input } from "@/components/ui/input";
+import SpaForm from "./SpaForm";
 
 interface Service {
   name: string;
+  price: number;
+  category: string;
   description: string;
   isPopular: boolean;
   packages: string[];
@@ -35,8 +16,6 @@ interface ServiceDetailSheetProps {
 export default function ServiceDetailSheet({
   service,
 }: ServiceDetailSheetProps) {
-  const [date, setDate] = useState<Date | undefined>(new Date());
-  const [selectedPackage, setSelectedPackage] = useState(service.packages[0]);
 
   return (
     <div className="relative z-10 px-4 py-6 -mt-8 bg-muted-background rounded-t-4xl">
@@ -57,79 +36,7 @@ export default function ServiceDetailSheet({
       </div>
 
       {/* Form Section */}
-      <div className="mt-6 space-y-4">
-        <div>
-          <label className="text-sm font-semibold uppercase text-foreground">
-            Package
-          </label>
-          <Select value={selectedPackage} onValueChange={setSelectedPackage}>
-            <SelectTrigger className="w-full !h-12 mt-1 border-none bg-base-input">
-              <SelectValue placeholder="Select a package" />
-            </SelectTrigger>
-            <SelectContent>
-              {service.packages.map((pkg) => (
-                <SelectItem key={pkg} value={pkg}>
-                  {pkg}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-
-        <div>
-          <label className="text-sm font-semibold uppercase text-foreground">
-            Date
-          </label>
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button
-                variant={"outline"}
-                className={cn(
-                  "w-full justify-start text-left font-normal mt-1 bg-base-input border-none h-12",
-                  !date && "text-muted-foreground"
-                )}
-              >
-                <CalendarIcon className="w-4 h-4 mr-2" />
-                {date ? format(date, "PPP") : <span>Pick a date</span>}
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="w-auto p-0">
-              <Calendar mode="single" selected={date} onSelect={setDate} />
-            </PopoverContent>
-          </Popover>
-        </div>
-
-        <div>
-          <label className="text-sm font-semibold uppercase text-foreground">
-            Hours
-          </label>
-          <div className="relative mt-1">
-            <Clock className="absolute w-4 h-4 -translate-y-1/2 left-3 top-1/2" />
-            <Input
-              type="time"
-              id="time-picker"
-              step="1"
-              defaultValue="10:30:00"
-              className="w-full h-12 py-2 pl-10 pr-3 border-none bg-base-input appearance-none [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none"
-            />
-          </div>
-        </div>
-
-        <div>
-          <label className="text-sm font-semibold uppercase text-foreground">
-            Message
-          </label>
-          <Textarea
-            placeholder="Type here"
-            className="mt-1 border-none bg-base-input"
-            rows={3}
-          />
-        </div>
-      </div>
-
-      <Button size="lg" className="w-full mt-8 bg-base-primary">
-        Make Appointment
-      </Button>
+     <SpaForm packages={service.packages} serviceName={service.name} price={service.price} category={service.category} />
     </div>
   );
 }
