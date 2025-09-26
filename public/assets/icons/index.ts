@@ -1,7 +1,6 @@
 
 
 export const Icons = {
-  m3Logo: "/assets/icons/m3_logo.svg",
   filterIcon: "/assets/icons/filter.svg",
 };
 

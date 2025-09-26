@@ -3,7 +3,6 @@ import { ImageAssets } from "../../../../public/assets/imgs/index";
 export default function HomeHeader() {
   return (
     <div className="relative h-56 w-full">
-    
       <img src={ImageAssets.resortBackground} alt="Resort background" className="absolute inset-0 h-full w-full object-cover" loading="lazy" />
       <div className="absolute inset-0 bg-[#407AA400] bg-gradient-to-t from-[#407AA4] to-transparent" />
 
