@@ -61,11 +61,11 @@ export default function BottomNav() {
           </div>
 
           {/* Central Button */}
-          <div className="relative -top-7">
+          <div className="relative -top-9">
             <Button
               size={"sm"}
               onClick={handleFabClick}
-              className="w-14 h-14 rounded-full bg-base-primary customShadowXl"
+              className="w-12 h-12 rounded-full bg-base-primary customShadowXl"
               aria-label="Open menu"
             >
               <div key={isFabOpen ? "x" : "question"}>

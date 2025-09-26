@@ -84,7 +84,7 @@ export function ContactFabMenu({ isOpen, onClose }: ContactFabMenuProps) {
                   >
                     <Button
                       size="icon"
-                      className={`w-14 h-14 rounded-full ${buttonBg} shadow-md`}
+                      className={`w-12 h-12 rounded-full ${buttonBg} shadow-md`}
                       aria-label={action.label}
                     >
                       <Icon className="w-7 h-7 text-white" />

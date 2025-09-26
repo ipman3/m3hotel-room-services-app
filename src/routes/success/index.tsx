@@ -70,7 +70,7 @@ function RouteComponent() {
           Back to Home
         </Link>
         <Link
-          to="/Cart"
+          to="/cart"
           className="block py-2 px-4 text-center rounded-md bg-background text-muted-foreground border w-2/4"
         >
           View Order

@@ -1,4 +1,4 @@
-import { Headphones, MessageSquare, Globe, Facebook, Twitter, Instagram } from "lucide-react";
+import { MessageSquare, Globe, Facebook, Twitter, Instagram } from "lucide-react";
 
 export interface ContactLink {
   label: string;
@@ -8,15 +8,9 @@ export interface ContactLink {
 
 export const contactLinks: ContactLink[] = [
   {
-    label: "Customer Services",
-    icon: Headphones,
-    url: "tel:+1234567890", // Example phone number
-  },
-
-  {
     label: "WhatsApp",
     icon: MessageSquare,
-    url: "https://wa.me/1234567890", // Example WhatsApp link
+    url: "https://wa.me/1234567890",
   },
   {
     label: "Website",
