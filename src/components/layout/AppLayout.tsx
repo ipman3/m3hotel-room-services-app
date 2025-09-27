@@ -11,7 +11,7 @@ export default function AppLayout() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsSplashScreen(false);
-    }, 1000);
+    }, 2000);
 
     return () => clearTimeout(timer);
   }, []);

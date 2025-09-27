@@ -26,7 +26,7 @@ const navItems = [
   },
   {
     path: '/notifications',
-    label: 'Notifications',
+    label: 'Alerts',
     icon: BellDot, 
   },
 ];
