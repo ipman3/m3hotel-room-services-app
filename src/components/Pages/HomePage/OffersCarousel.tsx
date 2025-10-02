@@ -38,7 +38,7 @@ export default function OffersCarousel() {
         <h2 className="text-lg font-bold text-card-foreground">
           Offers & News
         </h2>
-        <Link to="/">
+        <Link to="/offer">
           <span className="text-sm font-semibold text-base-accent">
             View All
           </span>
