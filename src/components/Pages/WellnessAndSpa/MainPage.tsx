@@ -8,7 +8,8 @@ import CategoryFilters from "./CategoryFilters";
 import PopularSpaSection from "./PopularSpaSection";
 import SelectionList from "./SelectionList";
 import FilterSheet from "@/components/FilterSheet";
-import { Icons } from "../../../../public/assets/icons"
+import { Icons } from "../../../../public/assets/icons";
+import { useNavigate } from "@tanstack/react-router";
 
 const filterCategories = [
   "Facial",
@@ -19,6 +20,7 @@ const filterCategories = [
 ];
 
 export default function MainPage() {
+  const navigate = useNavigate();
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   const [selectedCategories, setSelectedCategories] = useState<string[]>([
@@ -39,14 +41,21 @@ export default function MainPage() {
     setIsFilterOpen(false);
   };
 
+  const handleNavigateToSearch = () => {
+    navigate({ to: "/search" });
+  };
+
   return (
     <main className="pt-6 mt-14">
       <div className="relative w-full px-4 mb-4">
-        <Search className="absolute w-5 h-5 text-gray-300 -translate-y-1/2 left-8 top-1/2" />
-        <Input
-          placeholder="Search..."
-          className="w-full h-12 text-base bg-white border border-gray-200 rounded-full pl-11"
-        />
+        <div onClick={handleNavigateToSearch}>
+          <Search className="absolute w-5 h-5 text-gray-300 -translate-y-1/2 left-8 top-1/2" />
+          <Input
+            placeholder="Search..."
+            className="w-full h-12 text-base bg-white border border-gray-200 rounded-full pl-11"
+            readOnly
+          />
+        </div>
         <Drawer open={isFilterOpen} onOpenChange={setIsFilterOpen}>
           <DrawerTrigger asChild>
             <Button

@@ -28,7 +28,7 @@ function RouteComponent() {
   return (
       <div>
         <HeaderComponent title="View All" />
-        <main className="mt-12">
+        <main className="pt-6 mt-12">
           <ViewAllPage id={viewId} />
         </main>
       </div>
