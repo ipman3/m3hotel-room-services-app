@@ -1,8 +1,10 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { spaItems } from "@/config/data/wellness-spa";
 import { usePathId } from "@/hooks/usePathId";
+import { containerVariants, itemVariants } from "@/lib/variantsAnimation";
 import { useCategoryStore } from "@/store/CategoryStore";
 import { Link } from "@tanstack/react-router";
+import { motion } from "framer-motion"; 
 
 export default function SelectionList() {
   const { activeCategory } = useCategoryStore();
@@ -24,35 +26,41 @@ export default function SelectionList() {
           </span>
         </Link>
       </div>
-      <div>
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
         {filteredItems.slice(0, 3).map((item) => (
-          <Link
-            key={item.id}
-            to="/wellness-spa/$serviceId"
-            params={{ serviceId: item.id }}
-          >
-            <Card className="py-4 mb-4 overflow-hidden border-none customShadowSm rounded-xl">
-              <CardContent className="flex items-center gap-4 px-4">
-                <img
-                  src={item.imageUrl}
-                  alt={item.name}
-                  className="object-cover w-24 h-24 rounded-xl"
-                  loading="lazy"
-                />
-                <div className="flex-grow">
-                  <h3 className="font-bold">{item.name}</h3>
-                  <p className="text-sm text-muted-foreground">
-                    {item.description.length > 50
-                      ? item.description.slice(0, 50) + "..."
-                      : item.description}
-                  </p>
-                  <p className="mt-1 font-bold">${item.price.toFixed(2)}</p>
-                </div>
-              </CardContent>
-            </Card>
-          </Link>
+          <motion.div key={item.id} variants={itemVariants}>
+            <Link
+              to="/wellness-spa/$serviceId"
+              params={{ serviceId: item.id }}
+            >
+              <Card className="py-4 mb-4 overflow-hidden border-none customShadowSm rounded-xl scroll-animate">
+                <CardContent className="flex items-center gap-4 px-4">
+                  <img
+                    src={item.imageUrl}
+                    alt={item.name}
+                    className="object-cover w-24 h-24 rounded-xl"
+                    loading="lazy"
+                  />
+                  <div className="flex-grow">
+                    <h3 className="font-bold">{item.name}</h3>
+                    <p className="text-sm text-muted-foreground">
+                      {item.description.length > 50
+                        ? item.description.slice(0, 50) + "..."
+                        : item.description}
+                    </p>
+                    <p className="mt-1 font-bold">${item.price.toFixed(2)}</p>
+                  </div>
+                </CardContent>
+              </Card>
+            </Link>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
     </section>
   );
 }
+
