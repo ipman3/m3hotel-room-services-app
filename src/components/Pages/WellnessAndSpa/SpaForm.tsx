@@ -49,7 +49,6 @@ export default function SpaForm({ id, packages, serviceName, price, category }: 
   const form = useForm<z.infer<typeof spaSchema>>({
     resolver: zodResolver(spaSchema),
     defaultValues: {
-      id: id,
       serviceName: serviceName,
       price: price,
       category: category,
