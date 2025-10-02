@@ -21,9 +21,9 @@ function RouteComponent() {
   return (
     <div className="w-full max-w-md min-h-screen mx-auto">
       <HeaderComponent title="Wellness & Spa" />
-      <div className="bg-muted-background">
+      <main>
         <MainPage />
-      </div>
+      </main>
     </div>
   );
 }

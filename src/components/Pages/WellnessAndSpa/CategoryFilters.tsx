@@ -8,7 +8,7 @@ export default function CategoryFilters() {
 
   return (
     <section className="px-4">
-      <h2 className="mb-2 text-lg font-bold text-card-foreground">Categories</h2>
+      <h2 className="mb-4 text-lg font-bold text-card-foreground">Categories</h2>
       <div className="flex items-center gap-2 pb-2 overflow-x-auto">
         {categories.map((category) => (
           <Button

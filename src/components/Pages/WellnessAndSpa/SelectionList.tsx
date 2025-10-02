@@ -18,7 +18,7 @@ export default function SelectionList() {
 
   return (
     <section className="px-4">
-      <div className="flex items-center justify-between mb-2">
+      <div className="flex items-center justify-between mb-4">
         <h2 className="text-lg font-bold text-card-foreground">Selection</h2>
         <Link to="/view-all/$viewId" params={{ viewId }}>
           <span className="text-sm font-semibold cursor-pointer text-base-accent">

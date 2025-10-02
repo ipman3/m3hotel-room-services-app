@@ -36,37 +36,37 @@ export default function ConfirmAppointmentPage({ items }: ConfirmAppointmentPage
 
     return (
         <div className="px-4 py-8 space-y-6">
-            <div className="flex items-center gap-4 p-4 bg-white rounded-2xl shadow-sm">
-                <img src={service?.imageUrl} alt={service?.name} className="w-24 h-24 object-cover rounded-xl" />
+            <div className="relative flex items-center gap-4 p-4 bg-muted-background rounded-2xl customShadowSm">
+                <img src={service?.imageUrl} alt={service?.name} className="object-cover w-24 h-24 rounded-xl" />
                 <div>
-                    <h2 className="text-xl font-bold">{currentItem.serviceName}</h2>
-                    <p className="text-sm text-muted-foreground">{service?.description}</p>
+                    <h2 className="text-lg font-semibold">{currentItem.serviceName}</h2>
+                    <p className="text-xs text-muted-foreground">{service?.description}</p>
                 </div>
-                <Button variant="ghost" size="icon" onClick={() => removeItem(currentItem.serviceName)}>
-                    <Trash2 className="w-5 h-5 text-red-500" />
+                <Button className="absolute bottom-0 right-0 p-1 rounded-tl-xl rounded-br-xl" variant="destructive" size="icon" onClick={() => removeItem(currentItem.serviceName)}>
+                    <Trash2 className="w-4 h-4 text-card" />
                 </Button>
             </div>
 
-            <div className="p-4 bg-white rounded-2xl shadow-sm">
-                <h3 className="text-lg font-bold mb-2">Your Order</h3>
+            <div className="p-4 bg-muted-background rounded-2xl customShadowSm">
+                <h3 className="mb-2 text-lg font-bold">Your Order</h3>
                 <DetailRow label="Package" value={currentItem.packageName} />
                 <DetailRow label="Type" value={currentItem.category} />
                 <DetailRow label="Date" value={format(new Date(currentItem.date), "EEEE, dd MMM, yyyy")} />
                 <DetailRow label="Hours" value={currentItem.time} />
             </div>
 
-            <div className="p-4 bg-white rounded-2xl shadow-sm">
-                <h3 className="text-lg font-bold mb-2">Price Detail</h3>
+            <div className="p-4 bg-muted-background rounded-2xl customShadowSm">
+                <h3 className="mb-2 text-lg font-bold">Price Detail</h3>
                 <DetailRow label="Price" value={`$${currentItem.price.toFixed(2)}`} />
                 <DetailRow label="Discount" value="$00.00" />
                 <DetailRow label="Service charge" value={`${serviceChargePercent}%`} />
-                <div className="flex justify-between items-center py-3">
+                <div className="flex items-center justify-between py-3">
                     <span className="text-muted-foreground">Total</span>
-                    <span className="font-bold text-xl">{`$${total.toFixed(2)}`}</span>
+                    <span className="text-xl font-bold">{`$${total.toFixed(2)}`}</span>
                 </div>
             </div>
 
-            <Button onClick={handleConfirm} className="w-full bg-base-primary h-12 mt-8">
+            <Button onClick={handleConfirm} className="w-full h-12 mt-8 bg-base-primary">
                 Confirm Appointment
             </Button>
             <div className="pb-8" />

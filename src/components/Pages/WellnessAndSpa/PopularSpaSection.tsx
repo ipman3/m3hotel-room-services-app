@@ -18,7 +18,7 @@ export default function PopularSpaSection() {
 
   return (
     <section>
-      <div className="flex items-center justify-between px-4 mb-2">
+      <div className="flex items-center justify-between px-4 mb-4">
         <h2 className="text-lg font-bold text-card-foreground">
           Most popular spa
         </h2>
@@ -34,7 +34,7 @@ export default function PopularSpaSection() {
       </div>
 
       <motion.div
-        className="flex gap-4 px-4 pb-3 ml-4 overflow-x-auto scrollbar-hide snap-x snap-mandatory"
+        className="flex gap-4 pb-3 pr-4 ml-4 overflow-x-auto scrollbar-hide snap-x snap-mandatory"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
