@@ -6,7 +6,7 @@ import { contactLinks } from "@/config/contact";
 export default function ContactUsComponent() {
   return (
     <div className="flex flex-col">
-      <main className="flex-grow overflow-y-auto">
+      <main className="flex-grow overflow-y-auto px-4 py-4">
         <div>
           {contactLinks.map((link) => {
             const Icon = link.icon;
