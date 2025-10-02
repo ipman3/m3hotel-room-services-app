@@ -44,7 +44,7 @@ interface SpaFormProps {
 
 export default function SpaForm({ id, packages, serviceName, price, category }: SpaFormProps) {
    const navigate = useNavigate();
-   const addItemToAppointment = useOrderStore((state) => state.addItem);
+   const setPendingItem = useOrderStore((state) => state.setPendingItem);
    
   const form = useForm<z.infer<typeof spaSchema>>({
     resolver: zodResolver(spaSchema),
@@ -63,7 +63,7 @@ export default function SpaForm({ id, packages, serviceName, price, category }: 
     console.log("Form Submitted:", values);
 
      // Add the validated form data to the global cart store
-    addItemToAppointment({
+    setPendingItem({
         serviceName: values.serviceName,
         packageName: values.package, 
         date: values.date,
