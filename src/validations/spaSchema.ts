@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 export const spaSchema = z.object({
+  id: z.string(),
   serviceName: z.string(),
   price: z.number(),
   category: z.string(),

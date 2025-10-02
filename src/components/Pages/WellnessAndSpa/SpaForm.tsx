@@ -35,19 +35,21 @@ import { useNavigate } from "@tanstack/react-router";
 import { useOrderStore } from "@/store/CartStore";
 
 interface SpaFormProps {
+  id: string;
   serviceName: string;
   price: number;
   category: string;
   packages: string[];
 }
 
-export default function SpaForm({ packages, serviceName, price, category }: SpaFormProps) {
+export default function SpaForm({ id, packages, serviceName, price, category }: SpaFormProps) {
    const navigate = useNavigate();
    const addItemToAppointment = useOrderStore((state) => state.addItem);
    
   const form = useForm<z.infer<typeof spaSchema>>({
     resolver: zodResolver(spaSchema),
     defaultValues: {
+      id: id,
       serviceName: serviceName,
       price: price,
       category: category,
@@ -78,6 +80,7 @@ export default function SpaForm({ packages, serviceName, price, category }: SpaF
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="mt-6 space-y-4">
+        <input type="hidden" value={id} />
         <input type="hidden" value={serviceName} />
         <input type="hidden" value={price} />
         <input type="hidden" value={category} />
@@ -193,7 +196,7 @@ export default function SpaForm({ packages, serviceName, price, category }: SpaF
           )}
         />
 
-        <Button type="submit" size="lg" className="w-full mt-8 bg-base-primary h-12">
+        <Button type="submit" size="lg" className="w-full h-12 mt-8 bg-base-primary">
           Make Appointment
         </Button>
       </form>

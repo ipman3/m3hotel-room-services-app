@@ -1,6 +1,7 @@
-import { create } from 'zustand';
+import { create } from "zustand";
 
 export interface OrderItem {
+  id: string;
   serviceName: string;
   packageName: string;
   date: Date;
@@ -11,16 +12,20 @@ export interface OrderItem {
 
 interface CartState {
   items: OrderItem[];
-  addItem: (item: OrderItem) => void;
-  removeItem: (serviceName: string) => void;
+  addItem: (item: Omit<OrderItem, "id">) => void;
+  removeItem: (itemId: string) => void;
   clearCart: () => void;
 }
 
 export const useOrderStore = create<CartState>((set) => ({
   items: [],
-  addItem: (item) => set((state) => ({ items: [...state.items, item] })),
-  removeItem: (serviceName) => set((state) => ({ 
-    items: state.items.filter((item) => item.serviceName !== serviceName) 
-  })),
+  addItem: (item) =>
+    set((state) => ({
+      items: [...state.items, { ...item, id: crypto.randomUUID() }],
+    })),
+  removeItem: (itemId) =>
+    set((state) => ({
+      items: state.items.filter((item) => item.id !== itemId),
+    })),
   clearCart: () => set({ items: [] }),
 }));
