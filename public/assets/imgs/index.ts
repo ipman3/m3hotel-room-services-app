@@ -6,4 +6,5 @@ export const ImageAssets = {
   placeholderCarousal: "/assets/imgs/placeholder.jpg",
   placeholderCarousalOne: "/assets/imgs/bathroom.webp",
   placeholderCarousalTwo: "/assets/imgs/food_preview.webp",
+  placeholderService:"/assets/imgs/spa-package.jpg",
 };
