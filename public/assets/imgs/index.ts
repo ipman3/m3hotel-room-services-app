@@ -7,4 +7,5 @@ export const ImageAssets = {
   placeholderCarousalOne: "/assets/imgs/bathroom.webp",
   placeholderCarousalTwo: "/assets/imgs/food_preview.webp",
   placeholderService:"/assets/imgs/spa-package.jpg",
+  placeholderThing:"/assets/imgs/thing-to-do/slide-things.png",
 };

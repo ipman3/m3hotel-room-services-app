@@ -1,28 +1,28 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { serviceItems } from "@/config/data/room-service";
+import { thingItems } from "@/config/data/thing-to-do";
 import { usePathId } from "@/hooks/usePathId";
 import { useCategoryStore } from "@/store/CategoryStore";
 import { Link } from "@tanstack/react-router";
 
-export default function PopularServiceSection() {
+export default function PopularThingSection() {
   const { activeCategory } = useCategoryStore();
 
   const filteredPopular =
     activeCategory === "All"
-      ? serviceItems.filter((i) => i.isPopular)
-      : serviceItems.filter((i) => i.isPopular && i.category === activeCategory);
+      ? thingItems.filter((i) => i.isPopular)
+      : thingItems.filter((i) => i.isPopular && i.category === activeCategory);
 
-  const roomId = usePathId("/room-service/");
+  const thingId = usePathId("/thing-to-do/");
 
   return (
     <section>
       <div className="flex items-center justify-between px-4 mb-2">
         <h2 className="text-lg font-bold text-card-foreground">
-          Most popular dishes
+          Most Popular Tours
         </h2>
         <Link
-          to="/view-all/$roomId"
-          params={{ roomId }}
+          to="/view-all/$thingId"
+          params={{ thingId }}
           search={{ popular: "true" }}
         >
           <span className="text-sm font-semibold cursor-pointer text-base-accent">
