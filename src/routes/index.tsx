@@ -9,11 +9,7 @@ export const Route = createFileRoute("/")({
 
 function HomeComponent() {
   return (
-<<<<<<< HEAD
-    <div className="flex flex-col justify-center w-full max-w-md mx-auto bg-muted-background">
-=======
     <div className="flex flex-col justify-center w-full max-w-md min-h-screen mx-auto">
->>>>>>> origin/Bunheng-Dev
       <HomeHeader />
       <div className="pt-6 space-y-6">
         <ServiceGrid />
