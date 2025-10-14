@@ -23,7 +23,7 @@ export default function AppLayout() {
   return (
     <div className="text-accent-foreground">
       <Toaster position="top-right" theme="light" richColors expand />
-      <main className="min-h-screen select-none pb-24">
+      <main className="min-h-screen pb-24 select-none bg-background">
         <Outlet />
       </main>
       <BottomNav />

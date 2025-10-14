@@ -1,10 +1,10 @@
 import HeaderComponent from "@/components/layout/HeaderComponent";
-import ConfirmAppointmentPage from "@/components/Pages/WellnessAndSpa/ConfirmAppointment/MainPage";
+import MainPage from "@/components/Pages/Offer/MainPage";
 import useNavbarStore from "@/store/Navbar";
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect } from "react";
 
-export const Route = createFileRoute("/confirm-appointment/")({
+export const Route = createFileRoute("/offer/")({
   component: RouteComponent,
 });
 
@@ -18,12 +18,12 @@ function RouteComponent() {
     };
   }, [hide, show]);
 
-   return (
-        <div>
-          <HeaderComponent title="Confirm Appointment" />
-          <main className="mt-12">
-            <ConfirmAppointmentPage />
-          </main>
-        </div>
-      );
+  return (
+    <div>
+      <HeaderComponent title="Offers & News" />
+      <main className="pt-16 pb-4">
+        <MainPage />
+      </main>
+    </div>
+  );
 }

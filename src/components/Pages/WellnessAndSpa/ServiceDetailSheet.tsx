@@ -1,6 +1,7 @@
 import SpaForm from "./SpaForm";
 
 interface Service {
+  id: string;
   name: string;
   price: number;
   category: string;
@@ -36,7 +37,7 @@ export default function ServiceDetailSheet({
       </div>
 
       {/* Form Section */}
-     <SpaForm packages={service.packages} serviceName={service.name} price={service.price} category={service.category} />
+     <SpaForm id={service.id} packages={service.packages} serviceName={service.name} price={service.price} category={service.category} />
     </div>
   );
 }

@@ -38,7 +38,7 @@ export default function OffersCarousel() {
         <h2 className="text-lg font-bold text-card-foreground">
           Offers & News
         </h2>
-        <Link to="/">
+        <Link to="/offer">
           <span className="text-sm font-semibold text-base-accent">
             View All
           </span>
@@ -78,7 +78,7 @@ export default function OffersCarousel() {
               key={index}
               onClick={() => api?.scrollTo(index)}
               className={`h-2 rounded-full transition-all duration-300 ${
-                current === index ? "w-4 bg-white" : "w-2 bg-white/50"
+                current === index ? "w-4 bg-background" : "w-2 bg-background/50"
               }`}
               aria-label={`Go to slide ${index + 1}`}
             />

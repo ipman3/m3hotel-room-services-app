@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { X, Headphones } from "lucide-react";
 import { useNavItems } from "@/config/navItems";
 import useNavbarStore from "@/store/Navbar";
+import { useOrderStore } from "@/store/CartStore"; // 1. Import your order store
 import { Button } from "@/components/ui/button";
 import { ContactFabMenu } from "../ContactFabActions";
 
@@ -14,6 +15,9 @@ export default function BottomNav() {
 
   const { isVisible } = useNavbarStore((state) => state);
   const [isFabOpen, setIsFabOpen] = useState(false);
+  
+  // 2. Get the number of items from the Zustand store
+  const cartItemCount = useOrderStore((state) => state.items.length);
 
   const leftNavItems = navItems.slice(0, 2);
   const rightNavItems = navItems.slice(2);
@@ -83,6 +87,8 @@ export default function BottomNav() {
             {rightNavItems.map((item) => {
               const isActive = pathname === item.path;
               const IconComponent = item.icon as React.ElementType;
+              const isCart = item.label === 'Cart'; // Check if this is the Cart button
+
               return (
                 <motion.button
                   key={item.path}
@@ -91,10 +97,16 @@ export default function BottomNav() {
                   whileTap={{ scale: 0.9 }}
                 >
                   <motion.div
-                    className="w-6 h-6 mb-1.5"
+                    className="relative w-6 h-6 mb-1.5" // Add relative positioning here
                     animate={{ y: isActive ? -5 : 0 }}
                   >
                     <IconComponent className="w-6 h-6" />
+                    {/* 3. Conditionally render the badge */}
+                    {isCart && cartItemCount > 0 && (
+                      <span className="absolute -top-2 -right-2.5 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs text-white">
+                        {cartItemCount}
+                      </span>
+                    )}
                   </motion.div>
                   <h3 className="font-semibold">{item.label}</h3>
                 </motion.button>
@@ -106,3 +118,4 @@ export default function BottomNav() {
     </>
   );
 }
+

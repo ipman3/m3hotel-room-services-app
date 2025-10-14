@@ -10,17 +10,17 @@ export default function FaqComponent() {
   return (
     <div className="flex flex-col">
       <main className="flex-grow overflow-y-auto">
-        <Accordion type="single" collapsible className="w-full space-y-4">
+        <Accordion type="single" collapsible className="w-full space-y-4 px-4 py-4">
           {faqItems.map((item, index) => (
             <AccordionItem
               key={index}
               value={`item-${index}`}
-              className="bg-muted-background p-4 rounded-xl customShadowSm border-none"
+              className="bg-muted-background px-4 py-1 rounded-xl border-none customShadowSm"
             >
               <AccordionTrigger className="text-left font-semibold hover:no-underline">
                 {item.question}
               </AccordionTrigger>
-              <AccordionContent className="pt-2 text-muted-foreground">
+              <AccordionContent className="text-muted-foreground">
                 {item.answer}
               </AccordionContent>
             </AccordionItem>

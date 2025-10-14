@@ -1,14 +1,20 @@
 import HeaderComponent from "@/components/layout/HeaderComponent";
-import MainPage from "@/components/Pages/WellnessAndSpa/MainPage";
+import OfferDetails from "@/components/Pages/Offer/OfferDetails";
+import { offerAndNewsItems } from "@/config/data/offer";
 import useNavbarStore from "@/store/Navbar";
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect } from "react";
 
-export const Route = createFileRoute("/wellness-spa/")({
+export const Route = createFileRoute("/offer/$offerId")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
+  const { offerId } = Route.useParams();
+  const offerData =
+    offerAndNewsItems.find((item) => item.id === offerId) ||
+    offerAndNewsItems[0];
+
   const { hide, show } = useNavbarStore((state) => state);
 
   useEffect(() => {
@@ -19,10 +25,10 @@ function RouteComponent() {
   }, [hide, show]);
 
   return (
-    <div className="w-full max-w-md min-h-screen mx-auto">
-      <HeaderComponent title="Wellness & Spa" />
+    <div>
+      <HeaderComponent title="Offer Details" />
       <main>
-        <MainPage />
+        <OfferDetails offer={offerData} />
       </main>
     </div>
   );
