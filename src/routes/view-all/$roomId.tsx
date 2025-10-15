@@ -1,20 +1,22 @@
+
+
 import HeaderComponent from "@/components/layout/HeaderComponent";
-import ViewAllPage from "@/components/Pages/ViewAll/ViewAllthing";
+import ViewAllRoomService from "@/components/Pages/ViewAll/ViewAllRoomService";
 import useNavbarStore from "@/store/Navbar";
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect } from "react";
 
-export const Route = createFileRoute("/view-all/$viewId")({
+export const Route = createFileRoute("/view-all/$roomId")({
   component: RouteComponent,
   loader: async ({ params }) => {
     return {
-      viewId: params.viewId,
+      roomId: params.roomId,
     };
   },
 });
 
 function RouteComponent() {
-  const { viewId } = Route.useLoaderData();
+  const { roomId } = Route.useLoaderData();
 
   const { hide, show } = useNavbarStore((state) => state);
 
@@ -26,21 +28,11 @@ function RouteComponent() {
   }, [hide, show]);
 
   return (
-<<<<<<< HEAD
-      <div>
-        <HeaderComponent title="View All" />
-        <main className="pt-6 mt-12">
-          <ViewAllPage id={viewId} />
-        </main>
-      </div>
-    );
-=======
     <div>
       <HeaderComponent title="View All" />
       <main className="mt-12">
-        <ViewAllPage id={viewId} />
+        <ViewAllRoomService id={roomId} />
       </main>
     </div>
   );
->>>>>>> origin/vary
 }

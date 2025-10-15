@@ -16,7 +16,7 @@ export const serviceItems = [
   {
     icon: GridIcons.thingToDo,
     label: "Things to Do",
-    path: "/activities",
+    path: "/thing-to-do",
   },
   {
     icon: GridIcons.support,
