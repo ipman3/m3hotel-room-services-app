@@ -26,15 +26,6 @@ function RouteComponent() {
   }, [hide, show]);
 
   return (
-<<<<<<< HEAD
-      <div>
-        <HeaderComponent title="View All" />
-        <main className="pt-6 mt-12">
-          <ViewAllPage id={viewId} />
-        </main>
-      </div>
-    );
-=======
     <div>
       <HeaderComponent title="View All" />
       <main className="mt-12">
@@ -42,5 +33,4 @@ function RouteComponent() {
       </main>
     </div>
   );
->>>>>>> origin/vary
 }
