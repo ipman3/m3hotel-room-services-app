@@ -26,7 +26,7 @@ function RouteComponent() {
   return (
     <div>
       <HeaderComponent title="Selected items" />
-      <main>
+      <main className="h-screen bg-muted-background">
         <img
           src={serviceData.imageUrl}
           alt={serviceData.name}
