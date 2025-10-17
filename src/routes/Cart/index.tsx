@@ -11,7 +11,7 @@ function RouteComponent() {
   const orderItems = useOrderStore((state) => state.items);
   return (
     <div>
-      <HeaderComponent title="View Order" showBack={false} />
+      <HeaderComponent title="View Cart" showBack={false} />
       <main className="mt-12">
         <MainPage items={orderItems} />
       </main>
