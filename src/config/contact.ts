@@ -1,35 +1,25 @@
-import { MessageSquare, Globe, Facebook, Twitter, Instagram } from "lucide-react";
+import { Icons } from "../../public/assets/icons";
 
 export interface ContactLink {
   label: string;
-  icon: React.ElementType;
+  icon: string;
   url: string;
 }
 
 export const contactLinks: ContactLink[] = [
   {
-    label: "WhatsApp",
-    icon: MessageSquare,
-    url: "https://wa.me/1234567890",
-  },
-  {
-    label: "Website",
-    icon: Globe,
+    label: "Email",
+    icon: Icons.MailIcon,
     url: "https://example.com",
   },
   {
-    label: "Facebook",
-    icon: Facebook,
+    label: "Phone Number",
+    icon: Icons.PhoneIcon,
     url: "https://facebook.com/your-page",
   },
   {
-    label: "Twitter",
-    icon: Twitter,
+    label: "Telegram",
+    icon: Icons.TelegramIcon,
     url: "https://twitter.com/your-handle",
-  },
-  {
-    label: "Instagram",
-    icon: Instagram,
-    url: "https://instagram.com/your-profile",
   },
 ];

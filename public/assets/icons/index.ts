@@ -2,6 +2,9 @@
 
 export const Icons = {
   filterIcon: "/assets/icons/filter.svg",
+  MailIcon: "/assets/icons/mail.svg",
+  PhoneIcon: "/assets/icons/phone.svg",
+  TelegramIcon: "/assets/icons/telegram.svg",
 };
 
 export const GridIcons = {
