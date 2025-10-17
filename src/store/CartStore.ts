@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 
-export interface OrderItem {
+export interface CartItem {
   id: string;
   serviceName: string;
   packageName: string;
@@ -12,16 +12,16 @@ export interface OrderItem {
 }
 
 interface CartState {
-  items: OrderItem[];
-  pendingItem: Omit<OrderItem, "id"> | null; 
-  setPendingItem: (item: Omit<OrderItem, "id">) => void; 
+  items: CartItem[];
+  pendingItem: Omit<CartItem, "id"> | null; 
+  setPendingItem: (item: Omit<CartItem, "id">) => void; 
   confirmPendingItem: () => void; 
-  addItem: (item: Omit<OrderItem, "id">) => void;
+  addItem: (item: Omit<CartItem, "id">) => void;
   removeItem: (itemId: string) => void;
   clearCart: () => void;
 }
 
-export const useOrderStore = create<CartState>()(
+export const useCartStore = create<CartState>()(
   persist(
     (set) => ({
       items: [],
@@ -47,7 +47,7 @@ export const useOrderStore = create<CartState>()(
       clearCart: () => set({ items: [] }),
     }),
     {
-      name: "order-storage",
+      name: "cartItems-storage",
       partialize: (state) => ({ items: state.items }),
       storage: createJSONStorage(() => localStorage, {
         reviver: (key, value) => {

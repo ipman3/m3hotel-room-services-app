@@ -32,7 +32,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { spaSchema } from "@/validations/spaSchema";
 import { useNavigate } from "@tanstack/react-router";
-import { useOrderStore } from "@/store/CartStore";
+import { useCartStore } from "@/store/CartStore";
 
 interface SpaFormProps {
   id: string;
@@ -44,7 +44,7 @@ interface SpaFormProps {
 
 export default function SpaForm({ id, packages, serviceName, price, category }: SpaFormProps) {
    const navigate = useNavigate();
-   const setPendingItem = useOrderStore((state) => state.setPendingItem);
+   const setPendingItem = useCartStore((state) => state.setPendingItem);
    
   const form = useForm<z.infer<typeof spaSchema>>({
     resolver: zodResolver(spaSchema),
