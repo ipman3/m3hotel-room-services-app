@@ -36,7 +36,7 @@ export default function ServiceDetailSheet({
       </div>
 
       {/* Form Section */}
-      <ServiceForm packages={service.packages} serviceName={service.name} price={service.price} category={service.category} />
+      {/* <ServiceForm packages={service.packages} serviceName={service.name} price={service.price} category={service.category} /> */}
     </div>
   );
 }

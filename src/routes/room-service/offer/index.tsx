@@ -1,21 +1,14 @@
 import HeaderComponent from "@/components/layout/HeaderComponent";
-import ViewAllPage from "@/components/Pages/ViewAll/ViewAllthing";
+import MainPage from "@/components/Pages/roomservice/Offer/MainPage";
 import useNavbarStore from "@/store/Navbar";
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect } from "react";
 
-export const Route = createFileRoute("/view-all/$viewId")({
+export const Route = createFileRoute("/room-service/offer/")({
   component: RouteComponent,
-  loader: async ({ params }) => {
-    return {
-      viewId: params.viewId,
-    };
-  },
 });
 
 function RouteComponent() {
-  const { viewId } = Route.useLoaderData();
-
   const { hide, show } = useNavbarStore((state) => state);
 
   useEffect(() => {
@@ -27,9 +20,9 @@ function RouteComponent() {
 
   return (
     <div>
-      <HeaderComponent title="View All" />
-      <main className="mt-12">
-        <ViewAllPage id={viewId} />
+      <HeaderComponent title="Offers & News" />
+      <main className="pt-16 pb-4">
+        <MainPage />
       </main>
     </div>
   );
