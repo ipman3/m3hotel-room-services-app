@@ -49,7 +49,7 @@ export default function MainPage() {
             >
               <CardContent className="flex items-center gap-4 px-4">
                 <img
-                  src={item.imageUrl}
+                  src={item.image}
                   alt={item.name}
                   className="object-cover w-24 h-24 rounded-xl"
                   loading="lazy"

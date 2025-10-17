@@ -54,7 +54,7 @@ export default function PopularServiceSection() {
                 <Card className="flex-shrink-0 w-40 p-0 border-none customShadowSm rounded-xl">
                   <CardContent className="p-0">
                     <img
-                      src={item.imageUrl}
+                      src={item.image}
                       alt={item.name}
                       className="object-cover w-full h-24 rounded-t-xl"
                       loading="lazy"

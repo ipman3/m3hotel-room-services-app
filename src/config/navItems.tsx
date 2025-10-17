@@ -6,7 +6,7 @@ export interface NavItem {
   icon: ReactNode;
 }
 
-import { Home, Menu, BellDot, ShoppingCart } from "lucide-react";
+import { Home,BellDot, ShoppingCart, HistoryIcon } from "lucide-react";
 
 const navItems = [
   {
@@ -15,9 +15,9 @@ const navItems = [
     icon: Home, 
   },
    {
-    path: '/menu',
-    label: 'Menu',
-    icon: Menu,
+    path: '/orders',
+    label: 'Orders',
+    icon: HistoryIcon,
   },
   {
     path: '/cart',
@@ -26,7 +26,7 @@ const navItems = [
   },
   {
     path: '/notifications',
-    label: 'Alerts',
+    label: 'Notifications',
     icon: BellDot, 
   },
 ];
