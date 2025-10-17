@@ -26,7 +26,6 @@ export default function FilterSheet({
 }: FilterSheetProps) {
   return (
     <div className="p-4 pt-2">
-      <h2 className="text-lg font-semibold text-center my-4">Filters</h2>
       <div className="relative w-full mb-6">
         <Search className="absolute w-5 h-5 text-gray-300 -translate-y-1/2 left-4 top-1/2" />
         <Input
@@ -36,7 +35,7 @@ export default function FilterSheet({
       </div>
 
       <div className="mb-6">
-        <h3 className="font-semibold mb-3">Select Category</h3>
+        <h3 className="mb-3 font-semibold">Select Category</h3>
         <div className="flex flex-wrap gap-2">
           {categories.map((cat, index) => (
             <Button
@@ -56,7 +55,7 @@ export default function FilterSheet({
       </div>
 
       <div className="mb-8">
-        <h3 className="font-semibold mb-3">Price Range</h3>
+        <h3 className="mb-3 font-semibold">Price Range</h3>
         <Slider
           value={priceRange}
           max={maxPrice}
@@ -65,7 +64,7 @@ export default function FilterSheet({
           onValueChange={(value) => onPriceChange(value)}
           className="my-6"
         />
-        <div className="flex justify-between text-sm text-muted-foreground -mt-2">
+        <div className="flex justify-between -mt-2 text-sm text-muted-foreground">
           <span>${priceRange[0]}</span>
           <span>${priceRange[1]}</span>
         </div>
@@ -73,7 +72,7 @@ export default function FilterSheet({
 
       <Button
         size="lg"
-        className="w-full h-14 bg-base-primary rounded-full"
+        className="w-full rounded-full h-14 bg-base-primary"
         onClick={onApply}
       >
         Apply

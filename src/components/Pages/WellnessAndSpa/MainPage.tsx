@@ -10,6 +10,7 @@ import SelectionList from "./SelectionList";
 import FilterSheet from "@/components/FilterSheet";
 import { Icons } from "../../../../public/assets/icons";
 import { useNavigate } from "@tanstack/react-router";
+import { DialogDescription, DialogTitle } from "@/components/ui/dialog";
 
 const filterCategories = [
   "Facial",
@@ -70,7 +71,13 @@ export default function MainPage() {
               />
             </Button>
           </DrawerTrigger>
-          <DrawerContent className="bg-muted-background w-full max-w-md mx-auto">
+          <DrawerContent className="w-full max-w-md mx-auto bg-muted-background">
+            <DialogTitle className="pt-4 text-center">
+              Filter Options
+            </DialogTitle>
+            <DialogDescription className="mb-4 text-sm text-center text-muted-foreground">
+              Use the filters below to refine your search results.
+            </DialogDescription>
             <FilterSheet
               categories={filterCategories}
               selectedCategories={selectedCategories}
