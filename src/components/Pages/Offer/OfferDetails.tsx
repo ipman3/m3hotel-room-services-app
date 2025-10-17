@@ -14,20 +14,20 @@ interface OfferDetailsProps {
 
 export default function OfferDetails({ offer }: OfferDetailsProps) {
   return (
-    <Card className="overflow-hidden shadow-none border-none">
+    <Card className="overflow-hidden border-none shadow-none bg-background">
       <CardContent className="p-0">
         <img
           src={offer.imageUrl}
           alt={offer.title}
-          className="w-full h-56 object-cover"
+          className="object-cover w-full h-80"
         />
-        <div className="p-6 bg-white">
+        <div className="p-6">
           <h1 className="text-xl font-bold">{offer.title}</h1>
-          <p className="text-muted-foreground mt-2">{offer.description}</p>
-          <p className="text-xl font-bold my-4">
+          <p className="mt-2 text-muted-foreground">{offer.description}</p>
+          <p className="my-4 text-xl font-bold">
             ${offer.price.toFixed(2)} / per hour
           </p>
-          <Button className="w-full bg-base-primary rounded-full h-14 text-lg">
+          <Button className="w-full text-lg rounded-full bg-base-primary h-14">
             Book Now
           </Button>
         </div>
