@@ -10,7 +10,7 @@ function RouteComponent() {
   return (
     <div>
       <HeaderComponent title="View Order" showBack={false} />
-      <main className="mt-12">
+      <main className="mt-12 max-w-md mx-auto w-full">
         <MainPage />
       </main>
     </div>
