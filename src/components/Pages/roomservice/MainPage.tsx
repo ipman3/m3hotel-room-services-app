@@ -10,19 +10,10 @@ import CategoryFilters from "./CategoryFilters";
 import SelectionList from "./SelectionList";
 import ServicesCarousel from "./ServicesCarousel";
 import PopularServiceSection from "./PopularServiceSection";
-import FilterSheet from "@/components/FilterSheet";
 import { useNavigate } from "@tanstack/react-router";
+import FilterSheet from "@/components/FilterSheetCom";
 
-const filterCategories = [
-  "Pizza",
-  "Burger",
-  "Salad",
-  "Soup",
-  "Chicken",
-  "Grill",
-  "Breakfast",
-
-];
+const filterCategories = ["Pizza", "Burger", "Salad", "Soup", "Chicken", "Grill", "Breakfast"];
 
 const MainPage = () => {
   const navigate = useNavigate();
@@ -32,11 +23,7 @@ const MainPage = () => {
   const [priceRange, setPriceRange] = useState<[number, number]>([10, 100]);
 
   const handleCategoryToggle = (category: string) => {
-    setSelectedCategories((prev) =>
-      prev.includes(category)
-        ? prev.filter((c) => c !== category)
-        : [...prev, category]
-    );
+    setSelectedCategories((prev) => (prev.includes(category) ? prev.filter((c) => c !== category) : [...prev, category]));
   };
 
   const handleApplyFilters = () => {
@@ -54,11 +41,7 @@ const MainPage = () => {
       <div className="relative w-full mb-4">
         <div onClick={handleNavigateToSearch}>
           <Search className="absolute w-5 h-5 text-gray-300 -translate-y-1/2 left-8 top-1/2" />
-          <Input
-            placeholder="Search..."
-            className="w-full h-12 text-base bg-white border border-gray-200 rounded-full pl-11"
-            readOnly
-          />
+          <Input placeholder="Search..." className="w-full h-12 text-base bg-white border border-gray-200 rounded-full pl-11" readOnly />
         </div>
 
         {/* ===== Filter Drawer ===== */}
@@ -67,13 +50,8 @@ const MainPage = () => {
             <Button
               variant="ghost"
               size="icon"
-              className="absolute text-orange-500 -translate-y-1/2 rounded-full right-6 top-1/2 hover:bg-orange-100 hover:text-orange-500"
-            >
-              <img
-                src={Icons.filterIcon}
-                alt="Filter icon"
-                className="w-5 h-5"
-              />
+              className="absolute text-orange-500 -translate-y-1/2 rounded-full right-6 top-1/2 hover:bg-orange-100 hover:text-orange-500">
+              <img src={Icons.filterIcon} alt="Filter icon" className="w-5 h-5" />
             </Button>
           </DrawerTrigger>
           <DrawerContent className="bg-muted-background w-full max-w-md mx-auto">
@@ -82,9 +60,7 @@ const MainPage = () => {
               selectedCategories={selectedCategories}
               onCategoryToggle={handleCategoryToggle}
               priceRange={priceRange}
-              onPriceChange={(value) =>
-                setPriceRange(value as [number, number])
-              }
+              onPriceChange={(value) => setPriceRange(value as [number, number])}
               onApply={handleApplyFilters}
               minPrice={10}
               maxPrice={100}
