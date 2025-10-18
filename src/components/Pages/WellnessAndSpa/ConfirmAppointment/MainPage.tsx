@@ -19,6 +19,7 @@ import {
   type ConfirmAppointmentInput,
 } from "@/validations/confirmAppointment";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { CustomButtonSubmit } from "@/components/CustomButtonSubmit";
 
 export default function ConfirmAppointmentPage() {
   const navigate = useNavigate();
@@ -173,13 +174,11 @@ export default function ConfirmAppointmentPage() {
         </div>
       </div>
 
-      <Button
-        type="submit"
-        className="w-full h-12 bg-base-primary"
+      <CustomButtonSubmit
+        textBtn="Confirm Appointment"
+        isLoading={form.formState.isSubmitting}
         onClick={form.handleSubmit(onSubmit)}
-      >
-        Confirm Appointment
-      </Button>
+      />
 
       <div className="pb-8" />
     </div>

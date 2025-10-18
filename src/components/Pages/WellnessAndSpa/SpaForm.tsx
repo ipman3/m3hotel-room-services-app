@@ -1,6 +1,5 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
 import { format } from "date-fns";
 import { Calendar as CalendarIcon, Clock } from "lucide-react";
 import { toast } from "sonner";
@@ -30,26 +29,39 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { spaSchema } from "@/validations/spaSchema";
+import { spaSchema, type SpaFormData } from "@/validations/spaSchema";
 import { useNavigate } from "@tanstack/react-router";
 import { useCartStore } from "@/store/CartStore";
+import { CustomButtonSubmit } from "@/components/CustomButtonSubmit";
 
 interface SpaFormProps {
   id: string;
   serviceName: string;
+  serviceTypeId: number;
+  serviceType: string;
   price: number;
   category: string;
   packages: string[];
 }
 
-export default function SpaForm({ id, packages, serviceName, price, category }: SpaFormProps) {
-   const navigate = useNavigate();
-   const setPendingItem = useCartStore((state) => state.setPendingItem);
-   
-  const form = useForm<z.infer<typeof spaSchema>>({
+export default function SpaForm({
+  id,
+  packages,
+  serviceName,
+  price,
+  category,
+  serviceTypeId,
+  serviceType,
+}: SpaFormProps) {
+  const navigate = useNavigate();
+  const { setPendingItem, confirmPendingItem } = useCartStore();
+
+  const form = useForm<SpaFormData>({
     resolver: zodResolver(spaSchema),
     defaultValues: {
       serviceName: serviceName,
+      serviceTypeId: serviceTypeId,
+      serviceType: serviceType,
       price: price,
       category: category,
       package: packages[0] || "",
@@ -59,21 +71,25 @@ export default function SpaForm({ id, packages, serviceName, price, category }: 
     },
   });
 
-  function onSubmit(values: z.infer<typeof spaSchema>) {
+  function onSubmit(values: SpaFormData) {
     console.log("Form Submitted:", values);
 
-     // Add the validated form data to the global cart store
+    // Add the validated form data to the global cart store
     setPendingItem({
-        serviceName: values.serviceName,
-        packageName: values.package, 
-        date: values.date,
-        time: values.time,
-        price: values.price,
-        category: values.category,
+      serviceName: values.serviceName,
+      packageName: values.package,
+      date: values.date,
+      time: values.time,
+      price: values.price,
+      category: values.category,
+      serviceTypeId: values.serviceTypeId,
+      serviceType: values.serviceType,
+      message: values.message || "",
     });
 
+    confirmPendingItem?.();
     toast.success(`${values.serviceName} has been added to your appointment.`);
-    navigate({ to: '/confirm-appointment' });
+    navigate({ to: "/confirm-appointment" });
   }
 
   return (
@@ -81,8 +97,11 @@ export default function SpaForm({ id, packages, serviceName, price, category }: 
       <form onSubmit={form.handleSubmit(onSubmit)} className="mt-6 space-y-4">
         <input type="hidden" value={id} />
         <input type="hidden" value={serviceName} />
+        <input type="hidden" value={serviceTypeId} />
+        <input type="hidden" value={serviceType} />
         <input type="hidden" value={price} />
         <input type="hidden" value={category} />
+
         <FormField
           control={form.control}
           name="package"
@@ -195,9 +214,10 @@ export default function SpaForm({ id, packages, serviceName, price, category }: 
           )}
         />
 
-        <Button type="submit" size="lg" className="w-full h-12 mt-8 bg-base-primary">
-          Make Appointment
-        </Button>
+        <CustomButtonSubmit
+          textBtn="Add to Appointment"
+          isLoading={form.formState.isSubmitting}
+        />
       </form>
     </Form>
   );

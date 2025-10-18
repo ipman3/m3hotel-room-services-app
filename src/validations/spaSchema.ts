@@ -3,6 +3,8 @@ import { z } from "zod";
 export const spaSchema = z.object({
   serviceName: z.string(),
   price: z.number(),
+  serviceTypeId: z.number(),
+  serviceType: z.string(),
   category: z.string(),
   package: z.string({
     message: "Please select a package for your service.",
@@ -15,3 +17,5 @@ export const spaSchema = z.object({
   }),
   message: z.string().max(500, "Message must be 500 characters or less.").optional(),
 });
+
+export type SpaFormData = z.infer<typeof spaSchema>;

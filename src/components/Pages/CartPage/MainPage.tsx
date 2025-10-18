@@ -1,16 +1,23 @@
 import { Button } from "@/components/ui/button";
 import { spaItems } from "@/config/data/wellness-spa";
-import { useCartStore } from "@/store/CartStore";
+import { useCartStore, type CartItem } from "@/store/CartStore";
 import { toast } from "sonner";
 import { Trash2 } from "lucide-react";
+import { useNavigate } from "@tanstack/react-router";
 
 export default function MainPage() {
   const items = useCartStore((state) => state.items);
   const removeItem = useCartStore((state) => state.removeItem);
   const clearCart = useCartStore((state) => state.clearCart);
+  const setPendingItem = useCartStore((state) => state.setPendingItem);
+  const navigate = useNavigate();
 
   if (items.length === 0) {
-    return <p className="p-8 text-center text-muted-foreground">Your cart is empty.</p>;
+    return (
+      <p className="p-8 text-center text-muted-foreground">
+        Your cart is empty.
+      </p>
+    );
   }
 
   const handleClearCart = () => {
@@ -18,26 +25,58 @@ export default function MainPage() {
     toast.success("Your cart has been cleared.");
   };
 
+  const handleClickConfirmCheckout = (itemToConfirm: CartItem) => {
+    console.log("Setting pending item:", itemToConfirm);
+    setPendingItem(itemToConfirm);
+    navigate({ to: "/confirm-appointment" });
+  };
+
   return (
     <div className="px-4 py-8 space-y-6">
       <div className="flex items-center justify-between">
         <h2 className="text-lg font-bold text-base-secondary">Order Details</h2>
-        <Button variant="link" className="h-auto p-0 text-red-500" onClick={handleClearCart}>
+        <Button
+          variant="link"
+          className="h-auto p-0 text-red-500"
+          onClick={handleClearCart}
+        >
           Clear All
         </Button>
       </div>
       <div className="space-y-4">
         {items.map((currentItem) => {
-          const service = spaItems.find(s => s.name === currentItem.serviceName);
+          const service = spaItems.find(
+            (s) => s.name === currentItem.serviceName
+          );
           return (
-            <div key={currentItem.id} className="flex items-center gap-4 p-2 bg-white rounded-2xl customShadowSm">
-              <img src={service?.imageUrl} alt={service?.name} className="object-cover w-24 h-24 rounded-xl" />
+            <div
+              key={currentItem.id}
+              onClick={() => handleClickConfirmCheckout(currentItem)}
+              className="flex items-center gap-4 p-2 bg-white rounded-2xl customShadowSm cursor-pointer"
+            >
+              <img
+                src={service?.imageUrl}
+                alt={service?.name}
+                className="object-cover w-24 h-24 rounded-xl"
+              />
               <div className="flex-grow">
                 <h2 className="font-bold">{currentItem.serviceName}</h2>
-                <p className="text-sm text-muted-foreground">{service?.description.slice(0, 20)}...</p>
-                <p className="text-sm font-semibold text-base-secondary">${currentItem.price.toFixed(2)}</p>
+                <p className="text-sm text-muted-foreground">
+                  {service?.description.slice(0, 20)}...
+                </p>
+                <p className="text-sm font-semibold text-base-secondary">
+                  ${currentItem.price.toFixed(2)}
+                </p>
               </div>
-              <Button variant="ghost" size="icon" onClick={() => removeItem(currentItem.id)} aria-label="Remove item">
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  removeItem(currentItem.id);
+                }}
+                aria-label="Remove item"
+              >
                 <Trash2 className="w-5 h-5 text-red-500" />
               </Button>
             </div>
