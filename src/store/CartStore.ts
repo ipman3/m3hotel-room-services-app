@@ -12,6 +12,7 @@ export interface CartItem {
   price: number;
   category: string;
   message: string;
+  imageUrl: string;
 }
 
 interface CartState {

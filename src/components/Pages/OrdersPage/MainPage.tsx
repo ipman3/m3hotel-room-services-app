@@ -2,44 +2,8 @@ import { useState, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import type { OrderItems } from "@/types/orderItem";
 import CardItemComponent from "../../CardItemComponent";
-
-const mockOrders: OrderItems[] = [
-  {
-    id: "1",
-    name: "Johny Wick",
-    roomNumber: "302",
-    orderDate: "2025-10-17",
-    orderId: "ORD-001",
-    totalAmount: 49.99,
-    category: "Wellness & Spa",
-    imageUrl:
-      "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80",
-  },
-  {
-    id: "2",
-    name: "Johny Wick",
-    roomNumber: "302",
-    orderDate: "2025-10-17",
-    orderId: "ORD-002",
-    totalAmount: 19.99,
-    category: "Room Service",
-    imageUrl:
-      "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80",
-  },
-  {
-    id: "3",
-    name: "Johny Wick",
-    roomNumber: "305",
-    orderDate: "2025-10-17",
-    orderId: "ORD-003",
-    totalAmount: 79.99,
-    category: "Thing To Do",
-    imageUrl:
-      "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80",
-  },
-];
-
-const TABS = ["All", "Room Service", "Wellness & Spa", "Thing To Do"];
+import { mockOrders, TABS } from "@/config/data/orders";
+import { Link } from "@tanstack/react-router";
 
 export default function MainPage() {
   const [activeTab, setActiveTab] = useState("All");
@@ -78,34 +42,39 @@ export default function MainPage() {
           </Button>
         ))}
       </div>
-
       {/* Order List */}
       <div className="mt-4 space-y-4">
         {filteredItems.length > 0 ? (
           filteredItems.map((item) => (
-            <CardItemComponent
+            <Link
               key={item.id}
-              id={item.id}
-              imageUrl={item.imageUrl}
-              isRemovable={false}>
-              <p>
-                <span className="font-semibold">Order Date: </span>
-                {item.orderDate}
-              </p>
-              <p>
-                <span className="font-semibold">Order ID: </span> #{item.orderId}
-              </p>
-              <p>
-                <span className="font-semibold">Customer: </span> {item.name}
-              </p>
-              <p>
-                <span className="font-semibold">Room: </span> {item.roomNumber}
-              </p>
-              <p>
-                <span className="font-semibold">Total: </span> $
-                {item.totalAmount.toFixed(2)}
-              </p>
-            </CardItemComponent>
+              to="/orders/$orderId"
+              params={{ orderId: item.id }}
+            >
+              <CardItemComponent
+                id={item.id}
+                imageUrl={item.imageUrl}
+                isRemovable={false}
+                className="mb-4"
+              >
+                <h3 className="font-bold text-lg mb-2">
+                  {item.items?.[0]?.serviceName}
+                </h3>
+                <div className="flex items-center justify-between space-y-0.5">
+                  <div className="flex flex-col justify-start">
+                    <h3 className="font-semibold">Order Date: </h3>
+                    <h3 className="font-semibold">Order ID: </h3>
+                    <h3 className="font-semibold">Total: </h3>
+                  </div>
+
+                  <div className="flex flex-col justify-start">
+                    <p className="text-start">{item.orderDate}</p>
+                    <p className="text-start">#{item.orderId}</p>
+                    <p className="text-start">${item.totalAmount.toFixed(2)}</p>
+                  </div>
+                </div>
+              </CardItemComponent>
+            </Link>
           ))
         ) : (
           <p className="mt-6 text-center text-base-secondary">

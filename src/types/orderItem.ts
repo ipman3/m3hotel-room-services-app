@@ -1,3 +1,5 @@
+import type { CartItem } from "@/store/CartStore";
+
 export interface OrderItems {
   id: string;
   name: string;
@@ -7,4 +9,5 @@ export interface OrderItems {
   totalAmount: number;
   category: string;
   imageUrl: string;
+  items: CartItem[];
 };
