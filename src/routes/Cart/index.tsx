@@ -1,6 +1,5 @@
 import HeaderComponent from "@/components/layout/HeaderComponent";
 import MainPage from "@/components/Pages/CartPage/MainPage";
-import { useOrderStore } from "@/store/CartStore";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/cart/")({
@@ -8,12 +7,11 @@ export const Route = createFileRoute("/cart/")({
 });
 
 function RouteComponent() {
-  const orderItems = useOrderStore((state) => state.items);
   return (
     <div>
       <HeaderComponent title="View Cart" showBack={false} />
-      <main className="mt-12">
-        <MainPage items={orderItems} />
+      <main className="mt-12 max-w-md mx-auto w-full">
+        <MainPage />
       </main>
     </div>
   );

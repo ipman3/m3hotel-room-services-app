@@ -27,7 +27,7 @@ function RouteComponent() {
   return (
     <div>
       <HeaderComponent title="Offer Details" />
-      <main>
+      <main className="h-screen max-w-md mx-auto w-full">
         <OfferDetails offer={offerData} />
       </main>
     </div>

@@ -21,7 +21,7 @@ function RouteComponent() {
   return (
     <div>
       <HeaderComponent title="Offers & News" />
-      <main className="pt-16 pb-4">
+      <main className="pt-16 pb-4 max-w-md mx-auto w-full">
         <MainPage />
       </main>
     </div>

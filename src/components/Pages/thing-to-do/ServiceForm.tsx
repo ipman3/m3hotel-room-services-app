@@ -32,7 +32,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 
 import { useNavigate } from "@tanstack/react-router";
-import { useOrderStore } from "@/store/CartStore";
+import { useCartStore } from "@/store/CartStore";
 import { thingSchema } from "@/validations/thingSchema";
 
 
@@ -45,7 +45,7 @@ interface ServiceFormProps {
 
 export default function ServiceForm({ packages, serviceName, price, category }: ServiceFormProps) {
   const navigate = useNavigate();
-  const addItemToAppointment = useOrderStore((state) => state.addItem);
+  const addItemToAppointment = useCartStore((state) => state.addItem);
 
   const form = useForm<z.infer<typeof thingSchema>>({
     resolver: zodResolver(thingSchema),
@@ -195,7 +195,7 @@ export default function ServiceForm({ packages, serviceName, price, category }: 
           )}
         />
 
-        <Button type="submit" size="lg" className="w-full mt-8 bg-base-primary h-12">
+        <Button type="submit" size="lg" className="w-full h-12 mt-8 bg-base-primary">
           Make Appointment
         </Button>
       </form>

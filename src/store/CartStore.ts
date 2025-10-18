@@ -1,27 +1,31 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 
-export interface OrderItem {
+export interface CartItem {
   id: string;
   serviceName: string;
   packageName: string;
+  serviceTypeId: number;
+  serviceType: string;
   date: Date;
   time: string;
   price: number;
   category: string;
+  message: string;
+  imageUrl: string;
 }
 
 interface CartState {
-  items: OrderItem[];
-  pendingItem: Omit<OrderItem, "id"> | null; 
-  setPendingItem: (item: Omit<OrderItem, "id">) => void; 
-  confirmPendingItem: () => void; 
-  addItem: (item: Omit<OrderItem, "id">) => void;
+  items: CartItem[];
+  pendingItem: Omit<CartItem, "id"> | null;
+  setPendingItem: (item: Omit<CartItem, "id"> | null) => void;
+  confirmPendingItem: () => void;
+  addItem: (item: Omit<CartItem, "id">) => void;
   removeItem: (itemId: string) => void;
   clearCart: () => void;
 }
 
-export const useOrderStore = create<CartState>()(
+export const useCartStore = create<CartState>()(
   persist(
     (set) => ({
       items: [],
@@ -33,7 +37,7 @@ export const useOrderStore = create<CartState>()(
           const newItem = { ...state.pendingItem, id: crypto.randomUUID() };
           return {
             items: [...state.items, newItem],
-            pendingItem: null,
+            // pendingItem: null,
           };
         }),
       addItem: (item) =>
@@ -44,11 +48,14 @@ export const useOrderStore = create<CartState>()(
         set((state) => ({
           items: state.items.filter((item) => item.id !== itemId),
         })),
-      clearCart: () => set({ items: [] }),
+      clearCart: () => set({ items: [], pendingItem: null }),
     }),
     {
-      name: "order-storage",
-      partialize: (state) => ({ items: state.items }),
+      name: "cartItems-storage",
+      partialize: (state) => ({
+        items: state.items,
+        pendingItem: state.pendingItem,
+      }),
       storage: createJSONStorage(() => localStorage, {
         reviver: (key, value) => {
           if (key === "date" && typeof value === "string") {

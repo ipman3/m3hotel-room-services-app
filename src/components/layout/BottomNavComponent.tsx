@@ -2,7 +2,7 @@ import { useNavigate, useRouterState } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { useNavItems } from "@/config/navItems";
 import useNavbarStore from "@/store/Navbar";
-import { useOrderStore } from "@/store/CartStore";
+import { useCartStore } from "@/store/CartStore";
 
 export default function BottomNav() {
   const navigate = useNavigate();
@@ -10,7 +10,7 @@ export default function BottomNav() {
   const navItems = useNavItems();
 
   const { isVisible } = useNavbarStore((state) => state);
-  const cartItemCount = useOrderStore((state) => state.items.length);
+  const cartItemCount = useCartStore((state) => state.items.length);
 
   if (!isVisible) return null;
 
