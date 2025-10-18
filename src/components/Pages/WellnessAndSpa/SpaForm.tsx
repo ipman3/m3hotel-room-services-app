@@ -42,6 +42,7 @@ interface SpaFormProps {
   price: number;
   category: string;
   packages: string[];
+  imageUrl: string;
 }
 
 export default function SpaForm({
@@ -52,6 +53,7 @@ export default function SpaForm({
   category,
   serviceTypeId,
   serviceType,
+  imageUrl,
 }: SpaFormProps) {
   const navigate = useNavigate();
   const { setPendingItem, confirmPendingItem } = useCartStore();
@@ -85,6 +87,7 @@ export default function SpaForm({
       serviceTypeId: values.serviceTypeId,
       serviceType: values.serviceType,
       message: values.message || "",
+      imageUrl: imageUrl,
     });
 
     confirmPendingItem?.();

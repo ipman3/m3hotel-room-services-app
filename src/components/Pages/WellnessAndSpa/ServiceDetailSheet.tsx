@@ -10,6 +10,7 @@ interface Service {
   description: string;
   isPopular: boolean;
   packages: string[];
+  imageUrl: string;
 }
 
 interface ServiceDetailSheetProps {
@@ -48,6 +49,7 @@ export default function ServiceDetailSheet({
         category={service.category}
         serviceTypeId={service.serviceTypeId}
         serviceType={service.serviceType}
+        imageUrl={service.imageUrl}
       />
     </div>
   );

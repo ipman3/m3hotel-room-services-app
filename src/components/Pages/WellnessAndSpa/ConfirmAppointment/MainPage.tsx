@@ -9,8 +9,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
-import { spaItems } from "@/config/data/wellness-spa";
-import { format } from "date-fns";
 import { useCartStore } from "@/store/CartStore";
 import { DetailRow } from "./DetailRow";
 import { useNavigate } from "@tanstack/react-router";
@@ -23,7 +21,7 @@ import { CustomButtonSubmit } from "@/components/CustomButtonSubmit";
 
 export default function ConfirmAppointmentPage() {
   const navigate = useNavigate();
-  const { pendingItem, confirmPendingItem } = useCartStore();
+  const { items, clearCart, confirmPendingItem } = useCartStore();
 
   const form = useForm<ConfirmAppointmentInput>({
     resolver: zodResolver(confirmAppointmentSchema),
@@ -33,12 +31,11 @@ export default function ConfirmAppointmentPage() {
     },
   });
 
-  if (!pendingItem) {
+  if (items.length === 0) {
     return (
       <div className="p-8 text-center text-muted-foreground">
         <p>No appointment to confirm.</p>
         <Button
-          variant="link"
           onClick={() => navigate({ to: "/wellness-spa" })}
           className="mt-4 bg-base-primary text-card"
         >
@@ -48,18 +45,17 @@ export default function ConfirmAppointmentPage() {
     );
   }
 
-  const service = spaItems.find(
-    (item) => item.name === pendingItem.serviceName
-  );
-
+  const discount = 0.00;
+  const subTotal = items.reduce((acc, item) => acc + item.price, 0);
   const serviceChargePercent = 7;
-  const serviceCharge = pendingItem.price * (serviceChargePercent / 100);
-  const total = pendingItem.price + serviceCharge;
+  const serviceCharge = (subTotal * serviceChargePercent) / 100;
+  const total = subTotal + serviceCharge;
 
   const onSubmit = (data: ConfirmAppointmentInput) => {
     const combinedData = {
       ...data,
-      ...pendingItem,
+      orderItems: items,
+      total,
     };
 
     // Convert to FormData
@@ -77,11 +73,12 @@ export default function ConfirmAppointmentPage() {
     console.log("FormData prepared:", formData);
 
     confirmPendingItem?.();
+    clearCart();
     navigate({ to: "/success" });
   };
 
   return (
-    <div className="px-4 py-8 space-y-6">
+    <div className="px-4 py-8 space-y-4">
       <div className="flex items-center gap-4 p-4 bg-muted-background rounded-2xl customShadowSm">
         <div className="flex flex-col w-full gap-4">
           <h2 className="text-lg font-bold text-base-secondary">
@@ -91,7 +88,7 @@ export default function ConfirmAppointmentPage() {
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
-              className="w-full space-y-4"
+              className="w-full space-y-3"
               noValidate
             >
               {/* Customer Name */}
@@ -103,8 +100,8 @@ export default function ConfirmAppointmentPage() {
                     <FormLabel>Customer Name</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="Enter your full name"
-                        className="w-full py-6"
+                        placeholder="Enter your name"
+                        className="w-full py-5"
                         {...field}
                       />
                     </FormControl>
@@ -123,7 +120,7 @@ export default function ConfirmAppointmentPage() {
                     <FormControl>
                       <Input
                         placeholder="Enter room number"
-                        className="w-full py-6"
+                        className="w-full py-5"
                         {...field}
                       />
                     </FormControl>
@@ -137,40 +134,56 @@ export default function ConfirmAppointmentPage() {
       </div>
 
       <div className="p-4 bg-muted-background rounded-2xl customShadowSm">
-        <h3 className="mb-4 text-lg font-bold">Order Details</h3>
-        <div className="flex items-center gap-4 mb-4">
-          <img
-            src={service?.imageUrl}
-            alt={service?.name}
-            className="object-cover w-24 h-24 rounded-xl"
-          />
-          <div>
-            <h2 className="text-lg font-semibold">{pendingItem.serviceName}</h2>
-            <p className="text-xs text-muted-foreground">
-              {service?.description}
-            </p>
-          </div>
-        </div>
-        <DetailRow label="Package" value={pendingItem.packageName} />
-        <DetailRow label="Type" value={pendingItem.category} />
-        <DetailRow
-          label="Date"
-          value={format(new Date(pendingItem.date), "EEEE, dd MMM, yyyy")}
-        />
-        <div className="flex items-center justify-between py-3">
-          <span className="text-muted-foreground">Hours</span>
-          <span className="text-base font-semibold">{pendingItem.time}</span>
+        <h3 className="mb-4 text-lg font-bold text-base-secondary">Order Items</h3>
+        <div className="space-y-2">
+          {items.map((item) => (
+            <div
+              key={item.id}
+              className="flex justify-between items-center text-sm gap-2 border-b border-gray-100 pb-3 last:border-0 last:pb-0"
+            >
+              <div>
+                <img
+                  src={item.imageUrl}
+                  alt={item.serviceName}
+                  className="object-cover w-22 h-22 rounded-lg flex-shrink-0"
+                />
+              </div>
+              <div className="flex-grow flex flex-col justify-between">
+                <div>
+                  <h4 className="text-base font-semibold">
+                    {item.serviceName}
+                  </h4>
+                  <p className="text-sm text-muted-foreground">
+                    {item.packageName} Package - {item.category} Type
+                  </p>
+                  {item.date && (
+                    <p className="text-sm text-muted-foreground">
+                      {item.time} on {new Date(item.date).toLocaleDateString()}
+                    </p>
+                  )}
+                </div>
+                <div className="flex">
+                  <span className="text-base font-semibold text-base-primary">
+                   Price: ${item.price.toFixed(2)}
+                  </span>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
 
       <div className="p-4 bg-muted-background rounded-2xl customShadowSm">
-        <h3 className="mb-2 text-lg font-bold">Price Detail</h3>
-        <DetailRow label="Price" value={`$${pendingItem.price.toFixed(2)}`} />
-        <DetailRow label="Discount" value="$00.00" />
-        <DetailRow label="Service charge" value={`${serviceChargePercent}%`} />
-        <div className="flex items-center justify-between py-3">
-          <span className="text-muted-foreground">Total</span>
-          <span className="text-xl font-bold">{`$${total.toFixed(2)}`}</span>
+        <h3 className="mb-2 text-lg font-bold text-base-secondary">Price Detail</h3>
+        <DetailRow label="Subtotal" value={`$${subTotal.toFixed(2)}`} />
+        <DetailRow label="Discount" value={`$${discount.toFixed(2)}`} />
+        <DetailRow
+          label={`Service Charge (${serviceChargePercent}%)`}
+          value={`$${serviceCharge.toFixed(2)}`}
+        />
+        <div className="flex items-center justify-between py-3 mt-2">
+          <span className="text-black font-semibold text-lg">Total</span>
+          <span className="text-lg font-bold">{`$${total.toFixed(2)}`}</span>
         </div>
       </div>
 
@@ -179,8 +192,6 @@ export default function ConfirmAppointmentPage() {
         isLoading={form.formState.isSubmitting}
         onClick={form.handleSubmit(onSubmit)}
       />
-
-      <div className="pb-8" />
     </div>
   );
 }

@@ -19,7 +19,7 @@ export function CustomButtonSubmit({
       type="submit"
       size="lg"
       onClick={onClick}
-      className={`w-full h-12 mt-8 bg-base-primary text-card ${className}`}
+      className={`w-full h-12 mt-4 bg-base-primary text-card ${className}`}
       disabled={isLoading}
     >
       {isLoading ? (
