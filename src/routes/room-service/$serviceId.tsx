@@ -27,11 +27,11 @@ function RouteComponent() {
     <div>
       <HeaderComponent title="Selected items" />
       <main>
-        <img
+        {/* <img
           src={serviceData.imageUrl}
           alt={serviceData.name}
           className="object-cover w-full h-80"
-        />
+        /> */}
         <ServiceDetailSheet service={serviceData} />
       </main>
     </div>
