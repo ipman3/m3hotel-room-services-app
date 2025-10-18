@@ -23,7 +23,6 @@ export default function ServicesCarousel() {
         if (!api) {
             return;
         }
-
         setCount(api.scrollSnapList().length);
         setCurrent(api.selectedScrollSnap());
 
@@ -38,7 +37,7 @@ export default function ServicesCarousel() {
                 <h2 className="text-lg font-bold text-card-foreground">
                     Trending offers & news
                 </h2>
-                <Link to="/">
+                <Link to="/room-service/offer">
                     <span className="text-sm font-semibold text-base-accent">
                         View All
                     </span>
