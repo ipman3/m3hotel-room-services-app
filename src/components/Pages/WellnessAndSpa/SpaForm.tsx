@@ -182,12 +182,12 @@ export default function SpaForm({
                 Hours
               </FormLabel>
               <div className="relative mt-1">
-                <Clock className="absolute w-4 h-4 -translate-y-1/2 left-3 top-1/2 text-muted-foreground" />
+                <Clock className="absolute w-4 h-4 -translate-y-1/2 left-3 top-1/2 text-black" />
                 <FormControl>
                   <Input
                     type="time"
                     {...field}
-                    className="w-full h-12 py-2 pl-10 pr-3 border-none bg-base-input"
+                    className="w-full h-12 py-2 pl-10 pr-3 border-none bg-base-input text-black"
                   />
                 </FormControl>
               </div>

@@ -21,7 +21,7 @@ export default function ServiceDetailSheet({
   service,
 }: ServiceDetailSheetProps) {
   return (
-    <div className="relative z-10 px-4 py-6 -mt-8 bg-muted-background rounded-t-4xl">
+    <div className="relative z-10 px-4 py-6 -mt-8 bg-background rounded-t-4xl">
       <div className="absolute top-3 left-1/2 -translate-x-1/2 w-16 h-1.5 bg-base-input rounded-full" />
 
       <div className="flex items-center justify-between mt-4">
