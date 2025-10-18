@@ -22,7 +22,7 @@ export default function ServiceGrid() {
             onClick={() => handleServiceClick(item.path)}
           >
             <CardContent className="flex flex-col items-center justify-center gap-2">
-              <div className="p-2 rounded-full bg-background">
+              <div className="p-2 rounded-full bg-gray-100">
                 <img
                   src={item.icon}
                   alt={`${item.label} icon`}
