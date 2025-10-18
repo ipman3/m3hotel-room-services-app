@@ -24,7 +24,7 @@ export default function CardItemComponent({
   return (
     <div
       key={id}
-      className={`flex items-center gap-4 px-3 py-2 bg-muted-background rounded-2xl customShadowSm ${className}`}
+      className={`flex items-center gap-4 p-2 bg-muted-background rounded-2xl customShadowSm ${className}`}
     >
       {imageUrl && (
         <img

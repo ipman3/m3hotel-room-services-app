@@ -57,7 +57,7 @@ export default function MainPage() {
                 isRemovable={false}
                 className="mb-4"
               >
-                <h3 className="font-bold text-lg mb-2">
+                <h3 className="font-bold text-base mb-1 break-words">
                   {item.items?.[0]?.serviceName}
                 </h3>
                 <div className="flex items-center justify-between space-y-0.5">
