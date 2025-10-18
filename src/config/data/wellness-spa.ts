@@ -3,7 +3,7 @@ export const spaItems = [
     id: "1",
     name: "Aromatherapy Massage",
     serviceTypeId: 2,
-    serviceType: "wellness",
+    serviceType: "wellness-spa",
     price: 9.0,
     description:
       "A gentle massage using essential oils to promote relaxation, reduce stress, and improve mood. A truly calming experience for mind and body.",
@@ -17,7 +17,7 @@ export const spaItems = [
     id: "2",
     name: "Brown Chair With White Pillows",
     serviceTypeId: 2,
-    serviceType: "wellness",
+    serviceType: "wellness-spa",
     price: 14.0,
     description:
       "This facial treatment is designed to intensely moisturize and nourish the skin, leaving it soft, supple, and radiant.",
@@ -31,7 +31,7 @@ export const spaItems = [
     id: "3",
     name: "Topless Woman Lying on Bed Getting Massage",
     serviceTypeId: 2,
-    serviceType: "wellness",
+    serviceType: "wellness-spa",
     price: 14.0,
     description:
       "This facial treatment is designed to intensely moisturize and nourish the skin, leaving it soft, supple, and radiant.",
@@ -45,7 +45,7 @@ export const spaItems = [
     id: "4",
     name: "A Woman Having a Massage",
     serviceTypeId: 2,
-    serviceType: "wellness",
+    serviceType: "wellness-spa",
     price: 14.0,
     description:
       "This facial treatment is designed to intensely moisturize and nourish the skin, leaving it soft, supple, and radiant.",
@@ -59,7 +59,7 @@ export const spaItems = [
     id: "5",
     name: "Woman Doing Facial Mask",
     serviceTypeId: 2,
-    serviceType: "wellness",
+    serviceType: "wellness-spa",
     price: 14.0,
     description:
       "This facial treatment is designed to intensely moisturize and nourish the skin, leaving it soft, supple, and radiant.",

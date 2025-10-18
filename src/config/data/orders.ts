@@ -20,7 +20,7 @@ export const mockOrders: OrderItems[] = [
         price: 9,
         category: "Massage",
         serviceTypeId: 2,
-        serviceType: "wellness",
+        serviceType: "wellness-spa",
         message: "hello",
         id: "6b841f9e-5126-4bdf-912a-69fb21c27a1d",
         imageUrl:
@@ -34,7 +34,7 @@ export const mockOrders: OrderItems[] = [
         price: 9,
         category: "Massage",
         serviceTypeId: 2,
-        serviceType: "wellness",
+        serviceType: "wellness-spa",
         message: "hello",
         id: "a1b2c3d4-e5f6-7890-1234-567890abcdef",
         imageUrl:
@@ -61,7 +61,7 @@ export const mockOrders: OrderItems[] = [
         price: 9,
         category: "Massage",
         serviceTypeId: 2,
-        serviceType: "wellness",
+        serviceType: "wellness-spa",
         message: "hello",
         id: "6b841f9e-5126-4bdf-912a-69fb21c27a1d",
         imageUrl:
@@ -88,7 +88,7 @@ export const mockOrders: OrderItems[] = [
         price: 9,
         category: "Massage",
         serviceTypeId: 2,
-        serviceType: "wellness",
+        serviceType: "wellness-spa",
         message: "hello",
         id: "6b841f9e-5126-4bdf-912a-69fb21c27a1d",
         imageUrl:

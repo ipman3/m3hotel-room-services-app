@@ -25,10 +25,37 @@ export default function MainPage() {
     toast.success("Your cart has been cleared.");
   };
 
+  // Clicking on a single item card
   const handleClickConfirmCheckout = (itemToConfirm: CartItem) => {
-    console.log("Setting pending item:", itemToConfirm);
     setPendingItem(itemToConfirm);
-    navigate({ to: "/confirm-appointment" });
+    console.log(
+      `Setting pending item for service type: ${itemToConfirm.serviceType}`
+    );
+
+    let navigationPath = "/";
+
+    switch (itemToConfirm.serviceType) {
+      case "wellness-spa":
+        navigationPath = "/confirm-appointment";
+        break;
+      case "room-service":
+        navigationPath = "/room-service/confirm";
+        break;
+      case "thing-to-do":
+        navigationPath = "/things-to-do/confirm";
+        break;
+      default:
+        console.warn(
+          `Unknown service type: "${itemToConfirm.serviceType}". Navigating to default confirmation page.`
+        );
+        // navigationPath = "/confirm-appointment";
+        toast.error(
+          "Unknown service type. Please contact support for assistance."
+        );
+        break;
+    }
+
+    navigate({ to: navigationPath });
   };
 
   return (
