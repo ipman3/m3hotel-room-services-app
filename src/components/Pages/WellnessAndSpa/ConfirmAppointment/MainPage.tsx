@@ -45,11 +45,12 @@ export default function ConfirmAppointmentPage() {
     );
   }
 
-  const discount = 0.00;
+  const discountAmount = 0.00;
   const subTotal = items.reduce((acc, item) => acc + item.price, 0);
+  const discountedSubtotal = subTotal - discountAmount;
   const serviceChargePercent = 7;
-  const serviceCharge = (subTotal * serviceChargePercent) / 100;
-  const total = subTotal + serviceCharge;
+  const serviceCharge = discountedSubtotal * (serviceChargePercent / 100);
+  const total = discountedSubtotal + serviceCharge;
 
   const onSubmit = (data: ConfirmAppointmentInput) => {
     const combinedData = {
@@ -176,7 +177,7 @@ export default function ConfirmAppointmentPage() {
       <div className="p-4 bg-muted-background rounded-2xl customShadowSm">
         <h3 className="mb-2 text-lg font-bold text-base-secondary">Price Detail</h3>
         <DetailRow label="Subtotal" value={`$${subTotal.toFixed(2)}`} />
-        <DetailRow label="Discount" value={`$${discount.toFixed(2)}`} />
+        <DetailRow label="Discount" value={`$${discountAmount.toFixed(2)}`} />
         <DetailRow
           label={`Service Charge (${serviceChargePercent}%)`}
           value={`$${serviceCharge.toFixed(2)}`}
