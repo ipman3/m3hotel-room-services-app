@@ -17,7 +17,7 @@ import {
   type ConfirmAppointmentInput,
 } from "@/validations/confirmAppointment";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CustomButtonSubmit } from "@/components/CustomButtonSubmit";
+import { CustomButtonSubmit } from "@/components/CustomSubmitButtonCom";
 
 export default function ConfirmAppointmentPage() {
   const navigate = useNavigate();

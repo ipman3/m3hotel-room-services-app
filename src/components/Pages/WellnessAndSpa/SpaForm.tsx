@@ -32,7 +32,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { spaSchema, type SpaFormData } from "@/validations/spaSchema";
 import { useNavigate } from "@tanstack/react-router";
 import { useCartStore } from "@/store/CartStore";
-import { CustomButtonSubmit } from "@/components/CustomButtonSubmit";
+import { CustomButtonSubmit } from "@/components/CustomSubmitButtonCom";
 
 interface SpaFormProps {
   id: string;

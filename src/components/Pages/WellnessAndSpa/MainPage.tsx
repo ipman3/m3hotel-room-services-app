@@ -7,7 +7,7 @@ import OffersCarousel from "../HomePage/OffersCarousel";
 import CategoryFilters from "./CategoryFilters";
 import PopularSpaSection from "./PopularSpaSection";
 import SelectionList from "./SelectionList";
-import FilterSheet from "@/components/FilterSheet";
+import FilterSheet from "@/components/FilterSheetCom";
 import { Icons } from "../../../../public/assets/icons";
 import { useNavigate } from "@tanstack/react-router";
 import { DialogDescription, DialogTitle } from "@/components/ui/dialog";
