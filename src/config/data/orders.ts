@@ -36,7 +36,7 @@ export const mockOrders: OrderItems[] = [
         serviceTypeId: 2,
         serviceType: "wellness",
         message: "hello",
-        id: "6b841f9e-5126-4bdf-912a-69fb21c27a1d",
+        id: "a1b2c3d4-e5f6-7890-1234-567890abcdef",
         imageUrl:
           "https://images.unsplash.com/photo-1535914254981-b5012eebbd15?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1170",
       },

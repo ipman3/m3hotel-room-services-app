@@ -39,9 +39,9 @@ export default function OrderDetailsPage({ orderData }: OrderDetailsPageProps) {
         <h3 className="mb-4 text-lg font-bold">Order Items</h3>
 
         <div className="space-y-4">
-          {orderData.items.map((item) => (
+          {orderData.items.map((item, index) => (
             <div
-              key={item.id}
+              key={index}
               id={item.id}
               className="flex items-center gap-4 bg-muted-background rounded-2xl"
             >
