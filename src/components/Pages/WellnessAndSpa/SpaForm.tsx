@@ -37,6 +37,7 @@ import { CustomButtonSubmit } from "@/components/CustomSubmitButtonCom";
 interface SpaFormProps {
   id: string;
   serviceName: string;
+  description: string;
   serviceTypeId: number;
   serviceType: string;
   price: number;
@@ -54,6 +55,7 @@ export default function SpaForm({
   serviceTypeId,
   serviceType,
   imageUrl,
+  description,
 }: SpaFormProps) {
   const navigate = useNavigate();
   const { setPendingItem, confirmPendingItem } = useCartStore();
@@ -88,11 +90,12 @@ export default function SpaForm({
       serviceType: values.serviceType,
       message: values.message || "",
       imageUrl: imageUrl,
+      description: description,
     });
 
     confirmPendingItem?.();
     toast.success(`${values.serviceName} has been added to your appointment.`);
-    navigate({ to: "/confirm-appointment" });
+    navigate({ to: "/wellness-spa/confirm-appointment" });
   }
 
   return (
@@ -182,12 +185,12 @@ export default function SpaForm({
                 Hours
               </FormLabel>
               <div className="relative mt-1">
-                <Clock className="absolute w-4 h-4 -translate-y-1/2 left-3 top-1/2 text-black" />
+                <Clock className="absolute w-4 h-4 text-black -translate-y-1/2 left-3 top-1/2" />
                 <FormControl>
                   <Input
                     type="time"
                     {...field}
-                    className="w-full h-12 py-2 pl-10 pr-3 border-none bg-base-input text-black"
+                    className="w-full h-12 py-2 pl-10 pr-3 text-black border-none bg-base-input"
                   />
                 </FormControl>
               </div>

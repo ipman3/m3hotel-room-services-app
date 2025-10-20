@@ -43,7 +43,7 @@ export default function MainPage() {
   };
 
   const handleNavigateToSearch = () => {
-    navigate({ to: "/search" });
+    navigate({ to: "/wellness-spa/search" });
   };
 
   return (

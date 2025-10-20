@@ -35,8 +35,8 @@ export default function PopularThingSection() {
         {filteredPopular.slice(0, 3).map((item) => (
           <Link
             key={item.id}
-            to="/room-service/$serviceId"
-            params={{ serviceId: item.id }}
+            to="/thing-to-do/$thingId"
+            params={{ thingId: item.id }}
             className="snap-start"
           >
             <Card className="flex-shrink-0 w-40 p-0 border-none customShadowSm rounded-xl">
