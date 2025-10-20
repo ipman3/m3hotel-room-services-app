@@ -1,5 +1,9 @@
 import HeaderComponent from "@/components/layout/HeaderComponent";
+<<<<<<< HEAD
 import ConfirmAppointmentPage from "@/components/Pages/roomservice/PlaceOrder/MainPage";
+=======
+import PlaceOrderPage from "@/components/Pages/roomservice/PlaceOrder/MainPage";
+>>>>>>> origin/vary
 import useNavbarStore from "@/store/Navbar";
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect } from "react";
@@ -22,7 +26,7 @@ function RouteComponent() {
     <div>
       <HeaderComponent title="Order Detail" />
       <main className="mt-12">
-        <ConfirmAppointmentPage />
+        <PlaceOrderPage />
       </main>
     </div>
   );
