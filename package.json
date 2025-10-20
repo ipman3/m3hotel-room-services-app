@@ -22,6 +22,7 @@
     "@radix-ui/react-tabs": "^1.1.13",
     "@tailwindcss/vite": "^4.1.13",
     "@tanstack/react-query": "^5.89.0",
+    "@tanstack/react-query-devtools": "^5.90.2",
     "@tanstack/react-router": "^1.131.48",
     "@tanstack/router-plugin": "^1.131.48",
     "bun": "^1.2.22",
