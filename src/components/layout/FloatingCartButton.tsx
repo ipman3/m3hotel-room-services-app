@@ -20,7 +20,7 @@ export function FloatingCartButton() {
   return (
     <motion.button
       onClick={() => navigate({ to: "/cart" })}
-      className="fixed z-50 flex items-center justify-center w-12 h-12 rounded-full shadow-lg bg-base-primary text-card bottom-4 left-4"
+      className="fixed z-50 flex items-center justify-center w-12 h-12 rounded-full shadow-lg bg-base-primary text-card bottom-4 right-4"
       initial={{ opacity: 0, scale: 0.5 }}
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.5 }}
@@ -29,7 +29,7 @@ export function FloatingCartButton() {
       aria-label="View cart"
     >
       <ShoppingCart className="w-6 h-6" />
-      <span className="absolute flex items-center justify-center w-5 h-5 text-xs text-white bg-red-500 rounded-full -top-1 -left-1">
+      <span className="absolute flex items-center justify-center w-5 h-5 text-xs text-white bg-red-500 rounded-full -top-1 -right-1">
         {cartItemCount}
       </span>
     </motion.button>
