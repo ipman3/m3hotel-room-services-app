@@ -2,9 +2,9 @@ import { createFileRoute } from '@tanstack/react-router';
 import { useEffect } from 'react';
 import HeaderComponent from '@/components/layout/HeaderComponent';
 import useNavbarStore from '@/store/Navbar';
-import MainPage from '@/components/Pages/SearchPage/MainPage';
+import MainPage from '@/components/Pages/WellnessAndSpa/SearchPage/MainPage';
 
-export const Route = createFileRoute('/search/')({
+export const Route = createFileRoute('/wellness-spa/search/')({
   component: SearchRouteComponent,
 });
 

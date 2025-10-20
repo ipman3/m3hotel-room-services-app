@@ -45,6 +45,7 @@ export default function ServiceDetailSheet({
         id={service.id}
         packages={service.packages}
         serviceName={service.name}
+        description={service.description}
         price={service.price}
         category={service.category}
         serviceTypeId={service.serviceTypeId}

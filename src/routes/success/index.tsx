@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import { useEffect } from "react";
 import Lottie from "lottie-react";
 import successAnimation from "../../../public/assets/success.json";
-import { useCartStore } from "@/store/CartStore";
 
 export const Route = createFileRoute("/success/")({
   component: RouteComponent,
@@ -12,15 +11,13 @@ export const Route = createFileRoute("/success/")({
 
 function RouteComponent() {
   const { hide, show } = useNavbarStore((state) => state);
-  const clearCart = useCartStore((state) => state.clearCart);
 
   useEffect(() => {
-    clearCart();
     hide();
     return () => {
       show();
     };
-  }, [hide, show, clearCart]);
+  }, [hide, show]);
 
   return (
     <div className="flex flex-col items-center h-screen px-4 space-y-4 bg-white justify-evenly">

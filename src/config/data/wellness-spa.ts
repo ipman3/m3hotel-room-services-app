@@ -9,6 +9,11 @@ export const spaItems = [
       "A gentle massage using essential oils to promote relaxation, reduce stress, and improve mood. A truly calming experience for mind and body.",
     imageUrl:
       "https://images.pexels.com/photos/3757942/pexels-photo-3757942.jpeg",
+    imageUrls: [
+      "https://images.pexels.com/photos/3757942/pexels-photo-3757942.jpeg",
+      "https://images.pexels.com/photos/4041392/pexels-photo-4041392.jpeg",
+      "https://images.pexels.com/photos/3779837/pexels-photo-3779837.jpeg",
+    ],
     isPopular: true,
     packages: ["Basic", "Premium", "Deluxe"],
     category: "Massage",
@@ -23,6 +28,11 @@ export const spaItems = [
       "This facial treatment is designed to intensely moisturize and nourish the skin, leaving it soft, supple, and radiant.",
     imageUrl:
       "https://images.pexels.com/photos/161737/pedicure-massage-therapist-spa-161737.jpeg",
+    imageUrls: [
+      "https://images.pexels.com/photos/3757942/pexels-photo-3757942.jpeg",
+      "https://images.pexels.com/photos/4041392/pexels-photo-4041392.jpeg",
+      "https://images.pexels.com/photos/3779837/pexels-photo-3779837.jpeg",
+    ],
     isPopular: true,
     packages: ["Standard", "Plus"],
     category: "Spa",

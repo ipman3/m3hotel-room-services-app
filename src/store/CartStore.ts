@@ -13,6 +13,7 @@ export interface CartItem {
   category: string;
   message: string;
   imageUrl: string;
+  description: string;
 }
 
 interface CartState {
@@ -22,6 +23,7 @@ interface CartState {
   confirmPendingItem: () => void;
   addItem: (item: Omit<CartItem, "id">) => void;
   removeItem: (itemId: string) => void;
+  clearCartByServiceType: (serviceType: string) => void;
   clearCart: () => void;
 }
 
@@ -47,6 +49,10 @@ export const useCartStore = create<CartState>()(
       removeItem: (itemId) =>
         set((state) => ({
           items: state.items.filter((item) => item.id !== itemId),
+        })),
+      clearCartByServiceType: (serviceType: string) =>
+        set((state) => ({
+          items: state.items.filter((item) => item.serviceType !== serviceType),
         })),
       clearCart: () => set({ items: [], pendingItem: null }),
     }),

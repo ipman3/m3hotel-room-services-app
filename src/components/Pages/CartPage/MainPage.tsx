@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { spaItems } from "@/config/data/wellness-spa";
 import { useCartStore, type CartItem } from "@/store/CartStore";
 import { toast } from "sonner";
 import { Trash2 } from "lucide-react";
@@ -28,21 +27,19 @@ export default function MainPage() {
   // Clicking on a single item card
   const handleClickConfirmCheckout = (itemToConfirm: CartItem) => {
     setPendingItem(itemToConfirm);
-    console.log(
-      `Setting pending item for service type: ${itemToConfirm.serviceType}`
-    );
+    // console.log(`Setting pending item for service type: ${itemToConfirm.serviceType}`);
 
     let navigationPath = "/";
 
     switch (itemToConfirm.serviceType) {
       case "wellness-spa":
-        navigationPath = "/confirm-appointment";
+        navigationPath = "/wellness-spa/confirm-appointment";
         break;
       case "room-service":
         navigationPath = "/room-service/confirm";
         break;
       case "thing-to-do":
-        navigationPath = "/things-to-do/confirm";
+        navigationPath = "/thing-to-do/confirm-booking";
         break;
       default:
         console.warn(
@@ -71,25 +68,22 @@ export default function MainPage() {
         </Button>
       </div>
       <div className="space-y-4">
-        {items.map((currentItem) => {
-          const service = spaItems.find(
-            (s) => s.name === currentItem.serviceName
-          );
+       {items.map((currentItem) => {
           return (
             <div
               key={currentItem.id}
               onClick={() => handleClickConfirmCheckout(currentItem)}
-              className="flex items-center gap-4 p-2 bg-white rounded-2xl customShadowSm cursor-pointer"
+              className="flex items-center gap-4 p-2 bg-white cursor-pointer rounded-2xl customShadowSm"
             >
               <img
-                src={service?.imageUrl}
-                alt={service?.name}
+                src={currentItem?.imageUrl}
+                alt={currentItem?.serviceName}
                 className="object-cover w-24 h-24 rounded-xl"
               />
               <div className="flex-grow">
                 <h2 className="font-bold">{currentItem.serviceName}</h2>
                 <p className="text-sm text-muted-foreground">
-                  {service?.description.slice(0, 20)}...
+                  {currentItem?.description.slice(0, 20)}...
                 </p>
                 <p className="text-sm font-semibold text-base-secondary">
                   ${currentItem.price.toFixed(2)}

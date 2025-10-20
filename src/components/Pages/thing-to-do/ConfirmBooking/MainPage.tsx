@@ -12,24 +12,27 @@ import { useForm } from "react-hook-form";
 import { useCartStore } from "@/store/CartStore";
 import { DetailRow } from "./DetailRow";
 import { useNavigate } from "@tanstack/react-router";
-import {
-  confirmAppointmentSchema,
-  type ConfirmAppointmentInput,
-} from "@/validations/confirmAppointment";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CustomButtonSubmit } from "@/components/CustomSubmitButtonCom";
+import {
+  confirmBookingSchema,
+  type ConfirmBookingInput,
+} from "@/validations/confirmBooking";
 
-export default function ConfirmAppointmentPage() {
+export default function ConfirmBookingPage() {
   const navigate = useNavigate();
   const { items, clearCartByServiceType, confirmPendingItem } = useCartStore();
 
-  const filteredItems = items.filter((item) => item.serviceType === "wellness-spa");
+  const filteredItems = items.filter((item) => item.serviceType === "thing-to-do");
 
-  const form = useForm<ConfirmAppointmentInput>({
-    resolver: zodResolver(confirmAppointmentSchema),
+  const form = useForm<ConfirmBookingInput>({
+    resolver: zodResolver(confirmBookingSchema),
     defaultValues: {
       customerName: "",
       roomNumber: "",
+      email: "",
+      phoneNumber: "",
     },
   });
 
@@ -47,14 +50,14 @@ export default function ConfirmAppointmentPage() {
     );
   }
 
-  const discountAmount = 0.00;
+  const discountAmount = 0.0;
   const subTotal = items.reduce((acc, item) => acc + item.price, 0);
   const discountedSubtotal = subTotal - discountAmount;
   const serviceChargePercent = 7;
   const serviceCharge = discountedSubtotal * (serviceChargePercent / 100);
   const total = discountedSubtotal + serviceCharge;
 
-  const onSubmit = (data: ConfirmAppointmentInput) => {
+  const onSubmit = (data: ConfirmBookingInput) => {
     const combinedData = {
       ...data,
       orderItems: items,
@@ -76,7 +79,7 @@ export default function ConfirmAppointmentPage() {
     console.log("FormData prepared:", JSON.stringify(Object.fromEntries(formData)));
 
     confirmPendingItem?.();
-    clearCartByServiceType("wellness-spa");
+    clearCartByServiceType("thing-to-do");
     navigate({ to: "/success" });
   };
 
@@ -131,13 +134,53 @@ export default function ConfirmAppointmentPage() {
                   </FormItem>
                 )}
               />
+
+              {/* Email */}
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Email</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Enter email"
+                        className="w-full py-5"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {/* Phone Number */}
+              <FormField
+                control={form.control}
+                name="phoneNumber"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel> Phone Number</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Enter phone number"
+                        className="w-full py-5"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
             </form>
           </Form>
         </div>
       </div>
 
       <div className="p-4 bg-muted-background rounded-2xl customShadowSm">
-        <h3 className="mb-4 text-lg font-bold text-base-secondary">Order Items</h3>
+        <h3 className="mb-4 text-lg font-bold text-base-secondary">
+          Order Items
+        </h3>
         <div className="space-y-2">
           {filteredItems.map((item) => (
             <div
@@ -167,7 +210,7 @@ export default function ConfirmAppointmentPage() {
                 </div>
                 <div className="flex">
                   <span className="text-base font-semibold text-base-primary">
-                   Price: ${item.price.toFixed(2)}
+                    Price: ${item.price.toFixed(2)}
                   </span>
                 </div>
               </div>
@@ -177,7 +220,9 @@ export default function ConfirmAppointmentPage() {
       </div>
 
       <div className="p-4 bg-muted-background rounded-2xl customShadowSm">
-        <h3 className="mb-2 text-lg font-bold text-base-secondary">Price Detail</h3>
+        <h3 className="mb-2 text-lg font-bold text-base-secondary">
+          Price Detail
+        </h3>
         <DetailRow label="Subtotal" value={`$${subTotal.toFixed(2)}`} />
         <DetailRow label="Discount" value={`$${discountAmount.toFixed(2)}`} />
         <DetailRow
