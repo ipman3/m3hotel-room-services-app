@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Toaster } from "sonner";
 import SplashScreen from "./SplashScreenComponent";
 import BottomNav from "./BottomNavComponent";
+import { FloatingCartButton } from "./FloatingCartButton";
 
 export default function AppLayout() {
   const [isSplashScreen, setIsSplashScreen] = useState<boolean>(true);
@@ -27,6 +28,7 @@ export default function AppLayout() {
         <Outlet />
       </main>
       <BottomNav />
+      <FloatingCartButton />
     </div>
   );
 }
