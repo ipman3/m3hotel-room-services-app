@@ -44,7 +44,7 @@ export default function ViewAllRoomService({ id }: ViewAllPageProps) {
                         <Card className="py-4 mb-4 overflow-hidden border-none customShadowSm rounded-xl">
                             <CardContent className="flex items-center gap-4 px-4">
                                 <img
-                                    src={item.imageUrl}
+                                    src={item.image}
                                     alt={item.name}
                                     className="object-cover w-24 h-24 rounded-xl"
                                     loading="lazy"
