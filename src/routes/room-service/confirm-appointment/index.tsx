@@ -1,5 +1,5 @@
 import HeaderComponent from "@/components/layout/HeaderComponent";
-import ConfirmAppointmentPage from "@/components/Pages/roomservice/ConfirmAppointment/MainPage";
+import ConfirmAppointmentPage from "@/components/Pages/roomservice/PlaceOrder/MainPage";
 import useNavbarStore from "@/store/Navbar";
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect } from "react";
