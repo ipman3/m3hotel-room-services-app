@@ -3,7 +3,8 @@ export interface ServiceItem {
   name: string;
   price: number;
   description: string;
-  imageUrl: string;
+  image:string;
+  imageUrl:string[];
   category: string;
   isPopular?: boolean;
   packages?: string[];

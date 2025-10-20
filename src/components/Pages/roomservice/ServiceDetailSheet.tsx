@@ -7,10 +7,12 @@ import {
   type CarouselApi,
 } from "@/components/ui/carousel";
 import { Plus, Minus, SquarePen, ChevronLeft, ChevronRight } from "lucide-react";
+import { useNavigate } from "@tanstack/react-router";
 
 interface Service {
   name: string;
-  imageUrl: string | string[];
+  image: string;
+  imageUrl: string[];
   price: number;
   category: string;
   description: string;
@@ -27,6 +29,7 @@ export default function ServiceDetailSheet({ service }: ServiceDetailSheetProps)
   const [api, setApi] = React.useState<CarouselApi>();
   const [current, setCurrent] = React.useState(0);
   const [count, setCount] = React.useState(0);
+  const navigate = useNavigate();
 
   const plugin = React.useRef(
     Autoplay({ delay: 3000, stopOnInteraction: true, stopOnMouseEnter: true })
@@ -49,9 +52,13 @@ export default function ServiceDetailSheet({ service }: ServiceDetailSheetProps)
   const handleDecrease = () => setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
   const handleIncrease = () => setQuantity((prev) => prev + 1);
 
+  const handleAddToCart = () => {
+    navigate({ to: "/room-service/confirm-appointment" });
+  };
+
   return (
     <>
-      {/* ✅ Image Carousel */}
+
       <div className="relative w-full h-80 overflow-hidden">
         <Carousel
           setApi={setApi}
@@ -79,7 +86,6 @@ export default function ServiceDetailSheet({ service }: ServiceDetailSheetProps)
           </CarouselContent>
         </Carousel>
 
-        {/* ✅ Slide Arrows */}
         {images.length > 1 && (
           <>
             <button
@@ -100,7 +106,6 @@ export default function ServiceDetailSheet({ service }: ServiceDetailSheetProps)
           </>
         )}
 
-        {/* ✅ Dots Indicator */}
         {images.length > 1 && (
           <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
             {Array.from({ length: count }).map((_, index) => (
@@ -116,12 +121,9 @@ export default function ServiceDetailSheet({ service }: ServiceDetailSheetProps)
         )}
       </div>
 
-      {/* ✅ Detail Section */}
       <div className="relative z-10 px-4 py-6 -mt-8 bg-white rounded-t-4xl">
-        <div className="absolute top-3 left-1/2 -translate-x-1/2 w-16 h-1.5 bg-gray-300 rounded-full" />
-        <div className="bg-[#004422] w-[95px] h-[5px] rounded-[12.48px] mt-5 mb-5 mx-auto"></div>
+        <div className="bg-[#004422] w-[95px] h-[5px] rounded-[12.48px]  mb-5 mx-auto"></div>
 
-        {/* ✅ Popular + Quantity Controls */}
         <div className="flex items-center justify-between mt-2 mb-2">
           <div className="flex items-center gap-2">
             {service.isPopular && (
@@ -131,7 +133,6 @@ export default function ServiceDetailSheet({ service }: ServiceDetailSheetProps)
             )}
           </div>
 
-          {/* ✅ Compact Quantity Controls */}
           <div className="flex items-center gap-2">
             <button
               className="w-6 h-6 text-[#004422] bg-[#004422]/10 flex items-center justify-center border rounded hover:bg-[#004422]/20 transition"
@@ -149,7 +150,6 @@ export default function ServiceDetailSheet({ service }: ServiceDetailSheetProps)
           </div>
         </div>
 
-        {/* ✅ Name + Description + Price */}
         <h1 className="text-2xl font-bold text-gray-900">{service.name}</h1>
         <div className="mt-4">
           <p className="mt-1 text-gray-600">{service.description}</p>
@@ -158,7 +158,6 @@ export default function ServiceDetailSheet({ service }: ServiceDetailSheetProps)
           </div>
         </div>
 
-        {/* ✅ Special Request + Add to Cart */}
         <div className="flex flex-col gap-4 w-full mx-auto mt-6">
           <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-4 flex items-center">
             <SquarePen className="text-[#6F5D29] mr-3" size={20} />
@@ -169,9 +168,12 @@ export default function ServiceDetailSheet({ service }: ServiceDetailSheetProps)
               className="flex-grow text-gray-800 placeholder-[#A89A81] focus:outline-none"
             />
           </div>
-          <button className="bg-[#6F5D29] hover:bg-[#5C4C24] rounded-xl text-white w-full py-4 font-semibold text-lg transition duration-200 shadow-md">
+          <button
+            onClick={handleAddToCart}
+            className="bg-[#6F5D29] hover:bg-[#5C4C24] rounded-xl text-white w-full py-4 font-semibold text-lg transition duration-200 shadow-md">
             Add to Cart
           </button>
+
         </div>
       </div>
     </>
