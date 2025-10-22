@@ -1,3 +1,4 @@
+import { CarouselComponent } from "@/components/CarouselComponent";
 import HeaderComponent from "@/components/layout/HeaderComponent";
 import ServiceDetailSheet from "@/components/Pages/roomservice/ServiceDetailSheet";
 import { serviceItems } from "@/config/data/room-service";
@@ -27,11 +28,8 @@ function RouteComponent() {
     <div>
       <HeaderComponent title="Selected items" />
       <main>
-        {/* <img
-          src={serviceData.imageUrl}
-          alt={serviceData.name}
-          className="object-cover w-full h-80"
-        /> */}
+        <CarouselComponent imageUrls={serviceData.imageUrls || []} />
+        
         <ServiceDetailSheet service={serviceData} />
       </main>
     </div>

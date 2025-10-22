@@ -23,7 +23,16 @@ export default function ConfirmAppointmentPage() {
   const navigate = useNavigate();
   const { items, clearCartByServiceType, confirmPendingItem } = useCartStore();
 
-  const filteredItems = items.filter((item) => item.serviceType === "wellness-spa");
+  const filteredItems = items.filter(
+    (item) => item.serviceType === "wellness-spa"
+  );
+
+  const getSubtotal = () => {
+    return filteredItems.reduce((acc, item) => {
+      const quantity = item.quantity || 1;
+      return acc + item.price * quantity;
+    }, 0);
+  };
 
   const form = useForm<ConfirmAppointmentInput>({
     resolver: zodResolver(confirmAppointmentSchema),
@@ -47,8 +56,8 @@ export default function ConfirmAppointmentPage() {
     );
   }
 
-  const discountAmount = 0.00;
-  const subTotal = items.reduce((acc, item) => acc + item.price, 0);
+  const discountAmount = 0.0;
+  const subTotal = getSubtotal();
   const discountedSubtotal = subTotal - discountAmount;
   const serviceChargePercent = 7;
   const serviceCharge = discountedSubtotal * (serviceChargePercent / 100);
@@ -57,7 +66,7 @@ export default function ConfirmAppointmentPage() {
   const onSubmit = (data: ConfirmAppointmentInput) => {
     const combinedData = {
       ...data,
-      orderItems: items,
+      orderItems: filteredItems,
       total,
     };
 
@@ -73,7 +82,10 @@ export default function ConfirmAppointmentPage() {
       }
     });
 
-    console.log("FormData prepared:", JSON.stringify(Object.fromEntries(formData)));
+    console.log(
+      "FormData prepared:",
+      JSON.stringify(Object.fromEntries(formData))
+    );
 
     confirmPendingItem?.();
     clearCartByServiceType("wellness-spa");
@@ -85,7 +97,7 @@ export default function ConfirmAppointmentPage() {
       <div className="flex items-center gap-4 p-4 bg-muted-background rounded-2xl customShadowSm">
         <div className="flex flex-col w-full gap-4">
           <h2 className="text-lg font-bold text-base-secondary">
-            Customer Info Form
+            Customer Info
           </h2>
 
           <Form {...form}>
@@ -137,7 +149,9 @@ export default function ConfirmAppointmentPage() {
       </div>
 
       <div className="p-4 bg-muted-background rounded-2xl customShadowSm">
-        <h3 className="mb-4 text-lg font-bold text-base-secondary">Order Items</h3>
+        <h3 className="mb-4 text-lg font-bold text-base-secondary">
+          Order Items
+        </h3>
         <div className="space-y-2">
           {filteredItems.map((item) => (
             <div
@@ -167,7 +181,7 @@ export default function ConfirmAppointmentPage() {
                 </div>
                 <div className="flex">
                   <span className="text-base font-semibold text-base-primary">
-                   Price: ${item.price.toFixed(2)}
+                    Price: ${item.price.toFixed(2)}
                   </span>
                 </div>
               </div>
@@ -177,7 +191,9 @@ export default function ConfirmAppointmentPage() {
       </div>
 
       <div className="p-4 bg-muted-background rounded-2xl customShadowSm">
-        <h3 className="mb-2 text-lg font-bold text-base-secondary">Price Detail</h3>
+        <h3 className="mb-2 text-lg font-bold text-base-secondary">
+          Price Detail
+        </h3>
         <DetailRow label="Subtotal" value={`$${subTotal.toFixed(2)}`} />
         <DetailRow label="Discount" value={`$${discountAmount.toFixed(2)}`} />
         <DetailRow

@@ -4,7 +4,7 @@ import useNavbarStore from "@/store/Navbar";
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect } from "react";
 
-export const Route = createFileRoute("/room-service/confirm-appointment/")({
+export const Route = createFileRoute("/room-service/place-order/")({
   component: RouteComponent,
 });
 

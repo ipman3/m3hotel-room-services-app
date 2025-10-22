@@ -2,6 +2,7 @@ import { LoaderIcon } from "lucide-react";
 import { Button } from "./ui/button";
 
 interface CustomButtonSubmitProps {
+  type?: "button" | "submit" | "reset";
   textBtn: string;
   isLoading?: boolean;
   className?: string;
