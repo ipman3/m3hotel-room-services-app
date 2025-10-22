@@ -66,7 +66,7 @@ export default function ConfirmAppointmentPage() {
   const onSubmit = (data: ConfirmAppointmentInput) => {
     const combinedData = {
       ...data,
-      orderItems: items,
+      orderItems: filteredItems,
       total,
     };
 

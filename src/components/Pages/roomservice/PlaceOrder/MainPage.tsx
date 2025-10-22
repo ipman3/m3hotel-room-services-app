@@ -73,7 +73,7 @@ export default function PlaceOrderPage() {
   const onSubmit = (data: PlaceOrderInput) => {
     const combinedData = {
       ...data,
-      orderItems: items,
+      orderItems: filteredItems,
       total,
     };
 
