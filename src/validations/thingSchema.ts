@@ -3,7 +3,7 @@ import { z } from "zod";
 export const thingSchema = z.object({
   adults: z.number().int().min(1, "At least one adult is required."),
   children: z.number().int().min(0),
-  serviceName: z.string(),
+  name: z.string(),
   price: z.number(),
   serviceTypeId: z.number(),
   serviceType: z.string(),

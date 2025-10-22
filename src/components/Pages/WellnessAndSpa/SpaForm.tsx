@@ -36,7 +36,7 @@ import { CustomButtonSubmit } from "@/components/CustomSubmitButtonCom";
 
 interface SpaFormProps {
   id: string;
-  serviceName: string;
+  name: string;
   description: string;
   serviceTypeId: number;
   serviceType: string;
@@ -49,7 +49,7 @@ interface SpaFormProps {
 export default function SpaForm({
   id,
   packages,
-  serviceName,
+  name,
   price,
   category,
   serviceTypeId,
@@ -63,7 +63,7 @@ export default function SpaForm({
   const form = useForm<SpaFormData>({
     resolver: zodResolver(spaSchema),
     defaultValues: {
-      serviceName: serviceName,
+      name: name,
       serviceTypeId: serviceTypeId,
       serviceType: serviceType,
       price: price,
@@ -80,7 +80,7 @@ export default function SpaForm({
 
     // Add the validated form data to the global cart store
     setPendingItem({
-      serviceName: values.serviceName,
+      name: values.name,
       packageName: values.package,
       date: values.date,
       time: values.time,
@@ -98,14 +98,15 @@ export default function SpaForm({
       duration: 8000,
       action: { label: "View Cart", onClick: () => navigate({ to: "/cart" }) },
     });
-    navigate({ to: "/wellness-spa/confirm-appointment" });
+    // navigate({ to: "/wellness-spa/confirm-appointment" });
+    navigate({ to: "/wellness-spa" });
   }
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="mt-6 space-y-4">
         <input type="hidden" value={id} />
-        <input type="hidden" value={serviceName} />
+        <input type="hidden" value={name} />
         <input type="hidden" value={serviceTypeId} />
         <input type="hidden" value={serviceType} />
         <input type="hidden" value={price} />

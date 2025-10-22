@@ -78,11 +78,11 @@ export default function MainPage() {
             >
               <img
                 src={currentItem?.imageUrl}
-                alt={currentItem?.serviceName}
+                alt={currentItem?.name}
                 className="object-cover w-24 h-24 rounded-xl"
               />
               <div className="flex-grow">
-                <h2 className="font-bold">{currentItem.serviceName}</h2>
+                <h2 className="font-bold">{currentItem.name}</h2>
 
                 {currentItem.serviceType === "room-service" && (
                   <>

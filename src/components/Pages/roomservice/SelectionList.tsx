@@ -7,23 +7,16 @@ import { useCategoryStore } from "@/store/CategoryStore";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { containerVariants, itemVariants } from "@/lib/variantsAnimation";
 import { useCartStore } from "@/store/CartStore";
-import { useState } from "react";
 import { toast } from "sonner";
-import { cartFabRef } from "@/lib/cartFabRef";
+import { useFlyToCartStore } from "@/store/FlyToCartStore";
 
 export default function SelectionList() {
   const { activeCategory } = useCategoryStore();
   const navigate = useNavigate();
   const addItem = useCartStore((state) => state.addItem);
-  const [flyingCard, setFlyingCard] = useState<{
-    rect: DOMRect;
-    image: string;
-    serviceName: string;
-    price: number;
-  } | null>(null);
 
   const filteredItems =
     activeCategory === "All"
@@ -42,15 +35,15 @@ export default function SelectionList() {
     const card = e.currentTarget.closest(".card-container") as HTMLElement;
     const rect = card.getBoundingClientRect();
 
-    setFlyingCard({
+    useFlyToCartStore.getState().startFly({
       rect,
       image: item.imageUrl,
-      serviceName: item.serviceName,
+      name: item.name,
       price: item.price,
     });
 
     addItem({
-      serviceName: item.serviceName,
+      name: item.name,
       price: item.price,
       quantity: 1,
       imageUrl: item.imageUrl,
@@ -65,8 +58,6 @@ export default function SelectionList() {
       duration: 3000,
       action: { label: "View Cart", onClick: () => navigate({ to: "/cart" }) },
     });
-
-    setTimeout(() => setFlyingCard(null), 800);
   };
 
   return (
@@ -80,21 +71,28 @@ export default function SelectionList() {
         </Link>
       </div>
 
-      <motion.div variants={containerVariants} initial="hidden" animate="visible">
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
         {filteredItems.slice(0, 5).map((item) => (
           <motion.div key={item.id} variants={itemVariants}>
             <div className="relative card-container">
-              <Link to="/room-service/$serviceId" params={{ serviceId: item.id }}>
+              <Link
+                to="/room-service/$serviceId"
+                params={{ serviceId: item.id }}
+              >
                 <Card className="py-4 mb-4 overflow-hidden border-none customShadowSm rounded-xl">
                   <CardContent className="relative flex items-center gap-4 px-4">
                     <img
                       src={item.imageUrl}
-                      alt={item.serviceName}
+                      alt={item.name}
                       className="object-cover w-24 h-24 rounded-xl"
                       loading="lazy"
                     />
                     <div className="flex-grow">
-                      <h3 className="font-bold">{item.serviceName}</h3>
+                      <h3 className="font-bold">{item.name}</h3>
                       <p className="text-sm text-muted-foreground">
                         {item.description.length > 50
                           ? item.description.slice(0, 50) + "..."
@@ -117,51 +115,6 @@ export default function SelectionList() {
           </motion.div>
         ))}
       </motion.div>
-
-      <AnimatePresence>
-        {flyingCard && (
-          <motion.div
-            initial={{
-              position: "fixed",
-              top: flyingCard.rect.top,
-              left: flyingCard.rect.left,
-              width: flyingCard.rect.width,
-              height: flyingCard.rect.height,
-              zIndex: 9999,
-            }}
-            animate={{
-              top:
-                (cartFabRef.current?.getBoundingClientRect().bottom ?? 0) - 40,
-              left:
-                (cartFabRef.current?.getBoundingClientRect().right ?? 0) - 40,
-              width: 40,
-              height: 40,
-              opacity: 0,
-            }}
-            transition={{
-              duration: 0.8,
-              ease: "easeInOut",
-            }}
-            exit={{ opacity: 0 }}
-          >
-            <CardContent className="flex items-center gap-4 p-4 overflow-hidden bg-white shadow-lg rounded-xl">
-              <img
-                src={flyingCard.image}
-                alt={flyingCard.serviceName}
-                className="object-cover w-24 h-24 rounded-xl"
-              />
-              <div>
-                <h3 className="font-semibold truncate">
-                  {flyingCard.serviceName}
-                </h3>
-                <p className="text-sm font-bold text-gray-800">
-                  ${flyingCard.price.toFixed(2)}
-                </p>
-              </div>
-            </CardContent>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </section>
   );
 }

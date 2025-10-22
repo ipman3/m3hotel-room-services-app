@@ -3,7 +3,7 @@ import { persist, createJSONStorage } from "zustand/middleware";
 
 export interface CartItem {
   id: string;
-  serviceName: string;
+  name: string;
   packageName?: string;
   serviceTypeId: number;
   serviceType: string;

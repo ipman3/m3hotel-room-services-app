@@ -34,7 +34,7 @@ function RouteComponent() {
         <ServiceForm
           id={serviceData.id}
           packages={serviceData.packages}
-          serviceName={serviceData.name}
+          name={serviceData.name}
           description={serviceData.description}
           isPopular={serviceData.isPopular}
           price={serviceData.price}

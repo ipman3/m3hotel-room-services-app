@@ -5,6 +5,7 @@ import { Toaster } from "sonner";
 import SplashScreen from "./SplashScreenComponent";
 import BottomNav from "./BottomNavComponent";
 import { FloatingCartButton } from "./FloatingCartButton";
+import { FlyToCartAnimation } from "../FlyToCartAnimation";
 
 export default function AppLayout() {
   const [isSplashScreen, setIsSplashScreen] = useState<boolean>(true);
@@ -29,6 +30,7 @@ export default function AppLayout() {
       </main>
       <BottomNav />
       <FloatingCartButton />
+      <FlyToCartAnimation />
     </div>
   );
 }

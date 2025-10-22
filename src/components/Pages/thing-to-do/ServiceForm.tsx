@@ -30,7 +30,7 @@ import { NumberInput } from "@/components/NumberInput";
 
 interface ServiceData {
   id: string;
-  serviceName: string;
+  name: string;
   serviceTypeId: number;
   serviceType: string;
   price: number;
@@ -43,7 +43,7 @@ interface ServiceData {
 
 export default function ServiceForm({
   id,
-  serviceName,
+  name,
   serviceTypeId,
   serviceType,
   price,
@@ -58,7 +58,7 @@ export default function ServiceForm({
   const form = useForm<ThingFormData>({
     resolver: zodResolver(thingSchema),
     defaultValues: {
-      serviceName: serviceName,
+      name: name,
       serviceTypeId: serviceTypeId,
       serviceType: serviceType,
       price: price,
@@ -91,7 +91,8 @@ export default function ServiceForm({
       duration: 8000,
       action: { label: "View Cart", onClick: () => navigate({ to: "/cart" }) },
     });
-    navigate({ to: "/thing-to-do/confirm-booking" });
+    // navigate({ to: "/thing-to-do/confirm-booking" });
+    navigate({ to: "/thing-to-do" });
   }
 
   const onError = (errors: FieldErrors<ThingFormData>) => {
@@ -104,11 +105,11 @@ export default function ServiceForm({
       <div className="flex items-center p-4 mb-6 space-x-4 border rounded-lg bg-card border-border">
         <img
           src={imageUrl}
-          alt={serviceName}
+          alt={name}
           className="object-cover w-16 h-16 rounded-md"
         />
         <div>
-          <h2 className="font-semibold">{serviceName}</h2>
+          <h2 className="font-semibold">{name}</h2>
           <p className="mt-1 font-bold text-primary">${price.toFixed(2)}</p>
         </div>
       </div>
@@ -118,7 +119,7 @@ export default function ServiceForm({
           className="mt-6 space-y-4"
         >
           <input type="hidden" value={id} />
-          <input type="hidden" value={serviceName} />
+          <input type="hidden" value={name} />
           <input type="hidden" value={serviceTypeId} />
           <input type="hidden" value={serviceType} />
           <input type="hidden" value={price} />
