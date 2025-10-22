@@ -1,10 +1,9 @@
-// src/components/layout/FloatingCartButton.tsx
-
 import { useNavigate } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { ShoppingCart } from "lucide-react";
 import { useCartStore } from "@/store/CartStore";
 import useNavbarStore from "@/store/Navbar";
+import { cartFabRef } from "@/lib/cartFabRef";
 
 export function FloatingCartButton() {
   const navigate = useNavigate();
@@ -19,6 +18,7 @@ export function FloatingCartButton() {
 
   return (
     <motion.button
+      ref={cartFabRef}
       onClick={() => navigate({ to: "/cart" })}
       className="fixed z-50 flex items-center justify-center w-12 h-12 rounded-full shadow-lg bg-base-primary text-card bottom-4 right-4"
       initial={{ opacity: 0, scale: 0.5 }}
