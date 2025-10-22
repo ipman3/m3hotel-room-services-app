@@ -2,16 +2,18 @@ import { Card, CardContent } from "@/components/ui/card";
 import { serviceItems } from "@/config/data/room-service";
 import { usePathId } from "@/hooks/usePathId";
 import { useCategoryStore } from "@/store/CategoryStore";
-import { Link } from "@tanstack/react-router";
-import { useState } from "react";
-import { Plus, Check } from "lucide-react";
+import { Link, useNavigate } from "@tanstack/react-router";
+import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { containerVariants, itemVariants } from "@/lib/variantsAnimation";
 import { motion } from "framer-motion";
+import { useCartStore } from "@/store/CartStore";
+import { toast } from "sonner";
 
 export default function PopularServiceSection() {
   const { activeCategory } = useCategoryStore();
-  const [addedItems, setAddedItems] = useState<string[]>([]);
+  const navigate = useNavigate();
+  const addItem = useCartStore((state) => state.addItem);
 
   const filteredPopular =
     activeCategory === "All"
@@ -22,10 +24,27 @@ export default function PopularServiceSection() {
 
   const roomId = usePathId("/room-service/");
 
-  const handleToggle = (id: string) => {
-    setAddedItems((prev) =>
-      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
-    );
+  const handleAddToCart = (id: string) => {
+    const item = filteredPopular.find((i) => i.id === id);
+    if (!item) return;
+
+    const newItem = {
+      serviceName: item.serviceName,
+      price: item.price,
+      quantity: 1,
+      imageUrl: item.imageUrl,
+      description: item.description,
+      category: item.category,
+      serviceTypeId: item.serviceTypeId,
+      serviceType: item.serviceType,
+      message: "",
+    };
+    addItem(newItem);
+
+    toast.success("Item added to cart!", {
+      duration: 8000,
+      action: { label: "View Cart", onClick: () => navigate({ to: "/cart" }) },
+    });
   };
 
   return (
@@ -52,8 +71,6 @@ export default function PopularServiceSection() {
         animate="visible"
       >
         {filteredPopular.slice(0, 3).map((item) => {
-          const isAdded = addedItems.includes(item.id);
-
           return (
             <motion.div key={item.id} variants={itemVariants}>
               <div className="relative snap-start">
@@ -79,24 +96,14 @@ export default function PopularServiceSection() {
                       </div>
                     </CardContent>
                   </Card>
-                  {/* Add/Check button (no hover) */}
-                  <Button
-                    size="icon"
-                    onClick={() => handleToggle(item.id)}
-                    className={`absolute bottom-3 right-3 cursor-pointer w-[21px] h-[21px] flex items-center justify-center text-white p-0 border-none shadow-none transition-all duration-300
-                ${
-                  isAdded
-                    ? "bg-[#FF4B4B] rounded-full"
-                    : "bg-[#6F5D29] rounded-md"
-                }`}
-                  >
-                    {isAdded ? (
-                      <Check className="w-4 h-4 text-white" />
-                    ) : (
-                      <Plus className="w-4 h-4 text-white" />
-                    )}
-                  </Button>
                 </Link>
+                <Button
+                  size="icon"
+                  onClick={() => handleAddToCart(item.id)}
+                  className={`absolute bottom-3 right-3 cursor-pointer w-6 h-6 flex items-center justify-center text-white p-0 border-none shadow-none transition-all duration-300 bg-base-primary rounded-full`}
+                >
+                  <Plus className="w-4 h-4 text-white" />
+                </Button>
               </div>
             </motion.div>
           );
