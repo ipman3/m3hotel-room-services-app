@@ -12,11 +12,11 @@ export function FloatingCartButton() {
 
   const { isVisible: isBottomNavVisible } = useNavbarStore((state) => state);
 
-  // if (isBottomNavVisible || cartItemCount === 0) {
-  //   return null;
-  // }
+  if (isBottomNavVisible || cartItemCount === 0) {
+    return null;
+  }
 
-  if (isBottomNavVisible) return null;
+  // if (isBottomNavVisible) return null;
 
   return (
     <motion.button

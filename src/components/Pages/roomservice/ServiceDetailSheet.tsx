@@ -8,7 +8,7 @@ import { toast } from "sonner";
 
 interface Service {
   id: string;
-  serviceName: string;
+  name: string;
   serviceTypeId: number;
   serviceType: string;
   imageUrl: string;
@@ -31,7 +31,7 @@ export default function ServiceDetailSheet({ service }: Props) {
 
   const handleAddToCart = () => {
     const newItem = {
-      serviceName: service.serviceName,
+      name: service.name,
       price: service.price,
       quantity: quantity,
       message: message,
@@ -76,7 +76,7 @@ export default function ServiceDetailSheet({ service }: Props) {
         </div>
       </div>
 
-      <h1 className="text-xl font-bold text-black">{service.serviceName}</h1>
+      <h1 className="text-xl font-bold text-black">{service.name}</h1>
       <p className="mt-2 text-sm text-base-secondary">{service.description}</p>
       <div className="text-xl font-bold text-primary">
         ${service.price.toFixed(2)}

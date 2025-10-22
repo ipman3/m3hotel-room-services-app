@@ -44,7 +44,7 @@ export default function ServiceDetailSheet({
       <SpaForm
         id={service.id}
         packages={service.packages}
-        serviceName={service.name}
+        name={service.name}
         description={service.description}
         price={service.price}
         category={service.category}
