@@ -24,7 +24,16 @@ export default function ConfirmBookingPage() {
   const navigate = useNavigate();
   const { items, clearCartByServiceType, confirmPendingItem } = useCartStore();
 
-  const filteredItems = items.filter((item) => item.serviceType === "thing-to-do");
+  const filteredItems = items.filter(
+    (item) => item.serviceType === "thing-to-do"
+  );
+
+  const getSubtotal = () => {
+    return filteredItems.reduce((acc, item) => {
+      const quantity = item.quantity || 1;
+      return acc + item.price * quantity;
+    }, 0);
+  };
 
   const form = useForm<ConfirmBookingInput>({
     resolver: zodResolver(confirmBookingSchema),
@@ -51,7 +60,7 @@ export default function ConfirmBookingPage() {
   }
 
   const discountAmount = 0.0;
-  const subTotal = items.reduce((acc, item) => acc + item.price, 0);
+  const subTotal = getSubtotal();
   const discountedSubtotal = subTotal - discountAmount;
   const serviceChargePercent = 7;
   const serviceCharge = discountedSubtotal * (serviceChargePercent / 100);
@@ -60,7 +69,7 @@ export default function ConfirmBookingPage() {
   const onSubmit = (data: ConfirmBookingInput) => {
     const combinedData = {
       ...data,
-      orderItems: items,
+      orderItems: filteredItems,
       total,
     };
 
@@ -76,7 +85,10 @@ export default function ConfirmBookingPage() {
       }
     });
 
-    console.log("FormData prepared:", JSON.stringify(Object.fromEntries(formData)));
+    console.log(
+      "FormData prepared:",
+      JSON.stringify(Object.fromEntries(formData))
+    );
 
     confirmPendingItem?.();
     clearCartByServiceType("thing-to-do");
@@ -88,7 +100,7 @@ export default function ConfirmBookingPage() {
       <div className="flex items-center gap-4 p-4 bg-muted-background rounded-2xl customShadowSm">
         <div className="flex flex-col w-full gap-4">
           <h2 className="text-lg font-bold text-base-secondary">
-            Customer Info Form
+            Customer Info
           </h2>
 
           <Form {...form}>

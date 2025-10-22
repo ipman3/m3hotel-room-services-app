@@ -94,7 +94,10 @@ export default function SpaForm({
     });
 
     confirmPendingItem?.();
-    toast.success(`${values.serviceName} has been added to your appointment.`);
+    toast.success("Item added to cart!", {
+      duration: 8000,
+      action: { label: "View Cart", onClick: () => navigate({ to: "/cart" }) },
+    });
     navigate({ to: "/wellness-spa/confirm-appointment" });
   }
 

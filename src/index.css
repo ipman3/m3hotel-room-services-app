@@ -217,3 +217,9 @@
   animation-timeline: view();
   animation-range: entry 0% cover 5%;
 }
+
+
+[data-sonner-toast][data-styled=true] [data-button]:first-of-type {
+  background-color: #387F39 !important;
+  color: var(--color-primary-foreground) !important;
+}

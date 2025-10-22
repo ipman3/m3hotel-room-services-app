@@ -36,7 +36,7 @@ export default function MainPage() {
         navigationPath = "/wellness-spa/confirm-appointment";
         break;
       case "room-service":
-        navigationPath = "/room-service/confirm";
+        navigationPath = "/room-service/place-order";
         break;
       case "thing-to-do":
         navigationPath = "/thing-to-do/confirm-booking";
@@ -45,7 +45,6 @@ export default function MainPage() {
         console.warn(
           `Unknown service type: "${itemToConfirm.serviceType}". Navigating to default confirmation page.`
         );
-        // navigationPath = "/confirm-appointment";
         toast.error(
           "Unknown service type. Please contact support for assistance."
         );
@@ -68,7 +67,9 @@ export default function MainPage() {
         </Button>
       </div>
       <div className="space-y-4">
-       {items.map((currentItem) => {
+        {items.map((currentItem) => {
+          const quantity = currentItem.quantity || 1;
+
           return (
             <div
               key={currentItem.id}
@@ -82,12 +83,31 @@ export default function MainPage() {
               />
               <div className="flex-grow">
                 <h2 className="font-bold">{currentItem.serviceName}</h2>
-                <p className="text-sm text-muted-foreground">
-                  {currentItem?.description.slice(0, 20)}...
-                </p>
-                <p className="text-sm font-semibold text-base-secondary">
-                  ${currentItem.price.toFixed(2)}
-                </p>
+
+                {currentItem.serviceType === "room-service" && (
+                  <>
+                    <p className="text-sm text-muted-foreground">
+                      Unit Price: ${currentItem.price.toFixed(2)}
+                    </p>
+                    <p className="text-sm font-semibold text-base-secondary">
+                      Quantity: x{quantity}
+                    </p>
+                    <p className="mt-1 text-base font-bold text-base-secondary">
+                      Total: ${(currentItem.price * quantity).toFixed(2)}
+                    </p>
+                  </>
+                )}
+
+                {currentItem.serviceType !== "room-service" && (
+                  <>
+                    <p className="text-sm text-muted-foreground">
+                      {currentItem?.description.slice(0, 20)}...
+                    </p>
+                    <p className="text-sm font-semibold text-base-secondary">
+                      ${currentItem.price.toFixed(2)}
+                    </p>
+                  </>
+                )}
               </div>
               <Button
                 variant="ghost"
