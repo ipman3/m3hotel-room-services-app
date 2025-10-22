@@ -2,7 +2,7 @@ export interface SpaItem {
   id: string;
   name: string;
   price: number;
-  description: string;
+  description?: string;
   imageUrl: string;
   category: string;
   isPopular?: boolean;

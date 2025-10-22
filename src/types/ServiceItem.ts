@@ -5,6 +5,9 @@ export interface ServiceItem {
   quantity: number;
   description?: string;
   image:string;
-  imageUrl:string[];
+  imageUrl:string;
   category: string;
+  isPopular: boolean;
+  serviceTypeId: string;
+  serviceType: string;
 }
