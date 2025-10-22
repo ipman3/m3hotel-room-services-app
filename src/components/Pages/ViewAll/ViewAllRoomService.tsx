@@ -44,7 +44,7 @@ export default function ViewAllRoomService({ id }: ViewAllPageProps) {
                         <Card className="py-4 mb-4 overflow-hidden border-none customShadowSm rounded-xl">
                             <CardContent className="flex items-center gap-4 px-4">
                                 <img
-                                    src={item.image}
+                                    src={item.imageUrl}
                                     alt={item.name}
                                     className="object-cover w-24 h-24 rounded-xl"
                                     loading="lazy"
@@ -52,9 +52,9 @@ export default function ViewAllRoomService({ id }: ViewAllPageProps) {
                                 <div className="flex-grow">
                                     <h3 className="font-bold">{item.name}</h3>
                                     <p className="text-sm text-muted-foreground">
-                                        {item.description.length > 50
+                                        {item.description && item.description.length > 50
                                             ? item.description.slice(0, 50) + "..."
-                                            : item.description}
+                                            : item.description || ""}
                                     </p>
                                     <p className="mt-1 font-bold">${item.price.toFixed(2)}</p>
                                 </div>
