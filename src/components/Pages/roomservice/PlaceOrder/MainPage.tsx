@@ -198,7 +198,7 @@ export default function PlaceOrderPage() {
                   <div>
                     <img
                       src={item.imageUrl}
-                      alt={item.serviceName}
+                      alt={item.name}
                       className="flex-shrink-0 object-cover rounded-lg w-22 h-22"
                     />
                   </div>
@@ -208,7 +208,7 @@ export default function PlaceOrderPage() {
                     <div className="flex items-start justify-between">
                       <div>
                         <div className="text-base font-semibold text-base-secondary">
-                          {item.serviceName}
+                          {item.name}
                         </div>
                         <div className="text-sm text-muted-foreground line-clamp-1">
                           {item.description}

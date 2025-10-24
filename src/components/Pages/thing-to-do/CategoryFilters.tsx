@@ -14,9 +14,9 @@ export default function CategoryFilters() {
           <Button
             key={category}
             variant={activeCategory === category ? "default" : "outline"}
-            className={`rounded-full transition-all duration-300 ${activeCategory === category
+            className={`rounded-full border-none transition-all duration-300 ${activeCategory === category
               ? "bg-base-primary text-card"
-              : "bg-card"
+              : "bg-base-input"
               }`}
             onClick={() => setActiveCategory(category)}
           >

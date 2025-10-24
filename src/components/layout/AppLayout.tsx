@@ -1,4 +1,4 @@
-import { Outlet } from "@tanstack/react-router";
+import { Outlet, useLocation } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 
 import { Toaster } from "sonner";
@@ -9,6 +9,7 @@ import { FlyToCartAnimation } from "../FlyToCartAnimation";
 
 export default function AppLayout() {
   const [isSplashScreen, setIsSplashScreen] = useState<boolean>(true);
+  const location = useLocation();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -22,6 +23,24 @@ export default function AppLayout() {
     return <SplashScreen />;
   }
 
+  const isShowFloatingCartButton = () => {
+    const path = location.pathname;
+
+    const hideOnExactPaths = [
+      "/room-service/place-order",
+      "/wellness-spa/confirm-appointment",
+      "/thing-to-do/confirm-booking",
+      "/cart",
+      "/support",
+    ];
+
+    const hideOnDynamicPatterns = [/^\/orders\/[^/]+$/];
+
+    if (hideOnExactPaths.includes(path)) return false;
+
+    return !hideOnDynamicPatterns.some((pattern) => pattern.test(path));
+  };
+
   return (
     <div className="text-accent-foreground">
       <Toaster position="top-right" theme="light" richColors expand />
@@ -29,7 +48,7 @@ export default function AppLayout() {
         <Outlet />
       </main>
       <BottomNav />
-      <FloatingCartButton />
+      {isShowFloatingCartButton() && <FloatingCartButton />}
       <FlyToCartAnimation />
     </div>
   );

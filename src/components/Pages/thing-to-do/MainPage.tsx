@@ -52,7 +52,7 @@ const MainPage = () => {
           <Search className="absolute w-5 h-5 text-gray-300 -translate-y-1/2 left-8 top-1/2" />
           <Input
             placeholder="Search..."
-            className="w-full h-12 text-base bg-white border border-gray-200 rounded-full pl-11"
+            className="w-full h-12 text-base rounded-full pl-11"
             readOnly
           />
         </div>

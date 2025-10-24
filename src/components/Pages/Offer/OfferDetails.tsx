@@ -22,12 +22,12 @@ export default function OfferDetails({ offer }: OfferDetailsProps) {
           className="object-cover w-full h-80"
         />
         <div className="p-6">
-          <h1 className="text-xl font-bold">{offer.title}</h1>
-          <p className="mt-2 text-muted-foreground">{offer.description}</p>
+          <h1 className="text-lg font-bold">{offer.title}</h1>
+          <p className="mt-2 text-muted-foreground text-sm">{offer.description}</p>
           <p className="my-4 text-xl font-bold">
-            ${offer.price.toFixed(2)} / per hour
+            ${offer.price.toFixed(2)} <span className="text-sm text-base-secondary">/ per hour</span>
           </p>
-          <Button className="w-full text-lg rounded-full bg-base-primary h-14">
+          <Button className="w-full text-lg rounded-full bg-base-primary h-12">
             Book Now
           </Button>
         </div>

@@ -3,6 +3,11 @@ import { useCartStore, type CartItem } from "@/store/CartStore";
 import { toast } from "sonner";
 import { Trash2 } from "lucide-react";
 import { useNavigate } from "@tanstack/react-router";
+import { useMemo } from "react";
+
+type DisplayItem = CartItem & {
+  originalIds?: string[];
+};
 
 export default function MainPage() {
   const items = useCartStore((state) => state.items);
@@ -11,7 +16,32 @@ export default function MainPage() {
   const setPendingItem = useCartStore((state) => state.setPendingItem);
   const navigate = useNavigate();
 
-  if (items.length === 0) {
+  const displayedItems = useMemo(() => {
+    // Use a Map for efficient grouping. Key: item name, Value: DisplayItem
+    const groupedItems = new Map<string, DisplayItem>();
+
+    // Group items by name and sum their quantities
+    for (const item of items) {
+      const key = item.name;
+      const quantity = item.quantity || 1;
+
+      if (groupedItems.has(key)) {
+        const existing = groupedItems.get(key)!;
+        existing.quantity = (existing.quantity || 0) + quantity;
+        existing.originalIds?.push(item.id);
+      } else {
+        groupedItems.set(key, {
+          ...item,
+          quantity: quantity,
+          originalIds: [item.id],
+        });
+      }
+    }
+    
+    return Array.from(groupedItems.values()); // return all grouped items as an array
+  }, [items]);
+
+  if (displayedItems.length === 0) {
     return (
       <p className="p-8 text-center text-muted-foreground">
         Your cart is empty.
@@ -24,7 +54,6 @@ export default function MainPage() {
     toast.success("Your cart has been cleared.");
   };
 
-  // Clicking on a single item card
   const handleClickConfirmCheckout = (itemToConfirm: CartItem) => {
     setPendingItem(itemToConfirm);
     // console.log(`Setting pending item for service type: ${itemToConfirm.serviceType}`);
@@ -54,6 +83,16 @@ export default function MainPage() {
     navigate({ to: navigationPath });
   };
 
+  const handleRemoveItem = (item: DisplayItem) => {
+    if (item.originalIds && item.originalIds.length > 0) {
+      item.originalIds.forEach((id) => removeItem(id));
+      toast.success(`Removed all ${item.name} from cart.`);
+    } else {
+      removeItem(item.id);
+      toast.success(`Removed ${item.name} from cart.`);
+    }
+  };
+
   return (
     <div className="px-4 py-8 space-y-6">
       <div className="flex items-center justify-between">
@@ -67,12 +106,12 @@ export default function MainPage() {
         </Button>
       </div>
       <div className="space-y-4">
-        {items.map((currentItem) => {
+        {displayedItems.map((currentItem) => {
           const quantity = currentItem.quantity || 1;
 
           return (
             <div
-              key={currentItem.id}
+              key={currentItem.name}
               onClick={() => handleClickConfirmCheckout(currentItem)}
               className="flex items-center gap-4 p-2 bg-white cursor-pointer rounded-2xl customShadowSm"
             >
@@ -83,38 +122,24 @@ export default function MainPage() {
               />
               <div className="flex-grow">
                 <h2 className="font-bold">{currentItem.name}</h2>
-
-                {currentItem.serviceType === "room-service" && (
-                  <>
-                    <p className="text-sm text-muted-foreground">
-                      Unit Price: ${currentItem.price.toFixed(2)}
-                    </p>
-                    <p className="text-sm font-semibold text-base-secondary">
-                      Quantity: x{quantity}
-                    </p>
-                    <p className="mt-1 text-base font-bold text-base-secondary">
-                      Total: ${(currentItem.price * quantity).toFixed(2)}
-                    </p>
-                  </>
-                )}
-
-                {currentItem.serviceType !== "room-service" && (
-                  <>
-                    <p className="text-sm text-muted-foreground">
-                      {currentItem?.description.slice(0, 20)}...
-                    </p>
-                    <p className="text-sm font-semibold text-base-secondary">
-                      ${currentItem.price.toFixed(2)}
-                    </p>
-                  </>
-                )}
+                <>
+                  <p className="text-sm text-muted-foreground">
+                    Unit Price: ${currentItem.price.toFixed(2)}
+                  </p>
+                  <p className="text-sm font-semibold text-base-secondary">
+                    Quantity: x{quantity}
+                  </p>
+                  <p className="mt-1 text-base font-bold text-base-secondary">
+                    Total: ${(currentItem.price * quantity).toFixed(2)}
+                  </p>
+                </>
               </div>
               <Button
                 variant="ghost"
                 size="icon"
                 onClick={(e) => {
                   e.stopPropagation();
-                  removeItem(currentItem.id);
+                  handleRemoveItem(currentItem);
                 }}
                 aria-label="Remove item"
               >

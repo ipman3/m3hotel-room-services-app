@@ -47,13 +47,13 @@ export default function OrderDetailsPage({ orderData }: OrderDetailsPageProps) {
             >
               <img
                 src={item.imageUrl}
-                alt={item.serviceName}
+                alt={item.name}
                 className="flex-shrink-0 object-cover w-18 h-18 rounded-lg"
                 loading="lazy"
               />
               <div className="flex-grow space-y-0.5 text-sm text-base-secondary">
                 <h3 className="font-bold text-sm break-words">
-                  {item.serviceName}
+                  {item.name}
                 </h3>
                 <div className="flex items-center justify-between space-y-0.5">
                   <div className="flex flex-col justify-start">

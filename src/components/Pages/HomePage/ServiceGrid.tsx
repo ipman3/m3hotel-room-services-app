@@ -14,7 +14,7 @@ export default function ServiceGrid() {
       <h2 className="mb-4 text-lg font-bold text-card-foreground">
         Please choose below services
       </h2>
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-2 gap-4">
         {serviceItems.map((item) => (
           <Card
             key={item.label}
@@ -22,7 +22,7 @@ export default function ServiceGrid() {
             onClick={() => handleServiceClick(item.path)}
           >
             <CardContent className="flex flex-col items-center justify-center gap-2">
-              <div className="p-2 rounded-full bg-gray-100">
+              <div className="p-2 rounded-full bg-slate-100">
                 <img
                   src={item.icon}
                   alt={`${item.label} icon`}

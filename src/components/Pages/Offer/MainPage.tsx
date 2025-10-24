@@ -15,7 +15,7 @@ export default function MainPage() {
     >
       {offerAndNewsItems.map((item) => (
         <motion.div key={item.id} variants={itemVariants} className="scroll-animate">
-          <Card className="overflow-hidden rounded-2xl customShadowSm border-none p-0">
+          <Card className="overflow-hidden rounded-xl customShadowSm border-none p-0">
             <CardContent className="p-0">
               <img
                 src={item.imageUrl}
@@ -23,9 +23,10 @@ export default function MainPage() {
                 className="w-full h-44 object-cover"
               />
               <div className="p-4 bg-white">
-                <h3 className="text-lg font-bold mb-4">{item.title}</h3>
+                <h3 className="text-lg font-bold">{item.title}</h3>
+                <p className="text-sm text-muted-foreground mb-4">{item.description.slice(0, 100)}...</p>
                 <Link to="/offer/$offerId" params={{ offerId: item.id }} className="w-full">
-                  <Button className="w-full bg-base-primary rounded-full h-12">
+                  <Button className="w-full bg-base-primary">
                     View Detail
                   </Button>
                 </Link>

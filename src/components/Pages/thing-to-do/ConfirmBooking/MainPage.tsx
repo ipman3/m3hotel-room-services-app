@@ -40,8 +40,8 @@ export default function ConfirmBookingPage() {
     defaultValues: {
       customerName: "",
       roomNumber: "",
-      email: "",
-      phoneNumber: "",
+      // email: "",
+      // phoneNumber: "",
     },
   });
 
@@ -148,7 +148,7 @@ export default function ConfirmBookingPage() {
               />
 
               {/* Email */}
-              <FormField
+              {/* <FormField
                 control={form.control}
                 name="email"
                 render={({ field }) => (
@@ -164,10 +164,10 @@ export default function ConfirmBookingPage() {
                     <FormMessage />
                   </FormItem>
                 )}
-              />
+              /> */}
 
               {/* Phone Number */}
-              <FormField
+              {/* <FormField
                 control={form.control}
                 name="phoneNumber"
                 render={({ field }) => (
@@ -183,7 +183,7 @@ export default function ConfirmBookingPage() {
                     <FormMessage />
                   </FormItem>
                 )}
-              />
+              /> */}
             </form>
           </Form>
         </div>
