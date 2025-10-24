@@ -15,6 +15,7 @@ export interface CartItem {
   imageUrl: string;
   description: string;
   quantity?: number;
+  serviceName?: string;
 }
 
 interface CartState {
@@ -54,9 +55,7 @@ export const useCartStore = create<CartState>()(
         })),
       updateQuantity: (itemId, newQuantity) =>
         set((state) => ({
-          items: state.items.map((item) =>
-            item.id === itemId ? { ...item, quantity: newQuantity } : item
-          ),
+          items: state.items.map((item) => (item.id === itemId ? { ...item, quantity: newQuantity } : item)),
         })),
       clearCartByServiceType: (serviceType: string) =>
         set((state) => ({
