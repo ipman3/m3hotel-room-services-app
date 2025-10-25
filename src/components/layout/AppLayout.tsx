@@ -46,7 +46,7 @@ export default function AppLayout() {
   
 
   return (
-    <div className="text-accent-foreground">
+    <div className="text-accent-foreground max-w-md mx-auto min-h-screen">
       {ServiceTypeDialog}
 
       <Toaster position="top-right" theme="light" richColors expand />

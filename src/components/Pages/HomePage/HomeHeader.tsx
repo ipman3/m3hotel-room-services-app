@@ -17,7 +17,7 @@ export default function HomeHeader() {
         className="absolute inset-0 h-full w-full object-cover"
         loading="lazy"
       />
-      <div className="absolute inset-0 bg-[#407AA400] bg-gradient-to-t from-[#326081] to-transparent" />
+      <div className="absolute inset-0 bg-[#407AA400] bg-gradient-to-t from-[#4f493c] to-transparent" />
 
       <div className="relative flex h-full flex-col justify-end pb-6 px-4 text-white">
         <h1 className="text-3xl font-bold">{getGreeting()}</h1>

@@ -35,7 +35,7 @@ export default function OffersCarousel() {
   return (
     <section>
       <div className="flex items-center justify-between px-4 mb-4">
-        <h2 className="text-lg font-bold text-card-foreground">
+        <h2 className="text-lg font-bold text-primary">
           Offers & News
         </h2>
         <Link to="/offer">
