@@ -7,6 +7,9 @@ import { useEffect } from "react";
 
 export const Route = createFileRoute("/thing-to-do/")({
   component: RouteComponent,
+  context: () => ({
+    serviceType: "thing-to-do",
+  }),
 });
 
 function RouteComponent() {

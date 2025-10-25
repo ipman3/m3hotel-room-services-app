@@ -6,10 +6,12 @@ import SplashScreen from "./SplashScreenComponent";
 import BottomNav from "./BottomNavComponent";
 import { FloatingCartButton } from "./FloatingCartButton";
 import { FlyToCartAnimation } from "../FlyToCartAnimation";
+import { useServiceTypeCheck } from "@/hooks/useServiceTypeCheck";
 
 export default function AppLayout() {
   const [isSplashScreen, setIsSplashScreen] = useState<boolean>(true);
   const location = useLocation();
+  const { ServiceTypeDialog } = useServiceTypeCheck();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -41,8 +43,12 @@ export default function AppLayout() {
     return !hideOnDynamicPatterns.some((pattern) => pattern.test(path));
   };
 
+  
+
   return (
     <div className="text-accent-foreground">
+      {ServiceTypeDialog}
+
       <Toaster position="top-right" theme="light" richColors expand />
       <main className="min-h-screen pb-24 select-none">
         <Outlet />

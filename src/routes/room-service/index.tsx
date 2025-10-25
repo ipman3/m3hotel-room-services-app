@@ -7,6 +7,9 @@ import { useEffect } from "react";
 
 export const Route = createFileRoute("/room-service/")({
   component: RouteComponent,
+  context: () => ({
+    serviceType: "room-service",
+  }),
 });
 
 function RouteComponent() {
