@@ -8,7 +8,7 @@ import tanstackRouter from "@tanstack/router-plugin/vite";
 export default defineConfig({
   server: {
     host: true,
-    allowedHosts: ["localhost:3000", "charitable-humans-respectively-proceed.trycloudflare.com"],
+    allowedHosts: ["localhost:3000", "serving-harvest-replacing-prince.trycloudflare.com"],
   },
   plugins: [
     tanstackRouter(),
