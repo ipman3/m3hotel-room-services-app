@@ -161,14 +161,14 @@ export default function ConfirmAppointmentPage() {
               <div>
                 <img
                   src={item.imageUrl}
-                  alt={item.serviceName}
+                  alt={item.name}
                   className="flex-shrink-0 object-cover rounded-lg w-22 h-22"
                 />
               </div>
               <div className="flex flex-col justify-between flex-grow">
                 <div>
                   <h4 className="text-base font-semibold">
-                    {item.serviceName}
+                    {item.name}
                   </h4>
                   <p className="text-sm text-muted-foreground">
                     {item.packageName} Package - {item.category} Type
