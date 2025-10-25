@@ -16,7 +16,7 @@ export default function BottomNav() {
 
   return (
     <nav
-      className="fixed bottom-0 left-0 right-0 z-50 bg-muted-background shadow-[0_-2px_4px_-1px_rgba(0,0,0,0.16)]"
+      className="fixed bottom-0 left-0 right-0 z-50 bg-muted-background shadow-[0_-2px_4px_-1px_rgba(0,0,0,0.16)] rounded-t-4xl"
       aria-label="Bottom navigation"
     >
       <div className="flex items-center justify-between h-16 my-4">
@@ -30,12 +30,12 @@ export default function BottomNav() {
               <motion.button
                 key={item.path}
                 onClick={() => navigate({ to: item.path })}
-                className={`relative flex flex-col items-center justify-center text-sm transition-colors ${isActive ? "text-base-primary" : "text-muted-foreground"}`}
+                className={`relative flex flex-col items-center justify-center text-sm transition-colors ${isActive ? "text-base-primary font-bold" : "text-muted-foreground"}`}
                 whileTap={{ scale: 0.9 }}
               >
                 <motion.div
-                  className="relative w-6 h-6 mb-1.5"
-                  animate={{ y: isActive ? -5 : 0 }}
+                  className="relative w-6 h-6 mb-1"
+                  animate={{ y: isActive ? -3 : 0 }}
                 >
                   <IconComponent className="w-6 h-6" />
                   {isCart && cartItemCount > 0 && (
@@ -44,7 +44,7 @@ export default function BottomNav() {
                     </span>
                   )}
                 </motion.div>
-                <h3 className="font-semibold">{item.label}</h3>
+                <h3 className={`${isActive ? "font-bold" : "font-semibold"}`}>{item.label}</h3>
               </motion.button>
             );
           })}

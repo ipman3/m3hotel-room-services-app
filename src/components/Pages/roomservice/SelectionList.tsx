@@ -94,8 +94,8 @@ export default function SelectionList() {
                     <div className="flex-grow">
                       <h3 className="font-bold">{item.name}</h3>
                       <p className="text-sm text-muted-foreground">
-                        {item.description.length > 50
-                          ? item.description.slice(0, 50) + "..."
+                        {item.description.length > 60
+                          ? item.description.slice(0, 60) + "..."
                           : item.description}
                       </p>
                       <p className="mt-1 font-bold">${item.price.toFixed(2)}</p>

@@ -18,7 +18,7 @@ export default function MainPage() {
           placeholder="Search services..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full h-12 pl-12 pr-12 text-base bg-white border border-gray-200 rounded-full focus-visible:ring-base-primary ring-offset-0 focus-visible:ring-1 focus-visible:ring-offset-0"
+          className="w-full h-12 pl-12 pr-12 text-base rounded-full"
           autoFocus
         />
         {searchTerm && (

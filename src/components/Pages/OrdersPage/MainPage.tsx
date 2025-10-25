@@ -31,10 +31,10 @@ export default function MainPage() {
           <Button
             key={tab}
             variant={activeTab === tab ? "default" : "outline"}
-            className={`flex-1 whitespace-nowrap rounded-full transition-all ${
+            className={`flex-1 whitespace-nowrap border-none rounded-full transition-all ${
               activeTab === tab
                 ? "bg-base-primary text-white"
-                : "text-base-secondary"
+                : "text-base-secondary bg-base-input"
             }`}
             onClick={() => setActiveTab(tab)}
           >
@@ -58,7 +58,7 @@ export default function MainPage() {
                 className="mb-4"
               >
                 <h3 className="font-bold text-base mb-1 break-words">
-                  {item.items?.[0]?.serviceName}
+                  {item.items?.[0]?.name}
                 </h3>
                 <div className="flex items-center justify-between space-y-0.5">
                   <div className="flex flex-col justify-start">

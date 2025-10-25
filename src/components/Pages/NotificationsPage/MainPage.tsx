@@ -10,7 +10,7 @@ export default function MainPage() {
       </h2>
       <div className="space-y-4">
         {notificationItems.map((item) => (
-          <Card key={item.id} className="p-4 rounded-xl shadow-sm border-none">
+          <Card key={item.id} className="p-4 rounded-xl customShadowSm border-none">
             <CardContent className="p-0">
               <div className="flex justify-between items-start">
                 <p className="font-semibold text-gray-700">

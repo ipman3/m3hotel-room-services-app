@@ -155,15 +155,32 @@ export default function PlaceOrderPage() {
                   key={item.id}
                   className="relative flex items-center justify-between gap-2 px-2 py-3 pb-3 text-sm border-b border-gray-100 rounded-lg last:border-0 customShadowSm">
                   <div>
+<<<<<<< HEAD
                     <img src={item.imageUrl} alt={item.serviceName} className="flex-shrink-0 object-cover rounded-lg w-22 h-22" />
+=======
+                    <img
+                      src={item.imageUrl}
+                      alt={item.name}
+                      className="flex-shrink-0 object-cover rounded-lg w-22 h-22"
+                    />
+>>>>>>> origin/Bunheng-Dev
                   </div>
 
                   {/* Content */}
                   <div className="flex-1 mb-2">
                     <div className="flex items-start justify-between">
                       <div>
+<<<<<<< HEAD
                         <div className="text-base font-semibold text-base-secondary">{item.serviceName}</div>
                         <div className="text-sm text-muted-foreground line-clamp-1">{item.description}</div>
+=======
+                        <div className="text-base font-semibold text-base-secondary">
+                          {item.name}
+                        </div>
+                        <div className="text-sm text-muted-foreground line-clamp-1">
+                          {item.description}
+                        </div>
+>>>>>>> origin/Bunheng-Dev
                       </div>
                       <button onClick={() => removeItem(item.id)}>
                         <Trash2 className="w-4 h-4 text-red-500" />
