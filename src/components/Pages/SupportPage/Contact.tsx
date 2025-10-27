@@ -20,7 +20,9 @@ export default function ContactUsComponent() {
                 <Card className="p-4 rounded-xl customShadowSm border-none bg-muted-background mb-4">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-4">
-                      <Icon className="w-6 h-6 text-base-secondary" />
+                      <div className="w-6 h-6 text-base-secondary">
+                        <Icon />
+                      </div>
                       <span className="font-semibold">{link.label}</span>
                     </div>
                     <ChevronRight className="w-5 h-5 text-muted-foreground" />
