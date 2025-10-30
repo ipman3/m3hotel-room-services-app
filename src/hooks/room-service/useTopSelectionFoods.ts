@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import post from "@/lib/Api";
 
-export interface Product {
+export interface TopSelectionFood {
   id: number;
   code: string;
   store_id: number;
@@ -9,7 +9,7 @@ export interface Product {
   category_id: number;
   cost: string;
   price: string;
-  tax: number;
+  tax: string;
   discount: string;
   color: string;
   unit: string;
@@ -29,27 +29,19 @@ export interface Product {
   updatetime: number;
 }
 
-export interface ProductsResponse {
+interface TopSelectionFoodsResponse {
   code: number;
   msg: string;
   time: string;
-  data: {
-    total: number;
-    per_page: number;
-    current_page: number;
-    last_page: number;
-    data: Product[];
-  };
+  data: TopSelectionFood[];
 }
 
-export function useProductsByStore(store_id: number) {
-  return useQuery<ProductsResponse>({
-    queryKey: ["products", store_id],
+export function useTopSelectionFoods() {
+  return useQuery<TopSelectionFoodsResponse>({
+    queryKey: ["topSelectionFoods"],
     queryFn: () =>
       post({
-        endpoint: "/products/index",
-        data: { store_id },
+        endpoint: "/products/getTopSelectionFoods",
       }),
-    enabled: !!store_id,
   });
 }

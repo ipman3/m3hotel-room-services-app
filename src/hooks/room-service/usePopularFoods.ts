@@ -1,7 +1,14 @@
+{
+  /* 
+  This hook fetches all popular foods
+  @component: /roomservice/PopularServiceSection
+  */
+}
+
 import { useQuery } from "@tanstack/react-query";
 import post from "@/lib/Api";
 
-export interface Product {
+export interface PopularFood {
   id: number;
   code: string;
   store_id: number;
@@ -9,7 +16,7 @@ export interface Product {
   category_id: number;
   cost: string;
   price: string;
-  tax: number;
+  tax: string;
   discount: string;
   color: string;
   unit: string;
@@ -29,27 +36,19 @@ export interface Product {
   updatetime: number;
 }
 
-export interface ProductsResponse {
+interface PopularFoodsResponse {
   code: number;
   msg: string;
   time: string;
-  data: {
-    total: number;
-    per_page: number;
-    current_page: number;
-    last_page: number;
-    data: Product[];
-  };
+  data: PopularFood[];
 }
 
-export function useProductsByStore(store_id: number) {
-  return useQuery<ProductsResponse>({
-    queryKey: ["products", store_id],
+export function usePopularFoods() {
+  return useQuery<PopularFoodsResponse>({
+    queryKey: ["popularFoods"],
     queryFn: () =>
       post({
-        endpoint: "/products/index",
-        data: { store_id },
+        endpoint: "/products/getPopularFoods",
       }),
-    enabled: !!store_id,
   });
 }

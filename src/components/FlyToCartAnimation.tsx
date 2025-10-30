@@ -43,7 +43,7 @@ export function FlyToCartAnimation() {
             <div className="px-2 py-4">
               <h3 className="font-semibold truncate">{flyingCard.name}</h3>
               <p className="text-sm font-bold text-gray-800">
-                ${flyingCard.price.toFixed(2)}
+                ${parseFloat(flyingCard.price).toFixed(2)}
               </p>
             </div>
           </CardContent>

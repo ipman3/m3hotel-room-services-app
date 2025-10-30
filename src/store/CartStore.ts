@@ -2,17 +2,16 @@ import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 
 export interface CartItem {
+  serviceType?: string;
   id: string;
   name: string;
   packageName?: string;
-  serviceTypeId: number;
-  serviceType: string;
   date?: Date;
   time?: string;
-  price: number;
-  category: string;
+  price: string;
+  category_id: number;
   message: string;
-  imageUrl: string;
+  image: string;
   description: string;
   quantity?: number;
 }
@@ -25,7 +24,6 @@ interface CartState {
   addItem: (item: Omit<CartItem, "id">) => void;
   removeItem: (itemId: string) => void;
   updateQuantity: (itemId: string, newQuantity: number) => void;
-  clearCartByServiceType: (serviceType: string) => void;
   clearCart: () => void;
 }
 
@@ -57,10 +55,6 @@ export const useCartStore = create<CartState>()(
           items: state.items.map((item) =>
             item.id === itemId ? { ...item, quantity: newQuantity } : item
           ),
-        })),
-      clearCartByServiceType: (serviceType: string) =>
-        set((state) => ({
-          items: state.items.filter((item) => item.serviceType !== serviceType),
         })),
       clearCart: () => set({ items: [], pendingItem: null }),
     }),

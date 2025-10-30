@@ -9,13 +9,11 @@ import { toast } from "sonner";
 interface Service {
   id: string;
   name: string;
-  serviceTypeId: number;
   serviceType: string;
-  imageUrl: string;
+  image: string;
   description: string;
-  price: number;
-  category: string;
-  isPopular: boolean;
+  price: string;
+  category_id: number;
   quantity?: number;
 }
 
@@ -24,6 +22,7 @@ interface Props {
 }
 
 export default function ServiceDetailSheet({ service }: Props) {
+  const serviceType = "room-service";
   const [quantity, setQuantity] = useState(service.quantity || 1);
   const navigate = useNavigate();
   const [message, setMessage] = useState("");
@@ -31,15 +30,14 @@ export default function ServiceDetailSheet({ service }: Props) {
 
   const handleAddToCart = () => {
     const newItem = {
+      serviceType: serviceType,
       name: service.name,
       price: service.price,
       quantity: quantity,
       message: message,
-      imageUrl: service.imageUrl,
+      image: service.image,
       description: service.description,
-      category: service.category,
-      serviceTypeId: service.serviceTypeId,
-      serviceType: service.serviceType,
+      category_id: service.category_id,
     };
     addItem(newItem);
     toast.success("Item added to cart!", {
@@ -54,11 +52,11 @@ export default function ServiceDetailSheet({ service }: Props) {
       <div className="absolute top-3 left-1/2 -translate-x-1/2 w-16 h-1.5 bg-slate-200 rounded-full" />
 
       <div className="flex items-center justify-between my-4">
-        {service.isPopular && (
+        {/* {service.isPopular && (
           <span className="px-4 py-1.5 text-sm font-semibold rounded-full bg-amber-500/20 text-amber-500">
             Popular
           </span>
-        )}
+        )} */}
         <div className="flex items-center gap-2">
           <button
             onClick={() => setQuantity((q) => Math.max(1, q - 1))}
@@ -79,7 +77,7 @@ export default function ServiceDetailSheet({ service }: Props) {
       <h1 className="text-xl font-bold text-black">{service.name}</h1>
       <p className="mt-2 text-sm text-base-secondary">{service.description}</p>
       <div className="text-xl font-bold text-primary">
-        ${service.price.toFixed(2)}
+        ${parseFloat(service.price).toFixed(2)}
       </div>
 
       <div className="flex flex-col w-full gap-2 mt-8">
@@ -95,7 +93,7 @@ export default function ServiceDetailSheet({ service }: Props) {
             onClick={handleAddToCart}
             className="w-full h-12 py-5 text-base bg-base-primary"
           >
-            Add {quantity} to Cart - ${(service.price * quantity).toFixed(2)}
+            Add {quantity} to Cart - ${(parseFloat(service.price) * quantity).toFixed(2)}
           </Button>
         </div>
       </div>

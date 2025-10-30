@@ -67,13 +67,13 @@ export default function MainPage() {
       }
     }
 
-    return Array.from(groupedItems.values()); // return all grouped items as an array
+    return Array.from(groupedItems.values());
   }, [items]);
 
   const getSubtotal = () => {
     return displayedItems.reduce((acc, item) => {
       const quantity = item.quantity || 1;
-      return acc + item.price * quantity;
+      return acc + parseFloat(item.price) * quantity;
     }, 0);
   };
 
@@ -87,9 +87,9 @@ export default function MainPage() {
 
   if (displayedItems.length === 0) {
     return (
-      <div className="flex flex-col justify-center items-center py-8 gap-4">
-        <AlertCircle className="w-14 h-14 text-muted-foreground mt-16" />
-        <p className="text-center text-muted-foreground text-lg">
+      <div className="flex flex-col items-center justify-center gap-4 py-8">
+        <AlertCircle className="mt-16 w-14 h-14 text-muted-foreground" />
+        <p className="text-lg text-center text-muted-foreground">
           Your cart is empty.
         </p>
         <Button>
@@ -197,7 +197,7 @@ export default function MainPage() {
 
       <div className="flex items-center gap-4 p-4 bg-muted-background rounded-2xl customShadowSm">
         <div className="flex flex-col w-full gap-4">
-          <h2 className="text-lg font-semibold text-base-secondary underline">
+          <h2 className="text-lg font-semibold underline text-base-secondary">
             Customer Info
           </h2>
 
@@ -249,8 +249,8 @@ export default function MainPage() {
         </div>
       </div>
 
-      <div className="space-y-3 p-2 bg-muted-background rounded-2xl customShadowSm">
-        <h2 className="text-lg font-semibold text-base-secondary pl-2 underline">
+      <div className="p-2 space-y-3 bg-muted-background rounded-2xl customShadowSm">
+        <h2 className="pl-2 text-lg font-semibold underline text-base-secondary">
           Order Item
         </h2>
         {displayedItems.map((currentItem) => {
@@ -260,29 +260,29 @@ export default function MainPage() {
             <div
               key={currentItem.name}
               // onClick={() => handleClickConfirmCheckout(currentItem)}
-              className="flex items-center gap-3 px-2 py-1 bg-card border-b border-dotted border-gray-300 pb-4 last:pb-0 last:border-0"
+              className="flex items-center gap-3 px-2 py-1 pb-4 border-b border-gray-300 border-dotted bg-card last:pb-0 last:border-0"
             >
               <img
-                src={currentItem?.imageUrl}
+                src={currentItem?.image}
                 alt={currentItem?.name}
-                className="object-cover w-18 h-18 rounded-lg"
+                className="object-cover rounded-lg w-18 h-18"
               />
               <div className="flex-grow">
-                <h2 className="font-semibold text-base">{currentItem.name}</h2>
+                <h2 className="text-base font-semibold">{currentItem.name}</h2>
                 <>
                   <p className="text-xs text-muted-foreground">
-                    Unit Price: ${currentItem.price.toFixed(2)}
+                    Unit Price: ${parseFloat(currentItem.price).toFixed(2)}
                   </p>
                   <p className="text-xs font-semibold text-base-secondary">
                     Quantity: x{quantity}
                   </p>
                   <p className="mt-1 text-sm font-semibold text-base-secondary">
-                    Total: ${(currentItem.price * quantity).toFixed(2)}
+                    Total: ${(parseFloat(currentItem.price) * quantity).toFixed(2)}
                   </p>
                 </>
               </div>
               <Button
-                className="bg-red-500/10 rounded-full w-6 h-6"
+                className="w-6 h-6 rounded-full bg-red-500/10"
                 size="icon"
                 onClick={(e) => {
                   e.stopPropagation();
@@ -298,7 +298,7 @@ export default function MainPage() {
       </div>
 
       <div className="p-4 bg-muted-background rounded-2xl customShadowSm">
-        <h3 className="mb-2 text-lg font-semibold text-base-secondary underline">
+        <h3 className="mb-2 text-lg font-semibold underline text-base-secondary">
           Price Detail
         </h3>
         <DetailRow label="Subtotal" value={`$${subTotal.toFixed(2)}`} />
