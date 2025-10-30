@@ -8,15 +8,16 @@ import {
   CarouselItem,
   type CarouselApi,
 } from "@/components/ui/carousel";
-import { useSpecialOffers } from "@/hooks/offer/useGetOffer";
+import { useSpecialOffersByType } from "@/hooks/offer/useGetOfferByType";
 
-export default function OffersCarousel() {
+export default function OffersCarouselRoomService() {
   const [api, setApi] = React.useState<CarouselApi>();
   const [current, setCurrent] = React.useState(0);
   const [count, setCount] = React.useState(0);
-  const { data: offers } = useSpecialOffers();
+  const type = "restautant";
+  const { data: offersByType } = useSpecialOffersByType(type);
 
-  const offerItems = offers?.data || [];
+  const offerItems = offersByType?.data || [];
 
   const plugin = React.useRef(
     Autoplay({ delay: 3000, stopOnInteraction: true, stopOnMouseEnter: true })

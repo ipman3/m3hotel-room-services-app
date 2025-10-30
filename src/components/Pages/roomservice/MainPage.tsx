@@ -8,11 +8,11 @@ import { Search } from "lucide-react";
 import { Icons } from "../../../../public/assets/icons";
 import CategoryFilters from "./CategoryFilters";
 import SelectionList from "./SelectionList";
-import ServicesCarousel from "./ServicesCarousel";
 import PopularServiceSection from "./PopularServiceSection";
 import { useNavigate } from "@tanstack/react-router";
 import FilterSheet from "@/components/FilterSheetCom";
 import { DialogDescription, DialogTitle } from "@/components/ui/dialog";
+import OffersCarouselRoomService from "./Offer/OffersCarousel";
 
 const filterCategories = [
   "Pizza",
@@ -102,7 +102,7 @@ const MainPage = () => {
       {/* ===== Main Content Sections ===== */}
       <div className="space-y-6">
         <div className="mb-4">
-          <ServicesCarousel />
+          <OffersCarouselRoomService />
         </div>
 
         <CategoryFilters />
