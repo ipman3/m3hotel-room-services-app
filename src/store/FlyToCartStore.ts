@@ -4,7 +4,7 @@ interface FlyCard {
   rect: DOMRect;
   image: string;
   name: string;
-  price: number;
+  price: string;
 }
 
 interface FlyToCartState {
