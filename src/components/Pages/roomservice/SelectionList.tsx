@@ -79,13 +79,13 @@ export default function SelectionList() {
         animate="visible"
       >
         {isLoading ? (
-          [...Array(3)].map((_, index) => (
+          [...Array(8)].map((_, index) => (
             <SkeletonVerticalLoader key={index} />
           ))
         ) : isError ? (
           <ErrorState />
         ) : (
-          topSelectionProducts.slice(0, 8).map((item) => (
+          topSelectionProducts.slice(0, 12).map((item) => (
             <motion.div key={item.id} variants={itemVariants}>
               <div className="relative card-container">
                 <Link
@@ -102,11 +102,7 @@ export default function SelectionList() {
                       />
                       <div className="flex-grow">
                         <h3 className="font-bold">{item.name}</h3>
-                        <p className="text-sm text-muted-foreground">
-                          {item.description.length > 60
-                            ? item.description.slice(0, 60) + "..."
-                            : item.description}
-                        </p>
+                        <p className="text-xs line-clamp-2 text-muted-foreground" dangerouslySetInnerHTML={{__html: item.description}} />
                         <p className="mt-1 font-bold">
                           ${parseFloat(item.price).toFixed(2)}
                         </p>
