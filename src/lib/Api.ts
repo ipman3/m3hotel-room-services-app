@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
+// NOTE: POST helper
 export default async function post({
   endpoint,
   data,
@@ -10,72 +12,41 @@ export default async function post({
 }) {
   // Validate endpoint
   if (!endpoint || typeof endpoint !== "string") {
-    throw new Error("Invalid endpoint");
+    throw new Error("Invalid URL");
   }
 
-  // Handle fallback to GET (when no data provided)
-  if (!data && !params) {
-    return get({ endpoint });
-  }
-
-  if (!data && params) {
+  // If no data provided, fallback to GET
+  if (!data) {
     return get({ endpoint, params });
   }
 
-  // Validate params
-  if (params && typeof params !== "object") {
-    throw new Error("Invalid params — expected an object");
-  }
-
-  // Validate data
-  if (data !== null && typeof data !== "object") {
-    throw new Error("Invalid data — expected an object");
-  }
-
-  // Build URL
+  // Validate base URL
   const baseURL = import.meta.env.VITE_API_URL;
-  if (!baseURL) throw new Error("Missing API base URL");
+  if (!baseURL) {
+    throw new Error("Missing API base URL");
+  }
 
-  const urlParams = params ? new URLSearchParams(params).toString() : "";
-  const url = urlParams
-    ? `${baseURL}${endpoint}?${urlParams}`
-    : `${baseURL}${endpoint}`;
-
-  // Prepare request body safely
-  const body =
-    data && Object.keys(data).length > 0
-      ? new URLSearchParams(data as Record<string, string>).toString()
-      : undefined;
-
-  // Execute request
   try {
-    const res = await fetch(url, {
+    const res = await fetch(`${baseURL}${endpoint}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
       },
-      body,
+      body: new URLSearchParams(data as Record<string, string>).toString(),
     });
 
     if (!res.ok) {
-      const errText = await res.text();
-      throw new Error(`HTTP ${res.status}: ${errText || res.statusText}`);
+      throw new Error(`HTTP error! status: ${res.status}`);
     }
 
-    // Try parsing as JSON, fallback to text if invalid
-    const text = await res.text();
-    try {
-      return JSON.parse(text);
-    } catch {
-      return text;
-    }
+    return await res.json();
   } catch (error) {
-    console.error("POST request error:", error);
+    console.error("Fetch POST error:", error);
     throw error;
   }
 }
 
-// Reusable GET helper
+// NOTE: GET helper
 export async function get({
   endpoint,
   params,
@@ -84,41 +55,34 @@ export async function get({
   params?: Record<string, any>;
 }) {
   if (!endpoint || typeof endpoint !== "string") {
-    throw new Error("Invalid endpoint");
-  }
-
-  if (params && typeof params !== "object") {
-    throw new Error("Invalid params — expected an object");
+    throw new Error("Invalid URL");
   }
 
   const baseURL = import.meta.env.VITE_API_URL;
-  if (!baseURL) throw new Error("Missing API base URL");
+  if (!baseURL) {
+    throw new Error("Missing API base URL");
+  }
 
   const urlParams = params ? new URLSearchParams(params).toString() : "";
-  const url = urlParams
+  const fullUrl = urlParams
     ? `${baseURL}${endpoint}?${urlParams}`
     : `${baseURL}${endpoint}`;
 
-  if (import.meta.env.DEV) {
-    console.log("[GET]", url);
-  }
-
   try {
-    const res = await fetch(url, { method: "GET" });
+    const res = await fetch(fullUrl, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    });
 
     if (!res.ok) {
-      const errText = await res.text();
-      throw new Error(`HTTP ${res.status}: ${errText || res.statusText}`);
+      throw new Error(`HTTP error! status: ${res.status}`);
     }
 
-    const text = await res.text();
-    try {
-      return JSON.parse(text);
-    } catch {
-      return text;
-    }
+    return await res.json();
   } catch (error) {
-    console.error("GET request error:", error);
+    console.error("Fetch GET error:", error);
     throw error;
   }
 }
