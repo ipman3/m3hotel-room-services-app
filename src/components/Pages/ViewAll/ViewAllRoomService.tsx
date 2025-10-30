@@ -42,11 +42,7 @@ export default function ViewAllRoomService() {
                   />
                   <div className="flex-grow">
                     <h3 className="font-bold">{item.name}</h3>
-                    <p className="text-sm text-muted-foreground">
-                      {item.description && item.description.length > 50
-                        ? item.description.slice(0, 50) + "..."
-                        : item.description || ""}
-                    </p>
+                    <p className="!text-sm text-muted-foreground" dangerouslySetInnerHTML={{__html: item.description}} />
                     <p className="mt-1 font-bold">
                       ${parseFloat(item.price).toFixed(2)}
                     </p>

@@ -102,7 +102,7 @@ export default function SelectionList() {
                       />
                       <div className="flex-grow">
                         <h3 className="font-bold">{item.name}</h3>
-                        <p className="text-xs line-clamp-2 text-muted-foreground" dangerouslySetInnerHTML={{__html: item.description}} />
+                        <p className="!text-sm line-clamp-2 text-muted-foreground" dangerouslySetInnerHTML={{__html: item.description}} />
                         <p className="mt-1 font-bold">
                           ${parseFloat(item.price).toFixed(2)}
                         </p>

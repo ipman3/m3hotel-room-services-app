@@ -1,3 +1,4 @@
+import ErrorState from "@/components/ErrorState";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useCategories } from "@/hooks/category/useRestaurantCate";
@@ -17,10 +18,10 @@ export default function CategoryFilters() {
       <div className="flex items-center gap-2 pb-2 overflow-x-auto scrollbar-hide">
         {isLoading ? (
           [...Array(5)].map((_, index) => (
-            <Skeleton className="h-8 w-20 rounded-full" key={index} />
+            <Skeleton className="w-20 h-8 rounded-full" key={index} />
           ))
         ) : isError ? (
-          <p>Something went wrong</p>
+          <ErrorState />
         ) : (
           categories.map((category) => (
             <Button
