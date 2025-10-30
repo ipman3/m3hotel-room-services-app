@@ -5,6 +5,7 @@ export const Icons = {
   MailIcon: "/assets/icons/mail.svg",
   PhoneIcon: "/assets/icons/phone.svg",
   TelegramIcon: "/assets/icons/telegram.svg",
+  EmptyCartIcon: "/assets/icons/empty_cart.png",
 };
 
 // export const GridIcons = {

@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { useCartStore, type CartItem } from "@/store/CartStore";
 import { toast } from "sonner";
-import { AlertCircle, X } from "lucide-react";
+import { X } from "lucide-react";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -31,6 +31,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { Icons } from "../../../../public/assets/icons";
 
 type DisplayItem = CartItem & {
   originalIds?: string[];
@@ -87,12 +88,12 @@ export default function MainPage() {
 
   if (displayedItems.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center gap-4 py-8">
-        <AlertCircle className="mt-16 w-14 h-14 text-muted-foreground" />
-        <p className="text-lg text-center text-muted-foreground">
+      <div className="flex flex-col items-center justify-center gap-4 pt-20">
+        <img src={Icons.EmptyCartIcon} alt="Empty Cart" width={500} height={500} className="w-32 h-32" />
+        <p className="text-base text-center text-base-secondary">
           Your cart is empty.
         </p>
-        <Button>
+        <Button className="h-8 border bg-primary/20 text-primary border-base-primary/20 hover:bg-primary/20">
           <Link to="/">Browse Services</Link>
         </Button>
       </div>
@@ -282,7 +283,7 @@ export default function MainPage() {
                 </>
               </div>
               <Button
-                className="w-6 h-6 rounded-full bg-red-500/10"
+                className="w-6 h-6 rounded-full bg-red-500/10 hover:bg-red-500/10"
                 size="icon"
                 onClick={(e) => {
                   e.stopPropagation();

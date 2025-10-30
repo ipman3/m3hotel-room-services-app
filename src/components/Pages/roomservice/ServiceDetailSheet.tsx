@@ -7,10 +7,9 @@ import { useCartStore } from "@/store/CartStore";
 import { toast } from "sonner";
 
 interface Service {
-  id: string;
+  id: number;
   name: string;
-  serviceType: string;
-  image: string;
+  photo: string;
   description: string;
   price: string;
   category_id: number;
@@ -35,7 +34,7 @@ export default function ServiceDetailSheet({ service }: Props) {
       price: service.price,
       quantity: quantity,
       message: message,
-      image: service.image,
+      image: service.photo,
       description: service.description,
       category_id: service.category_id,
     };

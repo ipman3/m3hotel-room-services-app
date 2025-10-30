@@ -85,15 +85,15 @@ export default function SelectionList() {
         ) : isError ? (
           <ErrorState />
         ) : (
-          topSelectionProducts.slice(0, 5).map((item) => (
+          topSelectionProducts.slice(0, 8).map((item) => (
             <motion.div key={item.id} variants={itemVariants}>
               <div className="relative card-container">
                 <Link
                   to="/room-service/$serviceId"
                   params={{ serviceId: item.id.toString() }}
                 >
-                  <Card className="py-4 mb-4 overflow-hidden border-none customShadowSm rounded-xl">
-                    <CardContent className="relative flex items-center gap-4 px-4">
+                  <Card className="py-2 mb-4 overflow-hidden border-none customShadowSm rounded-xl">
+                    <CardContent className="relative flex items-center gap-4 px-2">
                       <img
                         src={item.photothumb}
                         alt={item.name}
