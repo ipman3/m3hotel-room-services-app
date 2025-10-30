@@ -1,11 +1,11 @@
 import { create } from "zustand";
 
 type CategoryState = {
-  activeCategory: string;
-  setActiveCategory: (category: string) => void;
+  activeCategory: number | null;
+  setActiveCategory: (category: number | null) => void;
 };
 
 export const useCategoryStore = create<CategoryState>((set) => ({
-  activeCategory: "All",
+  activeCategory: null,
   setActiveCategory: (category) => set({ activeCategory: category }),
 }));

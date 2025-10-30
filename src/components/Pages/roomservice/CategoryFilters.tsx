@@ -8,7 +8,7 @@ export default function CategoryFilters() {
   const type = "restautant";
   const { activeCategory, setActiveCategory } = useCategoryStore();
   const { data, isLoading, isError } = useCategories(type);
-  const categories = ["All", ...(data?.data?.map((cat) => cat.name) || [])];
+  const categories = [{ id: null, name: "All" }, ...(data?.data || [])];
 
   return (
     <section className="px-4">
@@ -25,16 +25,16 @@ export default function CategoryFilters() {
         ) : (
           categories.map((category) => (
             <Button
-              key={category}
-              variant={activeCategory === category ? "default" : "outline"}
+              key={category.id ?? "all"}
+              variant={activeCategory === category.id ? "default" : "outline"}
               className={`rounded-full border-none transition-all duration-300 h-8 ${
-                activeCategory === category
+                activeCategory === category.id
                   ? "bg-base-primary text-card"
                   : "bg-base-input"
               }`}
-              onClick={() => setActiveCategory(category)}
+              onClick={() => setActiveCategory(category.id)}
             >
-              {category}
+              {category.name}
             </Button>
           ))
         )}
