@@ -72,7 +72,7 @@ export default function FilterSheet({
 
       <Button
         size="lg"
-        className="w-full rounded-full h-14 bg-base-primary"
+        className="w-full rounded-full h-12 bg-base-primary"
         onClick={onApply}
       >
         Apply

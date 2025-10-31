@@ -321,10 +321,10 @@ export default function MainPage() {
       />
 
       <AlertDialog open={isClearDialogOpen} onOpenChange={setIsClearDialogOpen}>
-        <AlertDialogContent>
+        <AlertDialogContent className="bg-black/10 backdrop-blur-sm border border-card/20">
           <AlertDialogHeader>
-            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-            <AlertDialogDescription>
+            <AlertDialogTitle className="text-white">Are you sure?</AlertDialogTitle>
+            <AlertDialogDescription className="text-white">
               This action cannot be undone. This will permanently remove all
               items from your cart.
             </AlertDialogDescription>

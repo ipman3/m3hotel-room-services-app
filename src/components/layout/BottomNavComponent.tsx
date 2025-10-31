@@ -19,7 +19,7 @@ export default function BottomNav() {
       className="fixed bottom-0 left-0 right-0 z-50 bg-muted-background shadow-[0_-2px_4px_-1px_rgba(0,0,0,0.16)] rounded-t-4xl max-w-md mx-auto"
       aria-label="Bottom navigation"
     >
-      <div className="flex items-center justify-between h-8 my-4 pt-4">
+      <div className="flex items-center justify-between h-8 my-4 pt-2">
         <div className="flex justify-around flex-1">
           {navItems.map((item) => {
             const isActive = pathname === item.path;
@@ -34,17 +34,17 @@ export default function BottomNav() {
                 whileTap={{ scale: 0.9 }}
               >
                 <motion.div
-                  className="relative w-6 h-6 mb-1"
+                  className="relative w-5 h-5"
                   animate={{ y: isActive ? -3 : 0 }}
                 >
-                  <IconComponent className="w-6 h-6" />
+                  <IconComponent className="w-5 h-5" />
                   {isCart && cartItemCount > 0 && (
-                    <span className="absolute -top-2 -right-2.5 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs text-white">
+                    <span className="absolute -top-2 -right-2 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-xs text-white font-semibold">
                       {cartItemCount}
                     </span>
                   )}
                 </motion.div>
-                <h3 className={`${isActive ? "font-bold" : "font-semibold"}`}>{item.label}</h3>
+                <h3 className={`${isActive ? "font-bold" : "font-normal"} transition-all duration-300`}>{item.label}</h3>
               </motion.button>
             );
           })}

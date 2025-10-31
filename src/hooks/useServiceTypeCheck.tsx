@@ -63,7 +63,7 @@ export function useServiceTypeCheck() {
 
   const ServiceTypeDialog = (
     <AlertDialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-      <AlertDialogContent className="bg-background/20 backdrop-blur-sm border border-card/10">
+      <AlertDialogContent className="bg-black/10 backdrop-blur-sm border border-card/20">
         <AlertDialogHeader className="text-card">
           <AlertDialogTitle>Switch service type?</AlertDialogTitle>
           <AlertDialogDescription className="text-card">
@@ -75,7 +75,7 @@ export function useServiceTypeCheck() {
           <AlertDialogCancel className="bg-card/50" onClick={handleCancel}>
             No, Go Back
           </AlertDialogCancel>
-          <AlertDialogAction className="bg-base-accent" onClick={handleConfirm}>
+          <AlertDialogAction className="bg-primary" onClick={handleConfirm}>
             Yes, Clear Cart
           </AlertDialogAction>
         </AlertDialogFooter>

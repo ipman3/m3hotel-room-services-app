@@ -4,6 +4,7 @@ import CategoryFilters from "../roomservice/CategoryFilters";
 import { useProductsByStore } from "@/hooks/room-service/useProductsByStore";
 import SkeletonVerticalLoader from "@/components/SkeletonVerticalLoader";
 import ErrorState from "@/components/ErrorState";
+import { useCategoryStore } from "@/store/CategoryStore";
 
 export default function ViewAllRoomService() {
   const storeId = 12;
@@ -12,7 +13,13 @@ export default function ViewAllRoomService() {
     isLoading,
     isError,
   } = useProductsByStore(storeId);
+  const { activeCategory } = useCategoryStore();
   const products = allProductsList?.data.data || [];
+
+  const filteredProducts =
+    activeCategory === null
+      ? products
+      : products.filter((item) => item.category_id === activeCategory);
 
   return (
     <div className="pt-6">
@@ -26,7 +33,7 @@ export default function ViewAllRoomService() {
         ) : isError ? (
           <ErrorState />
         ) : (
-          products.map((item) => (
+          filteredProducts.map((item) => (
             <Link
               key={item.id}
               to="/room-service/$serviceId"

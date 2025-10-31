@@ -90,7 +90,7 @@ export default function ServiceDetailSheet({ service }: Props) {
         <div className="mt-4">
           <Button
             onClick={handleAddToCart}
-            className="w-full h-12 py-5 text-base bg-base-primary"
+            className="w-full h-12 py-5 text-base bg-base-primary rounded-full"
           >
             Add {quantity} to Cart - ${(parseFloat(service.price) * quantity).toFixed(2)}
           </Button>
