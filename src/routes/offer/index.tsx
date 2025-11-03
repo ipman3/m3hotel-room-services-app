@@ -21,9 +21,11 @@ function RouteComponent() {
   return (
     <div>
       <HeaderComponent title="Offers & News" />
-      <main className="pt-16 pb-4 max-w-md mx-auto w-full">
+      <main dangerouslySetInnerHTML={{__html: item.description}} className="pt-16 pb-4 max-w-md mx-auto w-full">
         <MainPage />
       </main>
+
+      <p dangerouslySetInnerHTML={{__html: item.description}}  ></p>
     </div>
   );
 }
