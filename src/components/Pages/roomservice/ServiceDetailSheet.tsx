@@ -74,7 +74,7 @@ export default function ServiceDetailSheet({ service }: Props) {
       </div>
 
       <h1 className="text-xl font-bold text-black">{service.name}</h1>
-      <p className="mt-2 text-sm text-base-secondary">{service.description}</p>
+      <p className="text-sm text-muted-foreground" dangerouslySetInnerHTML={{__html: service.description}} />
       <div className="text-xl font-bold text-primary">
         ${parseFloat(service.price).toFixed(2)}
       </div>

@@ -12,16 +12,22 @@ import { usePopularFoods } from "@/hooks/room-service/usePopularFoods";
 import { toast } from "sonner";
 import SkeletonHorizontalLoader from "@/components/SkeletonHorizentalLoader";
 import ErrorState from "@/components/ErrorState";
+import { useCategoryStore } from "@/store/CategoryStore";
 
 export default function PopularServiceSection() {
   const serviceType = "room-service";
   const navigate = useNavigate();
   const { data: popularFoods, isLoading, isError } = usePopularFoods();
   const addItem = useCartStore((state) => state.addItem);
-
+  const { activeCategory } = useCategoryStore();
   const popularProducts = popularFoods?.data || [];
-
   const roomId = usePathId("/room-service/");
+
+  const filteredPopular =
+    activeCategory === null
+      ? popularProducts
+      : popularProducts.filter((item) => item.category_id === activeCategory);
+
 
   const handleAddToCart = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -88,7 +94,7 @@ export default function PopularServiceSection() {
         ) : isError ? (
           <ErrorState />
         ) : (
-          popularProducts.slice(0, 5).map((item) => (
+          filteredPopular.slice(0, 5).map((item) => (
             <motion.div key={item.id} variants={itemVariants}>
               <div className="relative snap-start card-container">
                 <Link

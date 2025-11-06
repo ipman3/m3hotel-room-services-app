@@ -50,8 +50,8 @@ const MainPage = () => {
 
   return (
     <main className="pt-6 mt-14">
-      {/* ===== Search Bar + Filter Button ===== */}
-      <div className="relative w-full mb-4 px-4">
+      {/* Search Bar + Filter Button */}
+      <div className="relative w-full px-4 mb-4">
         <div onClick={handleNavigateToSearch}>
           <Search className="absolute w-5 h-5 text-gray-300 -translate-y-1/2 left-8 top-1/2" />
           <Input
@@ -61,7 +61,7 @@ const MainPage = () => {
           />
         </div>
 
-        {/* ===== Filter Drawer ===== */}
+        {/* Filter Drawer */}
         <Drawer open={isFilterOpen} onOpenChange={setIsFilterOpen}>
           <DrawerTrigger asChild>
             <Button
@@ -76,7 +76,7 @@ const MainPage = () => {
               />
             </Button>
           </DrawerTrigger>
-          <DrawerContent className="bg-muted-background w-full max-w-md mx-auto">
+          <DrawerContent className="w-full max-w-md mx-auto bg-muted-background">
             <DialogTitle className="pt-4 text-center">
               Filter Options
             </DialogTitle>
@@ -99,7 +99,7 @@ const MainPage = () => {
         </Drawer>
       </div>
 
-      {/* ===== Main Content Sections ===== */}
+      {/* Main Content Sections */}
       <div className="space-y-6">
         <div className="mb-4">
           <OffersCarouselRoomService />

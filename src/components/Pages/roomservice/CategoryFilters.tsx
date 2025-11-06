@@ -1,3 +1,4 @@
+import ErrorState from "@/components/ErrorState";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useCategories } from "@/hooks/category/useRestaurantCate";
@@ -7,7 +8,7 @@ export default function CategoryFilters() {
   const type = "restautant";
   const { activeCategory, setActiveCategory } = useCategoryStore();
   const { data, isLoading, isError } = useCategories(type);
-  const categories = ["All", ...(data?.data?.map((cat) => cat.name) || [])];
+  const categories = [{ id: null, name: "All" }, ...(data?.data || [])];
 
   return (
     <section className="px-4">
@@ -17,23 +18,23 @@ export default function CategoryFilters() {
       <div className="flex items-center gap-2 pb-2 overflow-x-auto scrollbar-hide">
         {isLoading ? (
           [...Array(5)].map((_, index) => (
-            <Skeleton className="h-8 w-20 rounded-full" key={index} />
+            <Skeleton className="w-20 h-8 rounded-full" key={index} />
           ))
         ) : isError ? (
-          <p>Something went wrong</p>
+          <ErrorState />
         ) : (
           categories.map((category) => (
             <Button
-              key={category}
-              variant={activeCategory === category ? "default" : "outline"}
+              key={category.id ?? "all"}
+              variant={activeCategory === category.id ? "default" : "outline"}
               className={`rounded-full border-none transition-all duration-300 h-8 ${
-                activeCategory === category
+                activeCategory === category.id
                   ? "bg-base-primary text-card"
                   : "bg-base-input"
               }`}
-              onClick={() => setActiveCategory(category)}
+              onClick={() => setActiveCategory(category.id)}
             >
-              {category}
+              {category.name}
             </Button>
           ))
         )}

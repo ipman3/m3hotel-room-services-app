@@ -13,20 +13,26 @@ import { useFlyToCartStore } from "@/store/FlyToCartStore";
 import { useTopSelectionFoods } from "@/hooks/room-service/useTopSelectionFoods";
 import SkeletonVerticalLoader from "@/components/SkeletonVerticalLoader";
 import ErrorState from "@/components/ErrorState";
+import { useCategoryStore } from "@/store/CategoryStore";
 
 export default function SelectionList() {
   const serviceType = "room-service";
   const navigate = useNavigate();
   const addItem = useCartStore((state) => state.addItem);
+  const { activeCategory } = useCategoryStore();
   const {
     data: topSelectionFoods,
     isLoading,
     isError,
   } = useTopSelectionFoods();
-
   const topSelectionProducts = topSelectionFoods?.data || [];
-
   const roomId = usePathId("/room-service/");
+
+  const filteredPopular =
+    activeCategory === null
+      ? topSelectionProducts
+      : topSelectionProducts.filter((item) => item.category_id === activeCategory);
+
 
   const handleAddToCart = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -79,13 +85,13 @@ export default function SelectionList() {
         animate="visible"
       >
         {isLoading ? (
-          [...Array(3)].map((_, index) => (
+          [...Array(8)].map((_, index) => (
             <SkeletonVerticalLoader key={index} />
           ))
         ) : isError ? (
           <ErrorState />
         ) : (
-          topSelectionProducts.slice(0, 8).map((item) => (
+          filteredPopular.slice(0, 12).map((item) => (
             <motion.div key={item.id} variants={itemVariants}>
               <div className="relative card-container">
                 <Link
@@ -102,11 +108,7 @@ export default function SelectionList() {
                       />
                       <div className="flex-grow">
                         <h3 className="font-bold">{item.name}</h3>
-                        <p className="text-sm text-muted-foreground">
-                          {item.description.length > 60
-                            ? item.description.slice(0, 60) + "..."
-                            : item.description}
-                        </p>
+                        <p className="!text-sm line-clamp-2 text-muted-foreground" dangerouslySetInnerHTML={{__html: item.description}} />
                         <p className="mt-1 font-bold">
                           ${parseFloat(item.price).toFixed(2)}
                         </p>
