@@ -5,15 +5,15 @@ export interface CartItem {
   serviceType?: string;
   id: string;
   name: string;
-  packageName?: string;
+  // packageName?: string;
   date?: Date;
   time?: string;
   price: string;
-  category_id: number;
+  category: number;
   message: string;
   image: string;
   description: string;
-  quantity?: number;
+  quantity: number;
   serviceName?: string;
 }
 

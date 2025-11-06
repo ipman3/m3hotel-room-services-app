@@ -7,27 +7,10 @@ import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { spaSchema, type SpaFormData } from "@/validations/spaSchema";
 import { useNavigate } from "@tanstack/react-router";
@@ -38,63 +21,55 @@ interface SpaFormProps {
   id: string;
   name: string;
   description: string;
-  serviceTypeId: number;
+  // serviceTypeId: number;
   serviceType: string;
   price: number;
   category: string;
-  packages: string[];
   imageUrl: string;
 }
 
-export default function SpaForm({
-  id,
-  packages,
-  name,
-  price,
-  category,
-  serviceTypeId,
-  serviceType,
-  imageUrl,
-  description,
-}: SpaFormProps) {
+export default function SpaForm({ service }: { service: SpaFormProps }) {
   const navigate = useNavigate();
   const { setPendingItem, confirmPendingItem } = useCartStore();
 
-  const form = useForm<SpaFormData>({
-    resolver: zodResolver(spaSchema),
+  const form = useForm<any>({
+    // resolver: zodResolver(spaSchema),
     defaultValues: {
-      name: name,
-      serviceTypeId: serviceTypeId,
-      serviceType: serviceType,
-      price: price,
-      category: category,
-      package: packages[0] || "",
+      name: service?.name,
+      // serviceTypeId: service?.serviceTypeId,
+      serviceType: "spa",
+      price: service?.price,
+      category: service?.category,
+      // package: packages[0] || "",
       date: new Date(),
       time: "10:30",
       message: "",
     },
   });
 
-  function onSubmit(values: SpaFormData) {
+  function onSubmit(values: any) {
     console.log("Form Submitted:", values);
 
     // Add the validated form data to the global cart store
     setPendingItem({
       name: values.name,
-      packageName: values.package,
+      // packageName: values.package,
       date: values.date,
       time: values.time,
-      price: values.price,
-      category: values.category,
-      serviceTypeId: values.serviceTypeId,
+      price: values.price.toFixed(2),
+      category: values?.category_id,
+      // serviceTypeId: values.serviceTypeId,
       serviceType: values.serviceType,
       message: values.message || "",
-      imageUrl: imageUrl,
-      description: description,
+      // imageUrl: service?.imageUrl,
+      description: service?.description,
+      image: "",
+      quantity: 1,
     });
 
     confirmPendingItem?.();
     toast.success("Item added to cart!", {
+      id: "spa-form-cart",
       duration: 8000,
       action: { label: "View Cart", onClick: () => navigate({ to: "/cart" }) },
     });
@@ -105,14 +80,14 @@ export default function SpaForm({
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="mt-6 space-y-4">
-        <input type="hidden" value={id} />
-        <input type="hidden" value={name} />
-        <input type="hidden" value={serviceTypeId} />
-        <input type="hidden" value={serviceType} />
-        <input type="hidden" value={price} />
-        <input type="hidden" value={category} />
+        <input type="hidden" name="id" value={service?.id} />
+        <input type="hidden" name="name" value={service?.name} />
+        {/* <input type="hidden" name="serviceTypeId" value={service?.serviceTypeId} /> */}
+        <input type="hidden" name="serviceType" value={service?.serviceType} />
+        <input type="hidden" name="price" value={service?.price} />
+        <input type="hidden" name="category_id" value={service?.category} />
 
-        <FormField
+        {/* <FormField
           control={form.control}
           name="package"
           render={({ field }) => (
@@ -137,42 +112,27 @@ export default function SpaForm({
               <FormMessage />
             </FormItem>
           )}
-        />
+        /> */}
 
         <FormField
           control={form.control}
           name="date"
           render={({ field }) => (
             <FormItem className="flex flex-col">
-              <FormLabel className="text-sm font-semibold uppercase text-foreground">
-                Date
-              </FormLabel>
+              <FormLabel className="text-sm font-semibold uppercase text-foreground">Date</FormLabel>
               <Popover>
                 <PopoverTrigger asChild>
                   <FormControl>
                     <Button
                       variant={"outline"}
-                      className={cn(
-                        "w-full justify-start text-left font-normal mt-1 bg-base-input border-none h-12",
-                        !field.value && "text-muted-foreground"
-                      )}
-                    >
+                      className={cn("w-full justify-start text-left font-normal mt-1 bg-base-input border-none h-12", !field.value && "text-muted-foreground")}>
                       <CalendarIcon className="w-4 h-4 mr-2" />
-                      {field.value ? (
-                        format(field.value, "PPP")
-                      ) : (
-                        <span>Pick a date</span>
-                      )}
+                      {field.value ? format(field.value, "PPP") : <span>Pick a date</span>}
                     </Button>
                   </FormControl>
                 </PopoverTrigger>
                 <PopoverContent className="w-auto p-0">
-                  <Calendar
-                    mode="single"
-                    selected={field.value}
-                    onSelect={field.onChange}
-                    initialFocus
-                  />
+                  <Calendar mode="single" selected={field.value} onSelect={field.onChange} initialFocus />
                 </PopoverContent>
               </Popover>
               <FormMessage />
@@ -185,17 +145,11 @@ export default function SpaForm({
           name="time"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-sm font-semibold uppercase text-foreground">
-                Hours
-              </FormLabel>
+              <FormLabel className="text-sm font-semibold uppercase text-foreground">Hours</FormLabel>
               <div className="relative mt-1">
                 <Clock className="absolute w-4 h-4 text-black -translate-y-1/2 left-3 top-1/2" />
                 <FormControl>
-                  <Input
-                    type="time"
-                    {...field}
-                    className="w-full h-12 py-2 pl-10 pr-3 text-black border-none bg-base-input"
-                  />
+                  <Input type="time" {...field} className="w-full h-12 py-2 pl-10 pr-3 text-black border-none bg-base-input" />
                 </FormControl>
               </div>
               <FormMessage />
@@ -208,26 +162,16 @@ export default function SpaForm({
           name="message"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-sm font-semibold uppercase text-foreground">
-                Message
-              </FormLabel>
+              <FormLabel className="text-sm font-semibold uppercase text-foreground">Message</FormLabel>
               <FormControl>
-                <Textarea
-                  placeholder="Type here"
-                  className="mt-1 border-none bg-base-input"
-                  rows={3}
-                  {...field}
-                />
+                <Textarea placeholder="Type here" className="mt-1 border-none bg-base-input" rows={3} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
 
-        <CustomButtonSubmit
-          textBtn="Add to Appointment"
-          isLoading={form.formState.isSubmitting}
-        />
+        <CustomButtonSubmit textBtn="Add to cart" isLoading={form.formState.isSubmitting} />
       </form>
     </Form>
   );

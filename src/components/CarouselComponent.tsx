@@ -67,7 +67,7 @@ export function CarouselComponent({ imageUrls = [], className }: CarouselProps) 
     <div className={cn("relative", className)}>
       <div className="overflow-hidden" ref={emblaRef}>
         <div className="flex">
-          {imageUrls.map((url, index) => (
+          {imageUrls && imageUrls?.map((url, index) => (
             <div
               className="relative min-w-0 flex-grow-0 flex-shrink-0 basis-full"
               key={index}
@@ -85,7 +85,7 @@ export function CarouselComponent({ imageUrls = [], className }: CarouselProps) 
       </div>
 
       {/* Hide controls if only one image */}
-      {imageUrls.length > 1 && (
+      {imageUrls?.length > 1 && (
         <>
           <button
             className="absolute top-1/2 -translate-y-1/2 left-4 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-black/20 text-card transition-opacity"

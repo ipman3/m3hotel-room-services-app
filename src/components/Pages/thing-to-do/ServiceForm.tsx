@@ -7,20 +7,9 @@ import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Textarea } from "@/components/ui/textarea";
 
 import { useNavigate } from "@tanstack/react-router";
@@ -41,17 +30,7 @@ interface ServiceData {
   imageUrl: string;
 }
 
-export default function ServiceForm({
-  id,
-  name,
-  serviceTypeId,
-  serviceType,
-  price,
-  description,
-  category,
-  packages,
-  imageUrl,
-}: ServiceData) {
+export default function ServiceForm({ id, name, serviceTypeId, serviceType, price, description, category, packages, imageUrl }: ServiceData) {
   const navigate = useNavigate();
   const { setPendingItem, confirmPendingItem } = useCartStore();
 
@@ -76,15 +55,15 @@ export default function ServiceForm({
     console.log("Form Submitted:", values);
 
     // Add the validated form data to the global cart store
-    setPendingItem({
-      ...values,
-      serviceTypeId: values.serviceTypeId || 0,
-      serviceType: values.serviceType || "",
-      packageName: values.package || "",
-      message: values.message || "",
-      imageUrl: imageUrl,
-      description: description,
-    });
+    // setPendingItem({
+    //   ...values,
+    //   serviceTypeId: values.serviceTypeId || 0,
+    //   serviceType: values.serviceType || "",
+    //   packageName: values.package || "",
+    //   message: values.message || "",
+    //   imageUrl: imageUrl,
+    //   description: description,
+    // });
 
     confirmPendingItem?.();
     toast.success("Item added to cart!", {
@@ -92,7 +71,7 @@ export default function ServiceForm({
       action: { label: "View Cart", onClick: () => navigate({ to: "/cart" }) },
     });
     // navigate({ to: "/thing-to-do/confirm-booking" });
-    navigate({ to: "/thing-to-do" });
+    // navigate({ to: "/thing-to-do" });
   }
 
   const onError = (errors: FieldErrors<ThingFormData>) => {
@@ -103,21 +82,14 @@ export default function ServiceForm({
   return (
     <>
       <div className="flex items-center p-4 mb-6 space-x-4 border rounded-lg bg-card border-border">
-        <img
-          src={imageUrl}
-          alt={name}
-          className="object-cover w-16 h-16 rounded-md"
-        />
+        <img src={imageUrl} alt={name} className="object-cover w-16 h-16 rounded-md" />
         <div>
           <h2 className="font-semibold">{name}</h2>
           <p className="mt-1 font-bold text-primary">${price.toFixed(2)}</p>
         </div>
       </div>
       <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit, onError)}
-          className="mt-6 space-y-4"
-        >
+        <form onSubmit={form.handleSubmit(onSubmit, onError)} className="mt-6 space-y-4">
           <input type="hidden" value={id} />
           <input type="hidden" value={name} />
           <input type="hidden" value={serviceTypeId} />
@@ -130,9 +102,7 @@ export default function ServiceForm({
             name="date"
             render={({ field }) => (
               <FormItem className="flex flex-col">
-                <FormLabel className="text-sm font-semibold uppercase text-foreground">
-                  Date
-                </FormLabel>
+                <FormLabel className="text-sm font-semibold uppercase text-foreground">Date</FormLabel>
                 <Popover>
                   <PopoverTrigger asChild>
                     <FormControl>
@@ -141,24 +111,14 @@ export default function ServiceForm({
                         className={cn(
                           "w-full justify-start text-left font-normal mt-1 bg-base-input border-none h-12",
                           !field.value && "text-muted-foreground"
-                        )}
-                      >
+                        )}>
                         <CalendarIcon className="w-4 h-4 mr-2" />
-                        {field.value ? (
-                          format(field.value, "PPP")
-                        ) : (
-                          <span>Pick a date</span>
-                        )}
+                        {field.value ? format(field.value, "PPP") : <span>Pick a date</span>}
                       </Button>
                     </FormControl>
                   </PopoverTrigger>
                   <PopoverContent className="w-auto p-0">
-                    <Calendar
-                      mode="single"
-                      selected={field.value}
-                      onSelect={field.onChange}
-                      initialFocus
-                    />
+                    <Calendar mode="single" selected={field.value} onSelect={field.onChange} initialFocus />
                   </PopoverContent>
                 </Popover>
                 <FormMessage />
@@ -171,16 +131,8 @@ export default function ServiceForm({
             name="adults"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-sm font-semibold uppercase text-foreground">
-                  Adults (Age 12 - 99)
-                </FormLabel>
-                <NumberInput
-                  onChange={field.onChange}
-                  value={field.value}
-                  key={field.name}
-                  max={10}
-                  min={1}
-                />
+                <FormLabel className="text-sm font-semibold uppercase text-foreground">Adults (Age 12 - 99)</FormLabel>
+                <NumberInput onChange={field.onChange} value={field.value} key={field.name} max={10} min={1} />
                 <FormMessage />
               </FormItem>
             )}
@@ -191,16 +143,8 @@ export default function ServiceForm({
             name="children"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-sm font-semibold uppercase text-foreground">
-                  Children (Age 5 - 11)
-                </FormLabel>
-                <NumberInput
-                  onChange={field.onChange}
-                  value={field.value}
-                  key={field.name}
-                  max={10}
-                  min={1}
-                />
+                <FormLabel className="text-sm font-semibold uppercase text-foreground">Children (Age 5 - 11)</FormLabel>
+                <NumberInput onChange={field.onChange} value={field.value} key={field.name} max={10} min={1} />
                 <FormMessage />
               </FormItem>
             )}
@@ -211,17 +155,11 @@ export default function ServiceForm({
             name="time"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-sm font-semibold uppercase text-foreground">
-                  Hours
-                </FormLabel>
+                <FormLabel className="text-sm font-semibold uppercase text-foreground">Hours</FormLabel>
                 <div className="relative mt-1">
                   <Clock className="absolute w-4 h-4 -translate-y-1/2 left-3 top-1/2 text-muted-foreground" />
                   <FormControl>
-                    <Input
-                      type="time"
-                      {...field}
-                      className="w-full h-12 py-2 pl-10 pr-3 border-none bg-base-input"
-                    />
+                    <Input type="time" {...field} className="w-full h-12 py-2 pl-10 pr-3 border-none bg-base-input" />
                   </FormControl>
                 </div>
                 <FormMessage />
@@ -234,28 +172,17 @@ export default function ServiceForm({
             name="message"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-sm font-semibold uppercase text-foreground">
-                  Message
-                </FormLabel>
+                <FormLabel className="text-sm font-semibold uppercase text-foreground">Message</FormLabel>
                 <FormControl>
-                  <Textarea
-                    placeholder="Type here"
-                    className="mt-1 border-none bg-base-input"
-                    rows={3}
-                    {...field}
-                  />
+                  <Textarea placeholder="Type here" className="mt-1 border-none bg-base-input" rows={3} {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
 
-          <Button
-            type="submit"
-            size="lg"
-            className="w-full h-12 mt-8 bg-base-primary"
-          >
-            Make Appointment
+          <Button type="submit" size="lg" className="w-full h-12 mt-8 bg-base-primary">
+            Add to Cart
           </Button>
         </form>
       </Form>

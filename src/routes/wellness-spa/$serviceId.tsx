@@ -1,8 +1,9 @@
 import { CarouselComponent } from "@/components/CarouselComponent";
 import HeaderComponent from "@/components/layout/HeaderComponent";
 import ServiceDetailSheet from "@/components/Pages/WellnessAndSpa/ServiceDetailSheet";
-import { spaItems } from "@/config/data/wellness-spa";
 import useNavbarStore from "@/store/Navbar";
+import post from "@sfutureapps/req-sdk";
+import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect } from "react";
 
@@ -14,8 +15,20 @@ function RouteComponent() {
   const { serviceId } = Route.useParams();
   const { hide, show } = useNavbarStore((state) => state);
 
-  const serviceData =
-    spaItems.find((item) => item.id === serviceId) || spaItems[0];
+  const { data: serviceData } = useQuery({
+    queryKey: ["spaService", serviceId],
+    queryFn: async () =>
+      await post({
+        endpoint: "spa/detail",
+        data: { id: serviceId },
+      }),
+    enabled: !!serviceId,
+  });
+
+  console.log(serviceData);
+
+  // const serviceData =
+  //   spaItems.find((item) => item.id === serviceId) || spaItems[0];
 
   useEffect(() => {
     hide();
@@ -28,9 +41,8 @@ function RouteComponent() {
     <div>
       <HeaderComponent title="Selected items" />
       <main className="h-screen bg-background max-w-md mx-auto w-full">
-        <CarouselComponent imageUrls={serviceData.imageUrls || []} />
-
-        <ServiceDetailSheet service={serviceData} />
+        <CarouselComponent imageUrls={serviceData?.data?.images || []} />
+        <ServiceDetailSheet service={serviceData?.data} />
       </main>
     </div>
   );

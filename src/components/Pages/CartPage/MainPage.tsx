@@ -315,7 +315,7 @@ export default function MainPage() {
       </div>
 
       <CustomButtonSubmit
-        textBtn="Confirm Appointment"
+        textBtn="Confirm"
         isLoading={form.formState.isSubmitting}
         onClick={form.handleSubmit(onSubmit)}
       />

@@ -195,7 +195,7 @@
 //         />
 
 //         <Button type="submit" size="lg" className="w-full h-12 mt-8 bg-base-primary">
-//           Make Appointment
+//           Make
 //         </Button>
 //       </form>
 //     </Form>

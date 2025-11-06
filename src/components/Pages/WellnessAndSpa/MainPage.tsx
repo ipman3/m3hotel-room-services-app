@@ -44,7 +44,7 @@ export default function MainPage() {
     navigate({ to: "/wellness-spa/search" });
   };
 
-  console.log(filterCategories);
+  // console.log(filterCategories);
 
   return (
     <main className="pt-6 mt-14">

@@ -20,7 +20,7 @@ function RouteComponent() {
 
    return (
         <div>
-          <HeaderComponent title="Confirm Appointment" />
+          <HeaderComponent title="Confirm" />
           <main className="mt-12">
             <ConfirmAppointmentPage />
           </main>
