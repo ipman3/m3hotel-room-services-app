@@ -30,10 +30,11 @@ interface SpecialOffersResponse {
 
 export function useSpecialOffers() {
   return useQuery<SpecialOffersResponse>({
-    queryKey: ["specialOffers"],
+    queryKey: ["specialOffers", "spa"],
     queryFn: () =>
       post({
-        endpoint: "/products/getSpecialOffers",
+        endpoint: "/products/getSpecialOfferByType",
+        data: { type: "spa" },
       }),
   });
 }

@@ -2,12 +2,7 @@ import * as React from "react";
 import { Link } from "@tanstack/react-router";
 import Autoplay from "embla-carousel-autoplay";
 
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  type CarouselApi,
-} from "@/components/ui/carousel";
+import { Carousel, CarouselContent, CarouselItem, type CarouselApi } from "@/components/ui/carousel";
 import { useSpecialOffers } from "@/hooks/offer/useGetOffer";
 
 export default function OffersCarousel() {
@@ -18,9 +13,7 @@ export default function OffersCarousel() {
 
   const offerItems = offers?.data || [];
 
-  const plugin = React.useRef(
-    Autoplay({ delay: 3000, stopOnInteraction: true, stopOnMouseEnter: true })
-  );
+  const plugin = React.useRef(Autoplay({ delay: 3000, stopOnInteraction: true, stopOnMouseEnter: true }));
 
   React.useEffect(() => {
     if (!api) {
@@ -38,13 +31,9 @@ export default function OffersCarousel() {
   return (
     <section>
       <div className="flex items-center justify-between px-4 mb-4">
-        <h2 className="text-lg font-bold text-primary">
-          Offers & News
-        </h2>
+        <h2 className="text-lg font-bold text-primary">Offers & News</h2>
         <Link to="/offer">
-          <span className="text-sm font-semibold text-base-accent">
-            View All
-          </span>
+          <span className="text-sm font-semibold text-base-accent">View All</span>
         </Link>
       </div>
 
@@ -56,18 +45,12 @@ export default function OffersCarousel() {
             align: "start",
             loop: true,
           }}
-          className="w-full px-4"
-        >
+          className="w-full px-4">
           <CarouselContent>
             {offerItems.map((offer, index) => (
               <CarouselItem key={index} className="basis-1/1">
                 <div className="relative h-48">
-                  <img
-                    src={offer.image}
-                    alt={offer.name}
-                    className="object-cover w-full h-full rounded-xl"
-                    loading="lazy"
-                  />
+                  <img src={offer?.image} alt={offer?.name} className="object-cover w-full h-full rounded-xl" loading="lazy" />
                   <div className="absolute inset-0 w-full pointer-events-none bg-black/20 rounded-xl" />
                 </div>
               </CarouselItem>
@@ -80,9 +63,7 @@ export default function OffersCarousel() {
             <button
               key={index}
               onClick={() => api?.scrollTo(index)}
-              className={`h-2 rounded-full transition-all duration-300 ${
-                current === index ? "w-4 bg-background" : "w-2 bg-background/50"
-              }`}
+              className={`h-2 rounded-full transition-all duration-300 ${current === index ? "w-4 bg-background" : "w-2 bg-background/50"}`}
               aria-label={`Go to slide ${index + 1}`}
             />
           ))}
