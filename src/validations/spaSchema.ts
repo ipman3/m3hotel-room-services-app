@@ -2,13 +2,12 @@ import { z } from "zod";
 
 export const spaSchema = z.object({
   name: z.string(),
-  price: z.number(),
-  serviceTypeId: z.number(),
+  price: z.string(),
   serviceType: z.string(),
-  category: z.string(),
-  package: z.string({
-    message: "Please select a package for your service.",
-  }),
+  category_id: z.number(),
+  // package: z.string({
+  //   message: "Please select a package for your service.",
+  // }),
   date: z.date({
     message: "An appointment date is required.",
   }),

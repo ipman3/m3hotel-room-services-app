@@ -11,35 +11,67 @@ import FilterSheet from "@/components/FilterSheetCom";
 import { Icons } from "../../../../public/assets/icons";
 import { useNavigate } from "@tanstack/react-router";
 import { DialogDescription, DialogTitle } from "@/components/ui/dialog";
-
-const filterCategories = [
-  "Facial",
-  "Oil Massage",
-  "Spa",
-  "Aromatherapy",
-  "Hot Stone",
-];
+import { useCategories } from "@/hooks/category/useRestaurantCate";
+import { useSpaSearchMutation } from "@/hooks/wellness-spa/useFilterSpa";
+import { useSearchStore, type SearchResult } from "@/store/useSearchStore";
+import { toast } from "sonner";
 
 export default function MainPage() {
   const navigate = useNavigate();
+  const type = "spa";
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [filterSearch, setFilterSearch] = useState("");
+  const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(
+    null
+  );
+  const [priceRange, setPriceRange] = useState<[number, number]>([20, 100]);
 
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([
-    "Spa",
-  ]);
-  const [priceRange, setPriceRange] = useState<[number, number]>([20, 40]);
-
-  const handleCategoryToggle = (category: string) => {
-    setSelectedCategories((prev) =>
-      prev.includes(category)
-        ? prev.filter((c) => c !== category)
-        : [...prev, category]
-    );
-  };
+  const { data: filterCategories } = useCategories(type);
+  const categories = filterCategories?.data || [];
+  
+  const { setSearchResults, setLoading, setError } = useSearchStore();
+  const searchMutation = useSpaSearchMutation();
 
   const handleApplyFilters = () => {
-    console.log("Applying filters:", { selectedCategories, priceRange });
-    setIsFilterOpen(false);
+    if (!selectedCategoryId) {
+      toast.error("Please select a category.");
+      return;
+    }
+
+    const variables = {
+      q: filterSearch,
+      category: selectedCategoryId,
+      price: `${priceRange[0]}-${priceRange[1]}`,
+    };
+
+    setLoading(true);
+    setError(null);
+
+    searchMutation.mutate(variables, {
+      onSuccess: (data) => {
+        if (data.code === 1) {
+          setSearchResults(data.data as SearchResult[]);
+          navigate({ to: "/wellness-spa/search" });
+        } else {
+          setError(data.msg || "Search failed");
+          console.error("Search failed:", data.msg);
+        }
+      },
+      onError: (error) => {
+        setError(
+          (error as Error).message || "An unknown network error occurred"
+        );
+        console.error("Error searching spa:", error);
+      },
+      onSettled: () => {
+        setLoading(false);
+        setIsFilterOpen(false);
+      },
+    });
+  };
+
+  const handleCategorySelect = (categoryId: number) => {
+    setSelectedCategoryId(categoryId);
   };
 
   const handleNavigateToSearch = () => {
@@ -79,16 +111,18 @@ export default function MainPage() {
               Use the filters below to refine your search results.
             </DialogDescription>
             <FilterSheet
-              categories={filterCategories}
-              selectedCategories={selectedCategories}
-              onCategoryToggle={handleCategoryToggle}
+              categories={categories}
+              searchQuery={filterSearch}
+              onSearchQueryChange={setFilterSearch}
+              selectedCategoryId={selectedCategoryId}
+              onCategorySelect={handleCategorySelect}
               priceRange={priceRange}
               onPriceChange={(value) =>
                 setPriceRange(value as [number, number])
               }
               onApply={handleApplyFilters}
-              minPrice={10}
-              maxPrice={50}
+              minPrice={20}
+              maxPrice={100}
             />
           </DrawerContent>
         </Drawer>

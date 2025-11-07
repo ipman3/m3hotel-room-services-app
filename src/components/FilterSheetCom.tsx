@@ -3,10 +3,24 @@ import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
 import { Search } from "lucide-react";
 
+interface Category {
+  id: number;
+  store_id: number;
+  name: string;
+  weigh: number;
+  status: string;
+  createtime: number;
+  updatetime: number;
+  service_type: string;
+  parent_id: number;
+}
+
 interface FilterSheetProps {
-  categories: string[];
-  selectedCategories: string[];
-  onCategoryToggle: (category: string) => void;
+  categories: Category[];
+  searchQuery: string;
+  onSearchQueryChange: (value: string) => void;
+  selectedCategoryId: number | null; 
+  onCategorySelect: (categoryId: number) => void;
   priceRange: [number, number];
   onPriceChange: (value: number[]) => void;
   onApply: () => void;
@@ -16,8 +30,10 @@ interface FilterSheetProps {
 
 export default function FilterSheet({
   categories,
-  selectedCategories,
-  onCategoryToggle,
+  searchQuery,
+  onSearchQueryChange,
+  selectedCategoryId,
+  onCategorySelect,
   priceRange,
   onPriceChange,
   onApply,
@@ -31,6 +47,8 @@ export default function FilterSheet({
         <Input
           placeholder="Search..."
           className="w-full h-12 text-base rounded-full pl-11"
+          value={searchQuery}
+          onChange={(e) => onSearchQueryChange(e.target.value)}
         />
       </div>
 
@@ -40,15 +58,15 @@ export default function FilterSheet({
           {categories.map((cat, index) => (
             <Button
               key={`${cat}-${index}`}
-              variant={selectedCategories.includes(cat) ? "default" : "outline"}
+              variant={selectedCategoryId === cat.id ? "default" : "outline"}
               className={`rounded-lg transition-colors border-none duration-300 ${
-                selectedCategories.includes(cat)
+                selectedCategoryId === cat.id
                   ? "bg-base-primary text-white border-transparent"
                   : "bg-base-input text-gray-700"
               }`}
-              onClick={() => onCategoryToggle(cat)}
+              onClick={() => onCategorySelect(cat.id)}
             >
-              {cat}
+              {cat.name}
             </Button>
           ))}
         </div>
@@ -74,6 +92,7 @@ export default function FilterSheet({
         size="lg"
         className="w-full rounded-full h-12 bg-base-primary"
         onClick={onApply}
+        disabled={selectedCategoryId === null}
       >
         Apply
       </Button>

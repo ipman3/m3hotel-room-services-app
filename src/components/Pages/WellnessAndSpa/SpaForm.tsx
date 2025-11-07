@@ -21,13 +21,13 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+// import {
+//   Select,
+//   SelectContent,
+//   SelectItem,
+//   SelectTrigger,
+//   SelectValue,
+// } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { spaSchema, type SpaFormData } from "@/validations/spaSchema";
 import { useNavigate } from "@tanstack/react-router";
@@ -35,27 +35,27 @@ import { useCartStore } from "@/store/CartStore";
 import { CustomButtonSubmit } from "@/components/CustomSubmitButtonCom";
 
 interface SpaFormProps {
-  id: string;
+  id: number;
   name: string;
-  description: string;
-  serviceTypeId: number;
+  short_desc: string;
+  desc: string;
+  image: string;
+  images: string[];
+  price: string;
+  unit: string;
+  category_id: number;
   serviceType: string;
-  price: number;
-  category: string;
-  packages: string[];
-  imageUrl: string;
 }
 
 export default function SpaForm({
   id,
-  packages,
   name,
   price,
-  category,
-  serviceTypeId,
+  category_id,
   serviceType,
-  imageUrl,
-  description,
+  image,
+  desc,
+  unit,
 }: SpaFormProps) {
   const navigate = useNavigate();
   const { setPendingItem, confirmPendingItem } = useCartStore();
@@ -64,11 +64,9 @@ export default function SpaForm({
     resolver: zodResolver(spaSchema),
     defaultValues: {
       name: name,
-      serviceTypeId: serviceTypeId,
       serviceType: serviceType,
       price: price,
-      category: category,
-      package: packages[0] || "",
+      category_id: category_id,
       date: new Date(),
       time: "10:30",
       message: "",
@@ -81,16 +79,14 @@ export default function SpaForm({
     // Add the validated form data to the global cart store
     setPendingItem({
       name: values.name,
-      packageName: values.package,
       date: values.date,
       time: values.time,
       price: values.price,
-      category: values.category,
-      serviceTypeId: values.serviceTypeId,
-      serviceType: values.serviceType,
+      category_id: values.category_id,
+      serviceType: serviceType,
       message: values.message || "",
-      imageUrl: imageUrl,
-      description: description,
+      image: image,
+      description: desc,
     });
 
     confirmPendingItem?.();
@@ -107,12 +103,12 @@ export default function SpaForm({
       <form onSubmit={form.handleSubmit(onSubmit)} className="mt-6 space-y-4">
         <input type="hidden" value={id} />
         <input type="hidden" value={name} />
-        <input type="hidden" value={serviceTypeId} />
+        <input type="hidden" value={unit} />
         <input type="hidden" value={serviceType} />
         <input type="hidden" value={price} />
-        <input type="hidden" value={category} />
+        <input type="hidden" value={category_id} />
 
-        <FormField
+        {/* <FormField
           control={form.control}
           name="package"
           render={({ field }) => (
@@ -137,7 +133,7 @@ export default function SpaForm({
               <FormMessage />
             </FormItem>
           )}
-        />
+        /> */}
 
         <FormField
           control={form.control}

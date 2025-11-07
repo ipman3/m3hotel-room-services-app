@@ -8,15 +8,22 @@ import {
   CarouselItem,
   type CarouselApi,
 } from "@/components/ui/carousel";
-import { useSpecialOffers } from "@/hooks/offer/useGetOffer";
+import { useSpecialOffersByType } from "@/hooks/offer/useGetOfferByType";
+import { Skeleton } from "@/components/ui/skeleton";
+import ErrorState from "@/components/ErrorState";
 
 export default function OffersCarousel() {
   const [api, setApi] = React.useState<CarouselApi>();
   const [current, setCurrent] = React.useState(0);
   const [count, setCount] = React.useState(0);
-  const { data: offers } = useSpecialOffers();
+  const type = "spa";
+  const {
+    data: offersByType,
+    isLoading,
+    isError,
+  } = useSpecialOffersByType(type);
 
-  const offerItems = offers?.data || [];
+  const offerItems = offersByType?.data || [];
 
   const plugin = React.useRef(
     Autoplay({ delay: 3000, stopOnInteraction: true, stopOnMouseEnter: true })
@@ -38,9 +45,7 @@ export default function OffersCarousel() {
   return (
     <section>
       <div className="flex items-center justify-between px-4 mb-4">
-        <h2 className="text-lg font-bold text-primary">
-          Offers & News
-        </h2>
+        <h2 className="text-lg font-bold text-primary">Offers & News</h2>
         <Link to="/offer">
           <span className="text-sm font-semibold text-base-accent">
             View All
@@ -59,19 +64,27 @@ export default function OffersCarousel() {
           className="w-full px-4"
         >
           <CarouselContent>
-            {offerItems.map((offer, index) => (
-              <CarouselItem key={index} className="basis-1/1">
-                <div className="relative h-48">
-                  <img
-                    src={offer.image}
-                    alt={offer.name}
-                    className="object-cover w-full h-full rounded-xl"
-                    loading="lazy"
-                  />
-                  <div className="absolute inset-0 w-full pointer-events-none bg-black/20 rounded-xl" />
-                </div>
-              </CarouselItem>
-            ))}
+            {isLoading ? (
+              <div className="rounded-xl">
+                <Skeleton className="w-full h-48 rounded-xl" />
+              </div>
+            ) : isError ? (
+              <ErrorState />
+            ) : (
+              offerItems.map((offer, index) => (
+                <CarouselItem key={index} className="basis-1/1">
+                  <div className="relative h-48">
+                    <img
+                      src={offer.image}
+                      alt={offer.name}
+                      className="object-cover w-full h-full rounded-xl"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 w-full pointer-events-none bg-black/20 rounded-xl" />
+                  </div>
+                </CarouselItem>
+              ))
+            )}
           </CarouselContent>
         </Carousel>
 

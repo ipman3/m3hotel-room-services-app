@@ -1,7 +1,8 @@
 import { CarouselComponent } from "@/components/CarouselComponent";
 import HeaderComponent from "@/components/layout/HeaderComponent";
 import ServiceDetailSheet from "@/components/Pages/WellnessAndSpa/ServiceDetailSheet";
-import { spaItems } from "@/config/data/wellness-spa";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useSpaDetail } from "@/hooks/wellness-spa/useSpaDetail";
 import useNavbarStore from "@/store/Navbar";
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect } from "react";
@@ -14,9 +15,6 @@ function RouteComponent() {
   const { serviceId } = Route.useParams();
   const { hide, show } = useNavbarStore((state) => state);
 
-  const serviceData =
-    spaItems.find((item) => item.id === serviceId) || spaItems[0];
-
   useEffect(() => {
     hide();
     return () => {
@@ -24,13 +22,21 @@ function RouteComponent() {
     };
   }, [hide, show]);
 
+  const { data: spaDetail, isLoading } = useSpaDetail(Number(serviceId));
+  const serviceData = spaDetail?.data;
+
   return (
     <div>
       <HeaderComponent title="Selected items" />
       <main className="h-screen bg-background max-w-md mx-auto w-full">
-        <CarouselComponent imageUrls={serviceData.imageUrls || []} />
-
-        <ServiceDetailSheet service={serviceData} />
+        {isLoading ? (
+          <Skeleton className="w-full h-80" />
+        ) : (
+          <CarouselComponent
+            imageUrls={serviceData?.images ? [serviceData?.images[0]] : []}
+          />
+        )}
+        {serviceData && <ServiceDetailSheet service={serviceData} />}
       </main>
     </div>
   );
