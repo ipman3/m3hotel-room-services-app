@@ -1,6 +1,6 @@
 import HeaderComponent from "@/components/layout/HeaderComponent";
 import ServiceForm from "@/components/Pages/thing-to-do/ServiceForm";
-import { thingItems } from "@/config/data/thing-to-do";
+import { useThingDetail } from "@/hooks/thing-to-do/useThingDetail";
 import useNavbarStore from "@/store/Navbar";
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect } from "react";
@@ -10,10 +10,9 @@ export const Route = createFileRoute("/thing-to-do/booking/$serviceId")({
 });
 
 function RouteComponent() {
+  const serviceType = "thing-to-do";
   const { hide, show } = useNavbarStore((state) => state);
   const { serviceId } = Route.useParams();
-  const serviceData =
-    thingItems.find((item) => item.id === serviceId) || thingItems[0];
 
   useEffect(() => {
     hide();
@@ -22,27 +21,30 @@ function RouteComponent() {
     };
   }, [hide, show]);
 
+   const { data: thingDetail } = useThingDetail(Number(serviceId));
+    const serviceData = thingDetail?.data;
+
   return (
     <div>
       <HeaderComponent title="Complete Your Booking" />
       <main className="max-w-md p-4 mx-auto">
-        <h1 className="mb-2 text-2xl font-bold">{serviceData.name}</h1>
+        <h1 className="mb-2 text-2xl font-bold">{serviceData?.name}</h1>
         <p className="pt-4 mb-6 text-sm text-muted-foreground">
           Please fill out the details below to complete your booking.
         </p>
 
-        <ServiceForm
-          id={serviceData.id}
-          packages={serviceData.packages}
-          name={serviceData.name}
-          description={serviceData.description}
-          isPopular={serviceData.isPopular}
-          price={serviceData.price}
-          category={serviceData.category}
-          serviceTypeId={serviceData.serviceTypeId}
-          serviceType={serviceData.serviceType}
-          imageUrl={serviceData.imageUrl}
-        />
+        {serviceData && (
+          <ServiceForm
+            id={serviceData.id}
+            name={serviceData.name}
+            short_desc={serviceData.short_desc}
+            price={serviceData.price}
+            category_id={serviceData.category_id}
+            serviceType={serviceType}
+            image={serviceData.image}
+            unit={serviceData.unit}
+          />
+        )}
       </main>
     </div>
   );

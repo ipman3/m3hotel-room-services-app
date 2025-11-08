@@ -168,6 +168,7 @@ export default function SpaForm({
                     selected={field.value}
                     onSelect={field.onChange}
                     initialFocus
+                    disabled={{ before: new Date() }}
                   />
                 </PopoverContent>
               </Popover>

@@ -4,42 +4,27 @@ import { Search } from "lucide-react";
 import { Icons } from "../../../../public/assets/icons";
 import CategoryFilters from "./CategoryFilters";
 import SelectionList from "./SelectionList";
-import ServicesCarousel from "./ServicesCarousel";
 import PopularThingSection from "./PopularThingSection";
 import { useNavigate } from "@tanstack/react-router";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { DialogDescription, DialogTitle } from "@/components/ui/dialog";
 import FilterSheet from "@/components/FilterSheetCom";
 import { useState } from "react";
-
-const filterCategories = [
-  "Full Day Tour",
-  "Half Day Tour",
-  "Tour",
-  "Sunrise",
-  "Angkor Wat",
-];
+import OffersCarousel from "../HomePage/OffersCarousel";
+import { useCategories } from "@/hooks/category/useRestaurantCate";
 
 const MainPage = () => {
   const navigate = useNavigate();
+  const type = "thing-to-do";
   const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([
-    "Tour",
-  ]);
-  const [priceRange, setPriceRange] = useState<[number, number]>([20, 40]);
+  const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(
+    null
+  );
+  const [priceRange, setPriceRange] = useState<[number, number]>([20, 100]);
 
-  const handleCategoryToggle = (category: string) => {
-    setSelectedCategories((prev) =>
-      prev.includes(category)
-        ? prev.filter((c) => c !== category)
-        : [...prev, category]
-    );
-  };
+  const { data: filterCategories } = useCategories(type);
+  const categories = filterCategories?.data || [];
 
-  const handleApplyFilters = () => {
-    console.log("Applying filters:", { selectedCategories, priceRange });
-    setIsFilterOpen(false);
-  };
 
   const handleNavigateToSearch = () => {
     navigate({ to: "/thing-to-do/search-thing-to-do" });
@@ -77,25 +62,27 @@ const MainPage = () => {
             <DialogDescription className="mb-4 text-sm text-center text-muted-foreground">
               Use the filters below to refine your search results.
             </DialogDescription>
-            <FilterSheet
-              categories={filterCategories}
-              selectedCategories={selectedCategories}
-              onCategoryToggle={handleCategoryToggle}
+            {/* <FilterSheet
+              categories={categories}
+              searchQuery={filterSearch}
+              onSearchQueryChange={setFilterSearch}
+              selectedCategoryId={selectedCategoryId}
+              onCategorySelect={handleCategorySelect}
               priceRange={priceRange}
               onPriceChange={(value) =>
                 setPriceRange(value as [number, number])
               }
               onApply={handleApplyFilters}
-              minPrice={10}
-              maxPrice={50}
-            />
+              minPrice={20}
+              maxPrice={100}
+            /> */}
           </DrawerContent>
         </Drawer>
       </div>
 
       <div className="space-y-6">
         <div className="mb-4">
-          <ServicesCarousel />
+          <OffersCarousel />
         </div>
 
         <CategoryFilters />

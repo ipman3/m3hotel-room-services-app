@@ -1,7 +1,8 @@
 import { CarouselComponent } from "@/components/CarouselComponent";
 import HeaderComponent from "@/components/layout/HeaderComponent";
 import ServiceDetailSheet from "@/components/Pages/thing-to-do/ServiceDetailSheet";
-import { thingItems } from "@/config/data/thing-to-do";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useThingDetail } from "@/hooks/thing-to-do/useThingDetail";
 
 import useNavbarStore from "@/store/Navbar";
 import { createFileRoute } from "@tanstack/react-router";
@@ -15,9 +16,6 @@ function RouteComponent() {
   const { thingId } = Route.useParams();
   const { hide, show } = useNavbarStore((state) => state);
 
-  const serviceData =
-    thingItems.find((item) => item.id === thingId) || thingItems[0];
-
   useEffect(() => {
     hide();
     return () => {
@@ -25,13 +23,22 @@ function RouteComponent() {
     };
   }, [hide, show]);
 
+  const { data: thingDetail, isLoading } = useThingDetail(Number(thingId));
+  const serviceData = thingDetail?.data;
+
   return (
     <div>
       <HeaderComponent title="Selected items" />
       <main className="h-screen bg-background max-w-md mx-auto w-full">
-        <CarouselComponent imageUrls={serviceData.imageUrls || []} />
+        {isLoading ? (
+          <Skeleton className="w-full h-80" />
+        ) : (
+          <CarouselComponent
+            imageUrls={serviceData?.images ? [serviceData?.images[0]] : []}
+          />
+        )}
 
-        <ServiceDetailSheet service={serviceData} />
+        {serviceData && <ServiceDetailSheet service={serviceData} />}
       </main>
     </div>
   );
