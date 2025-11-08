@@ -19,5 +19,6 @@ export function useProductsByStore(store_id: number, enabled: boolean) {
         data: { store_id },
       }),
     enabled: !!store_id && enabled,
+    refetchInterval: 30000,
   });
 }

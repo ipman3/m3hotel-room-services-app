@@ -16,5 +16,6 @@ export function usePopularSpas() {
       post({
         endpoint: "/spa/popularItems",
       }),
+      refetchInterval: 30000,
   });
 }

@@ -19,5 +19,6 @@ export function useGetAllThings(enabled: boolean) {
         endpoint: "/tourpackage/search",
       }),
       enabled: enabled,
+      refetchInterval: 30000,
   });
 }

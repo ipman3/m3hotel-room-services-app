@@ -15,5 +15,6 @@ export function useGetAllSpas(enabled: boolean) {
         endpoint: "/spa/search",
       }),
       enabled: enabled,
+      refetchInterval: 30000,
   });
 }

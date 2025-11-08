@@ -35,5 +35,6 @@ export function useSpecialOffers() {
       post({
         endpoint: "/products/getSpecialOffers",
       }),
+      refetchInterval: 30000,
   });
 }

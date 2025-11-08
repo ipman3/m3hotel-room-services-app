@@ -16,5 +16,6 @@ export function useTopSelectionThing() {
       post({
         endpoint: "/tourpackage/topSelectionItems",
       }),
+      refetchInterval: 30000,
   });
 }

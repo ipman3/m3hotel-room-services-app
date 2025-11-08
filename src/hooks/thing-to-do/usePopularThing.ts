@@ -16,5 +16,6 @@ export function usePopularThings() {
       post({
         endpoint: "/tourpackage/popularItems",
       }),
+      refetchInterval: 30000,
   });
 }

@@ -31,5 +31,6 @@ export function useCategories(type: string) {
         },
       }),
     enabled: !!type,
+    refetchInterval: 30000,
   });
 }

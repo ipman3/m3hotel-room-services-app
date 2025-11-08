@@ -17,5 +17,6 @@ export function useTopSelectionSpas() {
       post({
         endpoint: "/spa/topSelectionItems",
       }),
+      refetchInterval: 30000,
   });
 }

@@ -16,5 +16,6 @@ export function usePopularFoods() {
       post({
         endpoint: "/products/getPopularFoods",
       }),
+      refetchInterval: 30000,
   });
 }

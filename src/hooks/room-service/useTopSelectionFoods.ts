@@ -9,5 +9,6 @@ export function useTopSelectionFoods() {
       post({
         endpoint: "/products/getTopSelectionFoods",
       }),
+      refetchInterval: 30000,
   });
 }
