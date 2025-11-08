@@ -29,7 +29,7 @@ export default function MainPage() {
   const { data: filterCategories } = useCategories(type);
   const categories = filterCategories?.data || [];
   
-  const { setSearchResults, setLoading, setError } = useSearchStore();
+  const { setSearchResults, setLoading, setError, clearSearchResults } = useSearchStore();
   const searchMutation = useSpaSearchMutation();
 
   const handleApplyFilters = () => {
@@ -75,6 +75,7 @@ export default function MainPage() {
   };
 
   const handleNavigateToSearch = () => {
+    clearSearchResults();
     navigate({ to: "/wellness-spa/search" });
   };
 

@@ -7,32 +7,12 @@
 
 import { useQuery } from "@tanstack/react-query";
 import post from "@/lib/Api";
+import type { ThingToDoTypesResponse } from "@/types/thing-to-do/thingToDoType";
 
-interface GetAllThing {
-  id: number;
-  name: string;
-  short_desc: string;
-  desc: string;
-  image: string;
-  images: string[];
-  itinerary: string;
-  highlight: string;
-  price: string;
-  unit: string;
-  status: string;
-  category_id: number;
-  sort: number;
-}
 
-interface GetAllThingsResponse {
-  code: number;
-  msg: string;
-  time: string;
-  data: GetAllThing[];
-}
 
 export function useGetAllThings(enabled: boolean) {
-  return useQuery<GetAllThingsResponse>({
+  return useQuery<ThingToDoTypesResponse>({
     queryKey: ["getAllThings"],
     queryFn: () =>
       post({

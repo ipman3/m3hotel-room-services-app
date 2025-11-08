@@ -7,33 +7,10 @@
 
 import { useQuery } from "@tanstack/react-query";
 import post from "@/lib/Api";
-
-export interface PopularThing {
-  id: number;
-  name: string;
-  short_desc: string;
-  desc: string;
-  image: string;
-  images: string[];
-  itinerary: string;
-  highlight: string;
-  price: string;
-  unit: string;
-  status: string;
-  category_id: number;
-  sort: number;
-}
-
-
-interface PopularThingsResponse {
-  code: number;
-  msg: string;
-  time: string;
-  data: PopularThing[];
-}
+import type { ThingToDoTypesResponse } from "@/types/thing-to-do/thingToDoType";
 
 export function usePopularThings() {
-  return useQuery<PopularThingsResponse>({
+  return useQuery<ThingToDoTypesResponse>({
     queryKey: ["popularThings"],
     queryFn: () =>
       post({

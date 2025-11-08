@@ -5,37 +5,12 @@
   */
 }
 
-
 import { useQuery } from "@tanstack/react-query";
 import post from "@/lib/Api";
-
-
-export interface TopSelectionThing {
-  id: number;
-  name: string;
-  short_desc: string;
-  desc: string;
-  image: string;
-  images: string[];
-  itinerary: string;
-  highlight: string;
-  price: string;
-  unit: string;
-  status: string;
-  category_id: number;
-  sort: number;
-}
-
-
-interface TopSelectionThingsResponse {
-  code: number;
-  msg: string;
-  time: string;
-  data: TopSelectionThing[];
-}
+import type { ThingToDoTypesResponse } from "@/types/thing-to-do/thingToDoType";
 
 export function useTopSelectionThing() {
-  return useQuery<TopSelectionThingsResponse>({
+  return useQuery<ThingToDoTypesResponse>({
     queryKey: ["topSelectionThings"],
     queryFn: () =>
       post({

@@ -5,29 +5,10 @@
 
 import { useQuery } from "@tanstack/react-query";
 import post from "@/lib/Api";
-
-export interface GetAllSpa {
-  id: number;
-  name: string;
-  short_desc: string;
-  desc: string;
-  image: string;
-  images: string[];
-  price: string;
-  unit: string;
-  status: string;
-  category_id: number;
-}
-
-interface GetAllSpasResponse {
-  code: number;
-  msg: string;
-  time: string;
-  data: GetAllSpa[];
-}
+import type { WellnessSpaTypesResponse } from "@/types/wellness-spa/wellnessSpaType";
 
 export function useGetAllSpas(enabled: boolean) {
-  return useQuery<GetAllSpasResponse>({
+  return useQuery<WellnessSpaTypesResponse>({
     queryKey: ["getAllSpas"],
     queryFn: () =>
       post({

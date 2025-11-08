@@ -7,34 +7,10 @@
 
 import { useQuery } from "@tanstack/react-query";
 import post from "@/lib/Api";
-
-
-export interface DetailThing {
-  id: number;
-  name: string;
-  short_desc: string;
-  desc: string;
-  image: string;
-  images: string[];
-  itinerary: string;
-  highlight: string;
-  price: string;
-  unit: string;
-  status: string;
-  category_id: number;
-  sort: number;
-}
-
-interface DetailThingsResponse {
-  code: number;
-  msg: string;
-  time: string;
-  data: DetailThing;
-}
-
+import type { ThingToDoTypesResponse } from "@/types/thing-to-do/thingToDoType";
 
 export function useThingDetail(id: number) {
-  return useQuery<DetailThingsResponse>({
+  return useQuery<ThingToDoTypesResponse>({
     queryKey: ["thingDetail", id],
     queryFn: () =>
       post({

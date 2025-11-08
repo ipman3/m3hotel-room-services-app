@@ -7,29 +7,10 @@
 
 import { useQuery } from "@tanstack/react-query";
 import post from "@/lib/Api";
-
-export interface SpaDetail {
-  id: number;
-  name: string;
-  short_desc: string;
-  desc: string;
-  image: string;
-  images: string[];
-  price: string;
-  unit: string;
-  status: string;
-  category_id: number;
-}
-
-interface SpaDetailResponse {
-  code: number;
-  msg: string;
-  time: string;
-  data: SpaDetail;
-}
+import type { WellnessSpaTypesResponse } from "@/types/wellness-spa/wellnessSpaType";
 
 export function useSpaDetail(id: number) {
-  return useQuery<SpaDetailResponse>({
+  return useQuery<WellnessSpaTypesResponse>({
     queryKey: ["spaDetail", id],
     queryFn: () =>
       post({

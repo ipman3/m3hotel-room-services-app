@@ -6,7 +6,7 @@ import { useCategoryStore } from "@/store/CategoryStore";
 
 
 export default function CategoryFilters() {
-  const type = "thing-to-do";
+  const type = "tour_package";
     const { activeCategory, setActiveCategory } = useCategoryStore();
     const { data, isLoading, isError } = useCategories(type);
     const categories = [{ id: null, name: "All" }, ...(data?.data || [])];

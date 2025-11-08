@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { useSpaSearchMutation } from "@/hooks/wellness-spa/useFilterSpa";
 import { useGetAllSpas } from "@/hooks/wellness-spa/useGetAllSpa";
+import { normalizeSearchData } from "@/lib/normalizeSearchData";
 import { useSearchStore, type SearchResult } from "@/store/useSearchStore";
 import { Link } from "@tanstack/react-router";
 import { ChevronRightSquare, Search } from "lucide-react";
@@ -28,7 +29,6 @@ const SpaServiceCard = ({ item }: { item: SearchResult }) => (
         <div className="flex-grow">
           <h3 className="font-bold">{item.name.replace("_", " ")}</h3>
           <p className="text-sm text-muted-foreground">
-            {/* Using short_desc is better for a list view */}
             {item.short_desc?.slice(0, 30)}...
           </p>
           <p className="mt-1 font-bold">
@@ -49,6 +49,7 @@ export default function MainPage() {
     setSearchResults,
     setLoading,
     setError,
+    clearSearchResults,
   } = useSearchStore();
 
   const {
@@ -67,8 +68,8 @@ export default function MainPage() {
       { q: localSearch },
       {
         onSuccess: (data) => {
-          if (data.code === 1) {
-            setSearchResults(data.data as SearchResult[]);
+          if (data.code === 1 && Array.isArray(data.data)) {
+            setSearchResults(normalizeSearchData(data.data));
           } else {
             setError(data.msg || "Search failed");
           }
@@ -77,6 +78,7 @@ export default function MainPage() {
         onError: (err) => {
           setError((err as Error).message);
           setLoading(false);
+          clearSearchResults();
         },
       }
     );

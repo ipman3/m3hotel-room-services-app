@@ -12,6 +12,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { useSearchStore } from "@/store/useSearchStore";
 
 export function useServiceTypeCheck() {
   const navigate = useNavigate();
@@ -21,6 +22,7 @@ export function useServiceTypeCheck() {
     state.items.length > 0 ? state.items[0].serviceType : null
   );
   const clearCart = useCartStore((state) => state.clearCart);
+  const clearSearchResults = useSearchStore((state) => state.clearSearchResults);
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const matches = useMatches();
@@ -52,21 +54,23 @@ export function useServiceTypeCheck() {
 
   const handleConfirm = () => {
     clearCart();
+    clearSearchResults();
     toast.info("Your cart was cleared to switch to a different service type.");
     setIsDialogOpen(false);
   };
 
   const handleCancel = () => {
     setIsDialogOpen(false);
+    clearSearchResults();
     navigate({ to: "/" });
   };
 
   const ServiceTypeDialog = (
     <AlertDialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-      <AlertDialogContent className="bg-black/10 backdrop-blur-sm border border-card/20">
-        <AlertDialogHeader className="text-card">
+      <AlertDialogContent>
+        <AlertDialogHeader>
           <AlertDialogTitle>Switch service type?</AlertDialogTitle>
-          <AlertDialogDescription className="text-card">
+          <AlertDialogDescription>
             Your cart has items from another service. Clear the cart to add new
             items. Continue?
           </AlertDialogDescription>

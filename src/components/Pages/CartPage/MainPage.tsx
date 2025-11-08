@@ -89,7 +89,13 @@ export default function MainPage() {
   if (displayedItems.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center gap-4 pt-20">
-        <img src={Icons.EmptyCartIcon} alt="Empty Cart" width={500} height={500} className="w-32 h-32" />
+        <img
+          src={Icons.EmptyCartIcon}
+          alt="Empty Cart"
+          width={500}
+          height={500}
+          className="w-32 h-32"
+        />
         <p className="text-base text-center text-base-secondary">
           Your cart is empty.
         </p>
@@ -143,6 +149,8 @@ export default function MainPage() {
   const handleConfirmClearCart = () => {
     clearCart();
     toast.success("Your cart has been cleared.");
+    setIsClearDialogOpen(false);
+    navigate({ to: "/" });
   };
 
   // const handleClickConfirmCheckout = (itemToConfirm: CartItem) => {
@@ -278,7 +286,8 @@ export default function MainPage() {
                     Quantity: x{quantity}
                   </p>
                   <p className="mt-1 text-sm font-semibold text-base-secondary">
-                    Total: ${(parseFloat(currentItem.price) * quantity).toFixed(2)}
+                    Total: $
+                    {(parseFloat(currentItem.price) * quantity).toFixed(2)}
                   </p>
                 </>
               </div>
@@ -321,10 +330,10 @@ export default function MainPage() {
       />
 
       <AlertDialog open={isClearDialogOpen} onOpenChange={setIsClearDialogOpen}>
-        <AlertDialogContent className="bg-black/10 backdrop-blur-sm border border-card/20">
+        <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle className="text-white">Are you sure?</AlertDialogTitle>
-            <AlertDialogDescription className="text-white">
+            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+            <AlertDialogDescription>
               This action cannot be undone. This will permanently remove all
               items from your cart.
             </AlertDialogDescription>
