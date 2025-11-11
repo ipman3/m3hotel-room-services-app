@@ -3,9 +3,14 @@ import { z } from "zod";
 export const spaSchema = z.object({
   name: z.string(),
   price: z.string(),
+<<<<<<< HEAD
   // serviceTypeId: z.number(),
   serviceType: z.string(),
   category: z.number(),
+=======
+  serviceType: z.string(),
+  category_id: z.number(),
+>>>>>>> origin/Bunheng-Dev
   // package: z.string({
   //   message: "Please select a package for your service.",
   // }),

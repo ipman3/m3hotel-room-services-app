@@ -16,21 +16,32 @@ import { useNavigate } from "@tanstack/react-router";
 import { useCartStore } from "@/store/CartStore";
 import { thingSchema, type ThingFormData } from "@/validations/thingSchema";
 import { NumberInput } from "@/components/NumberInput";
+import { Card, CardContent } from "@/components/ui/card";
 
 interface ServiceData {
-  id: string;
+  id: number;
   name: string;
-  serviceTypeId: number;
+  short_desc: string;
+  image: string;
+  price: string;
+  unit: string;
+  category_id: number;
   serviceType: string;
-  price: number;
-  category: string;
-  description: string;
-  isPopular: boolean;
-  packages: string[];
-  imageUrl: string;
 }
 
+<<<<<<< HEAD
 export default function ServiceForm({ id, name, serviceTypeId, serviceType, price, description, category, packages, imageUrl }: ServiceData) {
+=======
+export default function ServiceForm({
+  id,
+  name,
+  short_desc,
+  price,
+  category_id,
+  image,
+  serviceType,
+}: ServiceData) {
+>>>>>>> origin/Bunheng-Dev
   const navigate = useNavigate();
   const { setPendingItem, confirmPendingItem } = useCartStore();
 
@@ -38,11 +49,9 @@ export default function ServiceForm({ id, name, serviceTypeId, serviceType, pric
     resolver: zodResolver(thingSchema),
     defaultValues: {
       name: name,
-      serviceTypeId: serviceTypeId,
       serviceType: serviceType,
       price: price,
-      category: category,
-      package: packages[0] || "",
+      category_id: category_id,
       date: new Date(),
       time: "10:30",
       adults: 1,
@@ -55,6 +64,7 @@ export default function ServiceForm({ id, name, serviceTypeId, serviceType, pric
     console.log("Form Submitted:", values);
 
     // Add the validated form data to the global cart store
+<<<<<<< HEAD
     // setPendingItem({
     //   ...values,
     //   serviceTypeId: values.serviceTypeId || 0,
@@ -64,6 +74,22 @@ export default function ServiceForm({ id, name, serviceTypeId, serviceType, pric
     //   imageUrl: imageUrl,
     //   description: description,
     // });
+=======
+    setPendingItem({
+      ...values,
+      // Additional service details
+      serviceType: serviceType,
+      price: price,
+      name: name,
+      time: values.time,
+      date: values.date,
+      category_id: category_id,
+      message: values.message || "",
+      image: image,
+      description: short_desc,
+      quantity: (values.adults || 0) + (values.children || 0),
+    });
+>>>>>>> origin/Bunheng-Dev
 
     confirmPendingItem?.();
     toast.success("Item added to cart!", {
@@ -81,6 +107,7 @@ export default function ServiceForm({ id, name, serviceTypeId, serviceType, pric
 
   return (
     <>
+<<<<<<< HEAD
       <div className="flex items-center p-4 mb-6 space-x-4 border rounded-lg bg-card border-border">
         <img src={imageUrl} alt={name} className="object-cover w-16 h-16 rounded-md" />
         <div>
@@ -88,14 +115,34 @@ export default function ServiceForm({ id, name, serviceTypeId, serviceType, pric
           <p className="mt-1 font-bold text-primary">${price.toFixed(2)}</p>
         </div>
       </div>
+=======
+      <Card className="py-4 mb-4 overflow-hidden border-none customShadowSm rounded-xl scroll-animate">
+        <CardContent className="flex items-center gap-4 px-4">
+          <img
+            src={image}
+            alt={name}
+            className="object-cover w-24 h-24 rounded-xl"
+            loading="lazy"
+          />
+          <div className="flex-grow">
+            <h3 className="font-bold">{name.replace("_", " ")}</h3>
+            <p className="text-sm text-muted-foreground" dangerouslySetInnerHTML={{ __html: short_desc }} />
+            <p className="mt-1 font-bold">${parseFloat(price).toFixed(2)}</p>
+          </div>
+        </CardContent>
+      </Card>
+
+
+>>>>>>> origin/Bunheng-Dev
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit, onError)} className="mt-6 space-y-4">
           <input type="hidden" value={id} />
           <input type="hidden" value={name} />
-          <input type="hidden" value={serviceTypeId} />
           <input type="hidden" value={serviceType} />
           <input type="hidden" value={price} />
-          <input type="hidden" value={category} />
+          <input type="hidden" value={image} />
+          <input type="hidden" value={short_desc} />
+          <input type="hidden" value={category_id} />
 
           <FormField
             control={form.control}
@@ -118,7 +165,17 @@ export default function ServiceForm({ id, name, serviceTypeId, serviceType, pric
                     </FormControl>
                   </PopoverTrigger>
                   <PopoverContent className="w-auto p-0">
+<<<<<<< HEAD
                     <Calendar mode="single" selected={field.value} onSelect={field.onChange} initialFocus />
+=======
+                    <Calendar
+                      mode="single"
+                      selected={field.value}
+                      onSelect={field.onChange}
+                      initialFocus
+                      disabled={{ before: new Date() }}
+                    />
+>>>>>>> origin/Bunheng-Dev
                   </PopoverContent>
                 </Popover>
                 <FormMessage />

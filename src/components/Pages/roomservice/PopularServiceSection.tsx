@@ -73,7 +73,6 @@ export default function PopularServiceSection() {
         <Link
           to="/view-all/$roomId"
           params={{ roomId }}
-          search={{ popular: "true" }}
         >
           <span className="text-sm font-semibold cursor-pointer text-base-accent">
             View All

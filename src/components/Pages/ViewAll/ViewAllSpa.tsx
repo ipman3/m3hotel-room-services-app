@@ -1,25 +1,20 @@
 import { Link } from "@tanstack/react-router";
 import { Card, CardContent } from "@/components/ui/card";
-import CategoryFilters from "../roomservice/CategoryFilters";
-import { useProductsByStore } from "@/hooks/room-service/useProductsByStore";
+import CategoryFilters from "../WellnessAndSpa/CategoryFilters";
+import { useCategoryStore } from "@/store/CategoryStore";
 import SkeletonVerticalLoader from "@/components/SkeletonVerticalLoader";
 import ErrorState from "@/components/ErrorState";
-import { useCategoryStore } from "@/store/CategoryStore";
+import { useGetAllSpas } from "@/hooks/wellness-spa/useGetAllSpa";
 
-export default function ViewAllRoomService() {
-  const storeId = 12;
-  const {
-    data: allProductsList,
-    isLoading,
-    isError,
-  } = useProductsByStore(storeId);
+export default function ViewAllSpa() {
+  const { data: allSpaItems, isLoading, isError } = useGetAllSpas(true);
   const { activeCategory } = useCategoryStore();
-  const products = allProductsList?.data.data || [];
+  const spaItems = allSpaItems?.data || [];
 
-  const filteredProducts =
+  const filteredSpaItems =
     activeCategory === null
-      ? products
-      : products.filter((item) => item.category_id === activeCategory);
+      ? spaItems
+      : spaItems.filter((item) => item.category_id === activeCategory);
 
   return (
     <div className="pt-6">
@@ -33,23 +28,26 @@ export default function ViewAllRoomService() {
         ) : isError ? (
           <ErrorState />
         ) : (
-          filteredProducts.map((item) => (
+          filteredSpaItems.map((item) => (
             <Link
               key={item.id}
-              to="/room-service/$serviceId"
+              to="/wellness-spa/$serviceId"
               params={{ serviceId: item.id.toString() }}
             >
               <Card className="py-4 mb-4 overflow-hidden border-none customShadowSm rounded-xl">
                 <CardContent className="flex items-center gap-4 px-4">
                   <img
-                    src={item.photo}
+                    src={item.image}
                     alt={item.name}
                     className="object-cover w-24 h-24 rounded-xl"
                     loading="lazy"
                   />
                   <div className="flex-grow">
                     <h3 className="font-bold">{item.name}</h3>
-                    <p className="!text-sm text-muted-foreground" dangerouslySetInnerHTML={{__html: item.description}} />
+                    <p
+                      className="!text-sm text-muted-foreground"
+                      dangerouslySetInnerHTML={{ __html: item.short_desc }}
+                    />
                     <p className="mt-1 font-bold">
                       ${parseFloat(item.price).toFixed(2)}
                     </p>

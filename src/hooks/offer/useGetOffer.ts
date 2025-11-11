@@ -36,5 +36,6 @@ export function useSpecialOffers() {
         endpoint: "/products/getSpecialOfferByType",
         data: { type: "spa" },
       }),
+      refetchInterval: 30000,
   });
 }

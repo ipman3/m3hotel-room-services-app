@@ -2,16 +2,33 @@ import * as React from "react";
 import { Link } from "@tanstack/react-router";
 import Autoplay from "embla-carousel-autoplay";
 
+<<<<<<< HEAD
 import { Carousel, CarouselContent, CarouselItem, type CarouselApi } from "@/components/ui/carousel";
 import { useSpecialOffers } from "@/hooks/offer/useGetOffer";
+=======
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  type CarouselApi,
+} from "@/components/ui/carousel";
+import { useSpecialOffersByType } from "@/hooks/offer/useGetOfferByType";
+import { Skeleton } from "@/components/ui/skeleton";
+import ErrorState from "@/components/ErrorState";
+>>>>>>> origin/Bunheng-Dev
 
 export default function OffersCarousel() {
   const [api, setApi] = React.useState<CarouselApi>();
   const [current, setCurrent] = React.useState(0);
   const [count, setCount] = React.useState(0);
-  const { data: offers } = useSpecialOffers();
+  const type = "spa";
+  const {
+    data: offersByType,
+    isLoading,
+    isError,
+  } = useSpecialOffersByType(type);
 
-  const offerItems = offers?.data || [];
+  const offerItems = offersByType?.data || [];
 
   const plugin = React.useRef(Autoplay({ delay: 3000, stopOnInteraction: true, stopOnMouseEnter: true }));
 
@@ -47,6 +64,7 @@ export default function OffersCarousel() {
           }}
           className="w-full px-4">
           <CarouselContent>
+<<<<<<< HEAD
             {offerItems.map((offer, index) => (
               <CarouselItem key={index} className="basis-1/1">
                 <div className="relative h-48">
@@ -55,6 +73,29 @@ export default function OffersCarousel() {
                 </div>
               </CarouselItem>
             ))}
+=======
+            {isLoading ? (
+              <div className="rounded-xl">
+                <Skeleton className="w-full h-48 rounded-xl" />
+              </div>
+            ) : isError ? (
+              <ErrorState />
+            ) : (
+              offerItems.map((offer, index) => (
+                <CarouselItem key={index} className="basis-1/1">
+                  <div className="relative h-48">
+                    <img
+                      src={offer.image}
+                      alt={offer.name}
+                      className="object-cover w-full h-full rounded-xl"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 w-full pointer-events-none bg-black/20 rounded-xl" />
+                  </div>
+                </CarouselItem>
+              ))
+            )}
+>>>>>>> origin/Bunheng-Dev
           </CarouselContent>
         </Carousel>
 

@@ -13,38 +13,71 @@ import { useNavigate } from "@tanstack/react-router";
 import FilterSheet from "@/components/FilterSheetCom";
 import { DialogDescription, DialogTitle } from "@/components/ui/dialog";
 import OffersCarouselRoomService from "./Offer/OffersCarousel";
-
-const filterCategories = [
-  "Pizza",
-  "Burger",
-  "Salad",
-  "Soup",
-  "Chicken",
-  "Grill",
-  "Breakfast",
-];
+import { useCategories } from "@/hooks/category/useRestaurantCate";
+import { useSearchStore, type SearchResult } from "@/store/useSearchStore";
+import { useRoomServiceSearchMutation } from "@/hooks/room-service/useFilterRoomService";
+import { toast } from "sonner";
 
 const MainPage = () => {
   const navigate = useNavigate();
+  const type = "restautant";
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [filterSearch, setFilterSearch] = useState("");
+  const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(
+    null
+  );
+  const [priceRange, setPriceRange] = useState<[number, number]>([1, 10]);
 
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-  const [priceRange, setPriceRange] = useState<[number, number]>([10, 100]);
+  const { data: filterCategories } = useCategories(type);
+  const categories = filterCategories?.data || [];
 
-  const handleCategoryToggle = (category: string) => {
-    setSelectedCategories((prev) =>
-      prev.includes(category)
-        ? prev.filter((c) => c !== category)
-        : [...prev, category]
-    );
-  };
+  const { setSearchResults, setLoading, setError, clearSearchResults } = useSearchStore();
+  const searchMutation = useRoomServiceSearchMutation();
 
   const handleApplyFilters = () => {
-    console.log("Applying filters:", { selectedCategories, priceRange });
-    setIsFilterOpen(false);
+    if (!selectedCategoryId) {
+      toast.error("Please select a category.");
+      return;
+    }
+
+    const variables = {
+      q: filterSearch,
+      category: selectedCategoryId,
+      price: `${priceRange[0]}-${priceRange[1]}`,
+    };
+
+    setLoading(true);
+    setError(null);
+
+    searchMutation.mutate(variables, {
+      onSuccess: (data) => {
+        if (data.code === 1 && Array.isArray(data.data)) {
+          setSearchResults(data.data as SearchResult[]);
+          navigate({ to: "/room-service/search" });
+        } else {
+          setError(data.msg || "Search failed");
+          console.error("Search failed:", data.msg);
+        }
+      },
+      onError: (error) => {
+        setError(
+          (error as Error).message || "An unknown network error occurred"
+        );
+        console.error("Error searching spa:", error);
+      },
+      onSettled: () => {
+        setLoading(false);
+        setIsFilterOpen(false);
+      },
+    });
+  };
+
+  const handleCategorySelect = (categoryId: number) => {
+    setSelectedCategoryId(categoryId);
   };
 
   const handleNavigateToSearch = () => {
+    clearSearchResults();
     navigate({ to: "/room-service/search" });
   };
 
@@ -84,15 +117,17 @@ const MainPage = () => {
               Use the filters below to refine your search results.
             </DialogDescription>
             <FilterSheet
-              categories={filterCategories}
-              selectedCategories={selectedCategories}
-              onCategoryToggle={handleCategoryToggle}
+              categories={categories}
+              searchQuery={filterSearch}
+              onSearchQueryChange={setFilterSearch}
+              selectedCategoryId={selectedCategoryId}
+              onCategorySelect={handleCategorySelect}
               priceRange={priceRange}
               onPriceChange={(value) =>
                 setPriceRange(value as [number, number])
               }
               onApply={handleApplyFilters}
-              minPrice={10}
+              minPrice={1}
               maxPrice={100}
             />
           </DrawerContent>

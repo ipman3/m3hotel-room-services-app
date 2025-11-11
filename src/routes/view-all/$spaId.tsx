@@ -1,20 +1,19 @@
 import HeaderComponent from "@/components/layout/HeaderComponent";
-import ViewAllPage from "@/components/Pages/ViewAll/ViewAllthing";
+import ViewAllSpa from "@/components/Pages/ViewAll/ViewAllSpa";
 import useNavbarStore from "@/store/Navbar";
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect } from "react";
 
-export const Route = createFileRoute("/view-all/$viewId")({
+export const Route = createFileRoute("/view-all/$spaId")({
   component: RouteComponent,
   loader: async ({ params }) => {
     return {
-      viewId: params.viewId,
+      spaId: params.spaId,
     };
   },
 });
 
 function RouteComponent() {
-  const { viewId } = Route.useLoaderData();
 
   const { hide, show } = useNavbarStore((state) => state);
 
@@ -29,7 +28,7 @@ function RouteComponent() {
     <div>
       <HeaderComponent title="View All" />
       <main className="mt-12 max-w-md mx-auto w-full">
-        <ViewAllPage id={viewId} />
+        <ViewAllSpa />
       </main>
     </div>
   );

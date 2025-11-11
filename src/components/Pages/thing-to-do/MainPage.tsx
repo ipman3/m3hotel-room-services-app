@@ -4,44 +4,79 @@ import { Search } from "lucide-react";
 import { Icons } from "../../../../public/assets/icons";
 import CategoryFilters from "./CategoryFilters";
 import SelectionList from "./SelectionList";
-import ServicesCarousel from "./ServicesCarousel";
 import PopularThingSection from "./PopularThingSection";
 import { useNavigate } from "@tanstack/react-router";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { DialogDescription, DialogTitle } from "@/components/ui/dialog";
 import FilterSheet from "@/components/FilterSheetCom";
 import { useState } from "react";
-
-const filterCategories = [
-  "Full Day Tour",
-  "Half Day Tour",
-  "Tour",
-  "Sunrise",
-  "Angkor Wat",
-];
+import OffersCarousel from "../HomePage/OffersCarousel";
+import { useCategories } from "@/hooks/category/useRestaurantCate";
+import { useSearchStore, type SearchResult } from "@/store/useSearchStore";
+import { useThingSearchMutation } from "@/hooks/thing-to-do/useFilterThing";
+import { toast } from "sonner";
 
 const MainPage = () => {
   const navigate = useNavigate();
+  const type = "tour_package";
   const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([
-    "Tour",
-  ]);
-  const [priceRange, setPriceRange] = useState<[number, number]>([20, 40]);
+  const [filterSearch, setFilterSearch] = useState("");
+  const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(
+    null
+  );
+  const [priceRange, setPriceRange] = useState<[number, number]>([20, 100]);
 
-  const handleCategoryToggle = (category: string) => {
-    setSelectedCategories((prev) =>
-      prev.includes(category)
-        ? prev.filter((c) => c !== category)
-        : [...prev, category]
-    );
+  const { data: filterCategories } = useCategories(type);
+  const categories = filterCategories?.data || [];
+
+  const { setSearchResults, setLoading, setError, clearSearchResults } = useSearchStore();
+  const searchMutation = useThingSearchMutation();
+
+
+    const handleApplyFilters = () => {
+    if (!selectedCategoryId) {
+      toast.error("Please select a category.");
+      return;
+    }
+
+    const variables = {
+      q: filterSearch,
+      category: selectedCategoryId,
+      price: `${priceRange[0]}-${priceRange[1]}`,
+    };
+
+    setLoading(true);
+    setError(null);
+
+    searchMutation.mutate(variables, {
+      onSuccess: (data) => {
+        if (data.code === 1) {
+          setSearchResults(data.data as SearchResult[]);
+          navigate({ to: "/thing-to-do/search-thing-to-do" });
+        } else {
+          setError(data.msg || "Search failed");
+          console.error("Search failed:", data.msg);
+        }
+      },
+      onError: (error) => {
+        setError(
+          (error as Error).message || "An unknown network error occurred"
+        );
+        console.error("Error searching spa:", error);
+      },
+      onSettled: () => {
+        setLoading(false);
+        setIsFilterOpen(false);
+      },
+    });
   };
 
-  const handleApplyFilters = () => {
-    console.log("Applying filters:", { selectedCategories, priceRange });
-    setIsFilterOpen(false);
+  const handleCategorySelect = (categoryId: number) => {
+    setSelectedCategoryId(categoryId);
   };
 
   const handleNavigateToSearch = () => {
+    clearSearchResults();
     navigate({ to: "/thing-to-do/search-thing-to-do" });
   };
 
@@ -78,16 +113,18 @@ const MainPage = () => {
               Use the filters below to refine your search results.
             </DialogDescription>
             <FilterSheet
-              categories={filterCategories}
-              selectedCategories={selectedCategories}
-              onCategoryToggle={handleCategoryToggle}
+              categories={categories}
+              searchQuery={filterSearch}
+              onSearchQueryChange={setFilterSearch}
+              selectedCategoryId={selectedCategoryId}
+              onCategorySelect={handleCategorySelect}
               priceRange={priceRange}
               onPriceChange={(value) =>
                 setPriceRange(value as [number, number])
               }
               onApply={handleApplyFilters}
-              minPrice={10}
-              maxPrice={50}
+              minPrice={20}
+              maxPrice={100}
             />
           </DrawerContent>
         </Drawer>
@@ -95,7 +132,7 @@ const MainPage = () => {
 
       <div className="space-y-6">
         <div className="mb-4">
-          <ServicesCarousel />
+          <OffersCarousel />
         </div>
 
         <CategoryFilters />

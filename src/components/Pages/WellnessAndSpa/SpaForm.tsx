@@ -9,8 +9,23 @@ import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+<<<<<<< HEAD
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+=======
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+// import {
+//   Select,
+//   SelectContent,
+//   SelectItem,
+//   SelectTrigger,
+//   SelectValue,
+// } from "@/components/ui/select";
+>>>>>>> origin/Bunheng-Dev
 import { Textarea } from "@/components/ui/textarea";
 import { spaSchema, type SpaFormData } from "@/validations/spaSchema";
 import { useNavigate } from "@tanstack/react-router";
@@ -18,8 +33,9 @@ import { useCartStore } from "@/store/CartStore";
 import { CustomButtonSubmit } from "@/components/CustomSubmitButtonCom";
 
 interface SpaFormProps {
-  id: string;
+  id: number;
   name: string;
+<<<<<<< HEAD
   description: string;
   // serviceTypeId: number;
   serviceType: string;
@@ -29,18 +45,47 @@ interface SpaFormProps {
 }
 
 export default function SpaForm({ service }: { service: SpaFormProps }) {
+=======
+  short_desc: string;
+  desc: string;
+  image: string;
+  images: string[];
+  price: string;
+  unit: string;
+  category_id: number;
+  serviceType: string;
+}
+
+export default function SpaForm({
+  id,
+  name,
+  price,
+  category_id,
+  serviceType,
+  image,
+  desc,
+  unit,
+}: SpaFormProps) {
+>>>>>>> origin/Bunheng-Dev
   const navigate = useNavigate();
   const { setPendingItem, confirmPendingItem } = useCartStore();
 
   const form = useForm<any>({
     // resolver: zodResolver(spaSchema),
     defaultValues: {
+<<<<<<< HEAD
       name: service?.name,
       // serviceTypeId: service?.serviceTypeId,
       serviceType: "spa",
       price: service?.price,
       category: service?.category,
       // package: packages[0] || "",
+=======
+      name: name,
+      serviceType: serviceType,
+      price: price,
+      category_id: category_id,
+>>>>>>> origin/Bunheng-Dev
       date: new Date(),
       time: "10:30",
       message: "",
@@ -53,6 +98,7 @@ export default function SpaForm({ service }: { service: SpaFormProps }) {
     // Add the validated form data to the global cart store
     setPendingItem({
       name: values.name,
+<<<<<<< HEAD
       // packageName: values.package,
       date: values.date,
       time: values.time,
@@ -65,6 +111,16 @@ export default function SpaForm({ service }: { service: SpaFormProps }) {
       description: service?.description,
       image: "",
       quantity: 1,
+=======
+      date: values.date,
+      time: values.time,
+      price: values.price,
+      category_id: values.category_id,
+      serviceType: serviceType,
+      message: values.message || "",
+      image: image,
+      description: desc,
+>>>>>>> origin/Bunheng-Dev
     });
 
     confirmPendingItem?.();
@@ -80,12 +136,21 @@ export default function SpaForm({ service }: { service: SpaFormProps }) {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="mt-6 space-y-4">
+<<<<<<< HEAD
         <input type="hidden" name="id" value={service?.id} />
         <input type="hidden" name="name" value={service?.name} />
         {/* <input type="hidden" name="serviceTypeId" value={service?.serviceTypeId} /> */}
         <input type="hidden" name="serviceType" value={service?.serviceType} />
         <input type="hidden" name="price" value={service?.price} />
         <input type="hidden" name="category_id" value={service?.category} />
+=======
+        <input type="hidden" value={id} />
+        <input type="hidden" value={name} />
+        <input type="hidden" value={unit} />
+        <input type="hidden" value={serviceType} />
+        <input type="hidden" value={price} />
+        <input type="hidden" value={category_id} />
+>>>>>>> origin/Bunheng-Dev
 
         {/* <FormField
           control={form.control}
@@ -132,7 +197,17 @@ export default function SpaForm({ service }: { service: SpaFormProps }) {
                   </FormControl>
                 </PopoverTrigger>
                 <PopoverContent className="w-auto p-0">
+<<<<<<< HEAD
                   <Calendar mode="single" selected={field.value} onSelect={field.onChange} initialFocus />
+=======
+                  <Calendar
+                    mode="single"
+                    selected={field.value}
+                    onSelect={field.onChange}
+                    initialFocus
+                    disabled={{ before: new Date() }}
+                  />
+>>>>>>> origin/Bunheng-Dev
                 </PopoverContent>
               </Popover>
               <FormMessage />
