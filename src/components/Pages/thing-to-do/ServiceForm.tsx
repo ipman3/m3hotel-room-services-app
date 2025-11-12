@@ -29,9 +29,6 @@ interface ServiceData {
   serviceType: string;
 }
 
-<<<<<<< HEAD
-export default function ServiceForm({ id, name, serviceTypeId, serviceType, price, description, category, packages, imageUrl }: ServiceData) {
-=======
 export default function ServiceForm({
   id,
   name,
@@ -41,7 +38,6 @@ export default function ServiceForm({
   image,
   serviceType,
 }: ServiceData) {
->>>>>>> origin/Bunheng-Dev
   const navigate = useNavigate();
   const { setPendingItem, confirmPendingItem } = useCartStore();
 
@@ -64,17 +60,6 @@ export default function ServiceForm({
     console.log("Form Submitted:", values);
 
     // Add the validated form data to the global cart store
-<<<<<<< HEAD
-    // setPendingItem({
-    //   ...values,
-    //   serviceTypeId: values.serviceTypeId || 0,
-    //   serviceType: values.serviceType || "",
-    //   packageName: values.package || "",
-    //   message: values.message || "",
-    //   imageUrl: imageUrl,
-    //   description: description,
-    // });
-=======
     setPendingItem({
       ...values,
       // Additional service details
@@ -89,7 +74,6 @@ export default function ServiceForm({
       description: short_desc,
       quantity: (values.adults || 0) + (values.children || 0),
     });
->>>>>>> origin/Bunheng-Dev
 
     confirmPendingItem?.();
     toast.success("Item added to cart!", {
@@ -107,15 +91,6 @@ export default function ServiceForm({
 
   return (
     <>
-<<<<<<< HEAD
-      <div className="flex items-center p-4 mb-6 space-x-4 border rounded-lg bg-card border-border">
-        <img src={imageUrl} alt={name} className="object-cover w-16 h-16 rounded-md" />
-        <div>
-          <h2 className="font-semibold">{name}</h2>
-          <p className="mt-1 font-bold text-primary">${price.toFixed(2)}</p>
-        </div>
-      </div>
-=======
       <Card className="py-4 mb-4 overflow-hidden border-none customShadowSm rounded-xl scroll-animate">
         <CardContent className="flex items-center gap-4 px-4">
           <img
@@ -133,7 +108,6 @@ export default function ServiceForm({
       </Card>
 
 
->>>>>>> origin/Bunheng-Dev
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit, onError)} className="mt-6 space-y-4">
           <input type="hidden" value={id} />
@@ -165,9 +139,6 @@ export default function ServiceForm({
                     </FormControl>
                   </PopoverTrigger>
                   <PopoverContent className="w-auto p-0">
-<<<<<<< HEAD
-                    <Calendar mode="single" selected={field.value} onSelect={field.onChange} initialFocus />
-=======
                     <Calendar
                       mode="single"
                       selected={field.value}
@@ -175,7 +146,6 @@ export default function ServiceForm({
                       initialFocus
                       disabled={{ before: new Date() }}
                     />
->>>>>>> origin/Bunheng-Dev
                   </PopoverContent>
                 </Popover>
                 <FormMessage />

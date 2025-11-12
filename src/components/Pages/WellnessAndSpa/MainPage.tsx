@@ -11,15 +11,10 @@ import FilterSheet from "@/components/FilterSheetCom";
 import { Icons } from "../../../../public/assets/icons";
 import { useNavigate } from "@tanstack/react-router";
 import { DialogDescription, DialogTitle } from "@/components/ui/dialog";
-<<<<<<< HEAD
-import post from "@sfutureapps/req-sdk";
-import { useQuery } from "@tanstack/react-query";
-=======
 import { useCategories } from "@/hooks/category/useRestaurantCate";
 import { useSpaSearchMutation } from "@/hooks/wellness-spa/useFilterSpa";
 import { useSearchStore, type SearchResult } from "@/store/useSearchStore";
 import { toast } from "sonner";
->>>>>>> origin/Bunheng-Dev
 
 export default function MainPage() {
   const navigate = useNavigate();
@@ -31,30 +26,11 @@ export default function MainPage() {
   );
   const [priceRange, setPriceRange] = useState<[number, number]>([20, 100]);
 
-<<<<<<< HEAD
-  const [selectedCategories, setSelectedCategories] = useState<string[]>(["Spa"]);
-
-  const { data: filterCategories } = useQuery({
-    queryKey: ["spa", "getCategoryByType"],
-    queryFn: async () =>
-      await post({
-        endpoint: "products/getCategoryByType",
-        data: { type: "spa" },
-      }),
-  });
-
-  const [priceRange, setPriceRange] = useState<[number, number]>([0, 40]);
-
-  const handleCategoryToggle = (category: string) => {
-    setSelectedCategories((prev) => (prev.includes(category) ? prev.filter((c) => c !== category) : [...prev, category]));
-  };
-=======
   const { data: filterCategories } = useCategories(type);
   const categories = filterCategories?.data || [];
   
   const { setSearchResults, setLoading, setError, clearSearchResults } = useSearchStore();
   const searchMutation = useSpaSearchMutation();
->>>>>>> origin/Bunheng-Dev
 
   const handleApplyFilters = () => {
     if (!selectedCategoryId) {
@@ -127,17 +103,11 @@ export default function MainPage() {
               Use the filters below to refine your search results.
             </DialogDescription>
             <FilterSheet
-<<<<<<< HEAD
-              categories={filterCategories?.data}
-              selectedCategories={selectedCategories}
-              onCategoryToggle={handleCategoryToggle}
-=======
               categories={categories}
               searchQuery={filterSearch}
               onSearchQueryChange={setFilterSearch}
               selectedCategoryId={selectedCategoryId}
               onCategorySelect={handleCategorySelect}
->>>>>>> origin/Bunheng-Dev
               priceRange={priceRange}
               onPriceChange={(value) => setPriceRange(value as [number, number])}
               onApply={handleApplyFilters}
