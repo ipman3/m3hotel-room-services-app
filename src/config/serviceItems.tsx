@@ -1,13 +1,11 @@
-
 import { GridIcons } from "../../public/assets/icons/index";
-
 
 export const serviceItems = [
   {
     icon: GridIcons.roomService,
     label: "Room Service",
     path: "/room-service",
-    serviceType: "room-service",
+    serviceType: "restautant",
   },
   {
     icon: GridIcons.wellnessSpa,

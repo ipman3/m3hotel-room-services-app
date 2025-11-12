@@ -27,10 +27,10 @@ export default function PlaceOrderPage() {
   const { items, updateQuantity, removeItem, confirmPendingItem, clearCartByServiceType } = useCartStore();
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
 
-  const filteredItems = items.filter((item) => item.serviceType === "room-service");
+  const filteredItems: any = items.filter((item: any) => item.serviceType === "restautant");
 
   const getSubtotal = () => {
-    return filteredItems.reduce((acc, item) => {
+    return filteredItems.reduce((acc: any, item: any) => {
       const quantity = item.quantity || 1;
       return acc + item.price * quantity;
     }, 0);
@@ -74,7 +74,7 @@ export default function PlaceOrderPage() {
     console.log("FormData prepared:", JSON.stringify(Object.fromEntries(formData)));
 
     confirmPendingItem?.();
-    clearCartByServiceType("room-service");
+    clearCartByServiceType("restautant");
     navigate({ to: "/success" });
   };
 
@@ -150,7 +150,7 @@ export default function PlaceOrderPage() {
             <h3 className="mb-4 text-lg font-bold text-base-secondary">Order Items</h3>
 
             <div className="space-y-2 last:mb-0">
-              {filteredItems?.map((item) => (
+              {filteredItems?.map((item:any) => (
                 <div
                   key={item.id}
                   className="relative flex items-center justify-between gap-2 px-2 py-3 pb-3 text-sm border-b border-gray-100 rounded-lg last:border-0 customShadowSm">

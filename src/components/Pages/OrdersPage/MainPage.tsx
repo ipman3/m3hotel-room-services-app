@@ -2,12 +2,11 @@ import { useState, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import type { OrderItems } from "@/types/orderItem";
 import CardItemComponent from "../../CardItemComponent";
-import { mockOrders, TABS } from "@/config/data/orders";
 import { Link } from "@tanstack/react-router";
 
 export default function MainPage() {
   const [activeTab, setActiveTab] = useState("All");
-  const [items] = useState<OrderItems[]>(mockOrders);
+  const [items] = useState<OrderItems[]>([]);
 
   const filteredItems = useMemo(() => {
     if (activeTab === "All") return items;
@@ -27,7 +26,7 @@ export default function MainPage() {
       <h2 className="text-lg font-bold text-base-secondary">Order Details</h2>
 
       <div className="flex justify-between pb-2 space-x-2 overflow-x-auto scrollbar-hide">
-        {TABS.map((tab) => (
+        {[].map((tab) => (
           <Button
             key={tab}
             variant={activeTab === tab ? "default" : "outline"}

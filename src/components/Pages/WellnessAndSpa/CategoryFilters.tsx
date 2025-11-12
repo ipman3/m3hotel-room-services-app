@@ -21,6 +21,8 @@ export default function CategoryFilters() {
       }),
   });
 
+  const categoriesData = [{ id: null, name: "All" }, ...(categories?.data || [])];
+
   return (
     <section className="px-4">
       <h2 className="mb-4 text-lg font-bold text-card-foreground">Categories</h2>
@@ -30,7 +32,8 @@ export default function CategoryFilters() {
         ) : isError ? (
           <ErrorState />
         ) : (
-          categories.map((category: any) => (
+          categoriesData &&
+          categoriesData?.map((category: any) => (
             <Button
               key={category.id ?? "all"}
               variant={activeCategory === category.id ? "default" : "outline"}

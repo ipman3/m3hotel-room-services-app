@@ -29,15 +29,7 @@ interface ServiceData {
   serviceType: string;
 }
 
-export default function ServiceForm({
-  id,
-  name,
-  short_desc,
-  price,
-  category_id,
-  image,
-  serviceType,
-}: ServiceData) {
+export default function ServiceForm({ id, name, short_desc, price, category_id, image, serviceType }: ServiceData) {
   const navigate = useNavigate();
   const { setPendingItem, confirmPendingItem } = useCartStore();
 
@@ -68,7 +60,7 @@ export default function ServiceForm({
       name: name,
       time: values.time,
       date: values.date,
-      category_id: category_id,
+      category: category_id,
       message: values.message || "",
       image: image,
       description: short_desc,
@@ -93,12 +85,7 @@ export default function ServiceForm({
     <>
       <Card className="py-4 mb-4 overflow-hidden border-none customShadowSm rounded-xl scroll-animate">
         <CardContent className="flex items-center gap-4 px-4">
-          <img
-            src={image}
-            alt={name}
-            className="object-cover w-24 h-24 rounded-xl"
-            loading="lazy"
-          />
+          <img src={image} alt={name} className="object-cover w-24 h-24 rounded-xl" loading="lazy" />
           <div className="flex-grow">
             <h3 className="font-bold">{name.replace("_", " ")}</h3>
             <p className="text-sm text-muted-foreground" dangerouslySetInnerHTML={{ __html: short_desc }} />
@@ -106,7 +93,6 @@ export default function ServiceForm({
           </div>
         </CardContent>
       </Card>
-
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit, onError)} className="mt-6 space-y-4">
@@ -139,13 +125,7 @@ export default function ServiceForm({
                     </FormControl>
                   </PopoverTrigger>
                   <PopoverContent className="w-auto p-0">
-                    <Calendar
-                      mode="single"
-                      selected={field.value}
-                      onSelect={field.onChange}
-                      initialFocus
-                      disabled={{ before: new Date() }}
-                    />
+                    <Calendar mode="single" selected={field.value} onSelect={field.onChange} initialFocus disabled={{ before: new Date() }} />
                   </PopoverContent>
                 </Popover>
                 <FormMessage />

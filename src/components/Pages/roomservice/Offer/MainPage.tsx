@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { containerVariants, itemVariants } from "@/lib/variantsAnimation";
-import { OfferServiceItem } from "@/config/data/offer-room-service";
+
 
 export default function MainPage() {
   return (
@@ -13,7 +13,7 @@ export default function MainPage() {
       initial="hidden"
       animate="visible"
     >
-      {OfferServiceItem.map((item) => (
+      {[].map((item:any) => (
         <motion.div key={item.id} variants={itemVariants} className="scroll-animate">
           <Card className="overflow-hidden rounded-2xl customShadowSm border-none p-0">
             <CardContent className="p-0">

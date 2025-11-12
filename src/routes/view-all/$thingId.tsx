@@ -32,7 +32,7 @@ function RouteComponent() {
     <div>
       <HeaderComponent title="View All" />
       <main className="mt-12">
-        <ViewAllthing id={thingId} />
+        <ViewAllthing />
       </main>
     </div>
   );

@@ -1,4 +1,3 @@
-
 import HeaderComponent from "@/components/layout/HeaderComponent";
 import MainPage from "@/components/Pages/roomservice/MainPage";
 import useNavbarStore from "@/store/Navbar";
@@ -8,14 +7,14 @@ import { useEffect } from "react";
 export const Route = createFileRoute("/room-service/")({
   component: RouteComponent,
   context: () => ({
-    serviceType: "room-service",
+    serviceType: "restautant",
   }),
 });
 
 function RouteComponent() {
   const { hide, show } = useNavbarStore((state) => state);
   const navigate = useNavigate();
-  const service_type = 'room-service';
+  const service_type = "restautant";
 
   useEffect(() => {
     hide();
@@ -27,7 +26,7 @@ function RouteComponent() {
   const handleNavigateToSupport = () => {
     navigate({
       to: "/support",
-      search: { service_type }
+      search: { service_type },
     });
   };
 

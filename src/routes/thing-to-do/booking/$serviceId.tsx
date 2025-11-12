@@ -21,19 +21,17 @@ function RouteComponent() {
     };
   }, [hide, show]);
 
-   const { data: thingDetail } = useThingDetail(Number(serviceId));
-    const serviceData = thingDetail?.data;
+  const { data: thingDetail } = useThingDetail(Number(serviceId));
+  const serviceData = thingDetail?.data;
 
   return (
     <div>
       <HeaderComponent title="Complete Your Booking" />
       <main className="max-w-md p-4 mx-auto">
-        <h1 className="mb-2 text-2xl font-bold">{serviceData?.name}</h1>
-        <p className="pt-4 mb-6 text-sm text-muted-foreground">
-          Please fill out the details below to complete your booking.
-        </p>
+        {/* <h1 className="mb-2 text-2xl font-bold">{serviceData?.name}</h1> */}
+        <p className="pt-4 mb-6 text-sm text-muted-foreground">Please fill out the details below to complete your booking.</p>
 
-        {serviceData && (
+        {/* {serviceData && (
           <ServiceForm
             id={serviceData.id}
             name={serviceData.name}
@@ -44,7 +42,7 @@ function RouteComponent() {
             image={serviceData.image}
             unit={serviceData.unit}
           />
-        )}
+        )} */}
       </main>
     </div>
   );

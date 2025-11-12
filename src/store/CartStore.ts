@@ -26,6 +26,7 @@ interface CartState {
   removeItem: (itemId: string) => void;
   updateQuantity: (itemId: string, newQuantity: number) => void;
   clearCart: () => void;
+  clearCartByServiceType: (serviceType: string) => void;
 }
 
 export const useCartStore = create<CartState>()(
@@ -56,6 +57,10 @@ export const useCartStore = create<CartState>()(
           items: state.items.map((item) => (item.id === itemId ? { ...item, quantity: newQuantity } : item)),
         })),
       clearCart: () => set({ items: [], pendingItem: null }),
+      clearCartByServiceType: (serviceType: string) =>
+        set((state) => ({
+          items: state.items.filter((item) => item.serviceType !== serviceType),
+        })),
     }),
     {
       name: "cartItems-storage",

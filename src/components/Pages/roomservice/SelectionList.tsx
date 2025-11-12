@@ -16,29 +16,18 @@ import ErrorState from "@/components/ErrorState";
 import { useCategoryStore } from "@/store/CategoryStore";
 
 export default function SelectionList() {
-  const serviceType = "room-service";
+  const serviceType = "restautant";
   const navigate = useNavigate();
   const addItem = useCartStore((state) => state.addItem);
   const { activeCategory } = useCategoryStore();
-  const {
-    data: topSelectionFoods,
-    isLoading,
-    isError,
-  } = useTopSelectionFoods();
+  const { data: topSelectionFoods, isLoading, isError } = useTopSelectionFoods();
   const topSelectionProducts = topSelectionFoods?.data || [];
   const roomId = usePathId("/room-service/");
 
-  const filteredPopular =
-    activeCategory === null
-      ? topSelectionProducts
-      : topSelectionProducts.filter((item) => item.category_id === activeCategory);
+  const filteredPopular = activeCategory === null ? topSelectionProducts : topSelectionProducts?.filter((item: any) => item.category === activeCategory);
 
-
-  const handleAddToCart = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    id: string
-  ) => {
-    const item = topSelectionProducts.find((i) => i.id === parseInt(id));
+  const handleAddToCart = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, id: string) => {
+    const item = topSelectionProducts.find((i: any) => i.id === parseInt(id));
     if (!item) return;
 
     const card = e.currentTarget.closest(".card-container") as HTMLElement;
@@ -58,7 +47,7 @@ export default function SelectionList() {
       quantity: 1,
       image: item.photothumb,
       description: item.description,
-      category_id: item.category_id,
+      category: item.category_id,
       message: "",
     });
 
@@ -73,45 +62,27 @@ export default function SelectionList() {
       <div className="flex items-center justify-between mb-2">
         <h2 className="text-lg font-bold text-card-foreground">Selection</h2>
         <Link to="/view-all/$roomId" params={{ roomId }}>
-          <span className="text-sm font-semibold cursor-pointer text-base-accent">
-            View All
-          </span>
+          <span className="text-sm font-semibold cursor-pointer text-base-accent">View All</span>
         </Link>
       </div>
 
-      <motion.div
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-      >
+      <motion.div variants={containerVariants} initial="hidden" animate="visible">
         {isLoading ? (
-          [...Array(8)].map((_, index) => (
-            <SkeletonVerticalLoader key={index} />
-          ))
+          [...Array(8)].map((_, index) => <SkeletonVerticalLoader key={index} />)
         ) : isError ? (
           <ErrorState />
         ) : (
-          filteredPopular.slice(0, 12).map((item) => (
+          filteredPopular.slice(0, 12).map((item: any) => (
             <motion.div key={item.id} variants={itemVariants}>
               <div className="relative card-container">
-                <Link
-                  to="/room-service/$serviceId"
-                  params={{ serviceId: item.id.toString() }}
-                >
+                <Link to="/room-service/$serviceId" params={{ serviceId: item.id.toString() }}>
                   <Card className="py-2 mb-4 overflow-hidden border-none customShadowSm rounded-xl">
                     <CardContent className="relative flex items-center gap-4 px-2">
-                      <img
-                        src={item.photothumb}
-                        alt={item.name}
-                        className="object-cover w-24 h-24 rounded-xl"
-                        loading="lazy"
-                      />
+                      <img src={item.photothumb} alt={item.name} className="object-cover w-24 h-24 rounded-xl" loading="lazy" />
                       <div className="flex-grow">
                         <h3 className="font-bold">{item.name}</h3>
-                        <p className="!text-sm line-clamp-2 text-muted-foreground" dangerouslySetInnerHTML={{__html: item.description}} />
-                        <p className="mt-1 font-bold">
-                          ${parseFloat(item.price).toFixed(2)}
-                        </p>
+                        <p className="!text-sm line-clamp-2 text-muted-foreground" dangerouslySetInnerHTML={{ __html: item.description }} />
+                        <p className="mt-1 font-bold">${parseFloat(item.price).toFixed(2)}</p>
                       </div>
                     </CardContent>
                   </Card>
@@ -120,8 +91,7 @@ export default function SelectionList() {
                 <Button
                   size="icon"
                   onClick={(e) => handleAddToCart(e, item.id.toString())}
-                  className="absolute flex items-center justify-center w-6 h-6 p-0 text-white border-none rounded-full shadow-none cursor-pointer bottom-3 right-3 bg-base-primary"
-                >
+                  className="absolute flex items-center justify-center w-6 h-6 p-0 text-white border-none rounded-full shadow-none cursor-pointer bottom-3 right-3 bg-base-primary">
                   <Plus className="w-4 h-4 text-white" />
                 </Button>
               </div>

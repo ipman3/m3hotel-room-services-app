@@ -21,14 +21,14 @@ interface Props {
 }
 
 export default function ServiceDetailSheet({ service }: Props) {
-  const serviceType = "room-service";
+  const serviceType = "restautant";
   const [quantity, setQuantity] = useState(service.quantity || 1);
   const navigate = useNavigate();
   const [message, setMessage] = useState("");
   const addItem = useCartStore((state) => state.addItem);
 
   const handleAddToCart = () => {
-    const newItem = {
+    const newItem: any = {
       serviceType: serviceType,
       name: service.name,
       price: service.price,
@@ -59,25 +59,19 @@ export default function ServiceDetailSheet({ service }: Props) {
         <div className="flex items-center gap-2">
           <button
             onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-            className={`w-6 h-6 ${quantity > 1 ? "text-white bg-base-primary" : "text-muted-foreground bg-gray-200"} flex items-center justify-center rounded-full`}
-          >
+            className={`w-6 h-6 ${quantity > 1 ? "text-white bg-base-primary" : "text-muted-foreground bg-gray-200"} flex items-center justify-center rounded-full`}>
             <Minus size={12} />
           </button>
           <span className="min-w-[24px] text-center">{quantity}</span>
-          <button
-            onClick={() => setQuantity((q) => q + 1)}
-            className="flex items-center justify-center w-6 h-6 text-white rounded-full bg-base-primary"
-          >
+          <button onClick={() => setQuantity((q) => q + 1)} className="flex items-center justify-center w-6 h-6 text-white rounded-full bg-base-primary">
             <Plus size={12} />
           </button>
         </div>
       </div>
 
       <h1 className="text-xl font-bold text-black">{service.name}</h1>
-      <p className="text-sm text-muted-foreground" dangerouslySetInnerHTML={{__html: service.description}} />
-      <div className="text-xl font-bold text-primary">
-        ${parseFloat(service.price).toFixed(2)}
-      </div>
+      <p className="text-sm text-muted-foreground" dangerouslySetInnerHTML={{ __html: service.description }} />
+      <div className="text-xl font-bold text-primary">${parseFloat(service.price).toFixed(2)}</div>
 
       <div className="flex flex-col w-full gap-2 mt-8">
         <label>Instructions</label>
@@ -88,10 +82,7 @@ export default function ServiceDetailSheet({ service }: Props) {
           className="placeholder-gray-400 bg-base-input"
         />
         <div className="mt-4">
-          <Button
-            onClick={handleAddToCart}
-            className="w-full h-12 py-5 text-base bg-base-primary rounded-full"
-          >
+          <Button onClick={handleAddToCart} className="w-full h-12 py-5 text-base bg-base-primary rounded-full">
             Add {quantity} to Cart - ${(parseFloat(service.price) * quantity).toFixed(2)}
           </Button>
         </div>

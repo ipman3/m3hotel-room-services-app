@@ -2,12 +2,7 @@ import * as React from "react";
 import { Link } from "@tanstack/react-router";
 import Autoplay from "embla-carousel-autoplay";
 
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  type CarouselApi,
-} from "@/components/ui/carousel";
+import { Carousel, CarouselContent, CarouselItem, type CarouselApi } from "@/components/ui/carousel";
 import { useSpecialOffersByType } from "@/hooks/offer/useGetOfferByType";
 import { Skeleton } from "@/components/ui/skeleton";
 import ErrorState from "@/components/ErrorState";
@@ -17,11 +12,7 @@ export default function OffersCarousel() {
   const [current, setCurrent] = React.useState(0);
   const [count, setCount] = React.useState(0);
   const type = "spa";
-  const {
-    data: offersByType,
-    isLoading,
-    isError,
-  } = useSpecialOffersByType(type);
+  const { data: offersByType, isLoading, isError } = useSpecialOffersByType(type);
 
   const offerItems = offersByType?.data || [];
 
@@ -42,12 +33,14 @@ export default function OffersCarousel() {
 
   return (
     <section>
-      <div className="flex items-center justify-between px-4 mb-4">
-        <h2 className="text-lg font-bold text-primary">Offers & News</h2>
-        <Link to="/offer">
-          <span className="text-sm font-semibold text-base-accent">View All</span>
-        </Link>
-      </div>
+      {offersByType && offersByType?.data?.length > 0 && (
+        <div className="flex items-center justify-between px-4 mb-4">
+          <h2 className="text-lg font-bold text-primary">Offers & News</h2>
+          <Link to="/offer">
+            <span className="text-sm font-semibold text-base-accent">View All</span>
+          </Link>
+        </div>
+      )}
 
       <div className="relative">
         <Carousel
@@ -69,12 +62,7 @@ export default function OffersCarousel() {
               offerItems.map((offer, index) => (
                 <CarouselItem key={index} className="basis-1/1">
                   <div className="relative h-48">
-                    <img
-                      src={offer.image}
-                      alt={offer.name}
-                      className="object-cover w-full h-full rounded-xl"
-                      loading="lazy"
-                    />
+                    <img src={offer.image} alt={offer.name} className="object-cover w-full h-full rounded-xl" loading="lazy" />
                     <div className="absolute inset-0 w-full pointer-events-none bg-black/20 rounded-xl" />
                   </div>
                 </CarouselItem>
