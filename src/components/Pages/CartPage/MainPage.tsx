@@ -136,8 +136,6 @@ export default function MainPage() {
     //   }
     // });
 
-    // console.log("FormData prepared:", combinedData);
-
     onSubmitMutation(combinedData, {
       onSuccess: (data, params, ctx) => {
         if (!data.status) {
