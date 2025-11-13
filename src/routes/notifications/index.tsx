@@ -1,5 +1,7 @@
 import HeaderComponent from "@/components/layout/HeaderComponent";
 import MainPage from "@/components/Pages/NotificationsPage/MainPage";
+import post from "@sfutureapps/req-sdk";
+import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/notifications/")({
@@ -7,11 +9,26 @@ export const Route = createFileRoute("/notifications/")({
 });
 
 function RouteComponent() {
+
+
+  const {data: notifications} = useQuery({
+    queryKey: ['notifications'],
+    queryFn: async () => await post({
+      endpoint: 'Notification/index',
+      data: {
+        name: 'dsfsdfds',
+        tableId: 74
+      }
+    }),
+    refetchInterval:1000
+  })
+
+
   return (
     <div>
       <HeaderComponent title="Notifications" showBack={false} />
       <main className="mt-12 max-w-md mx-auto w-full">
-        <MainPage />
+        {notifications && <MainPage notifications={notifications?.data} />}
       </main>
     </div>
   );

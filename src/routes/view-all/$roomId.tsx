@@ -15,7 +15,7 @@ export const Route = createFileRoute("/view-all/$roomId")({
 
 function RouteComponent() {
   const { hide, show } = useNavbarStore((state) => state);
-
+  
   useEffect(() => {
     hide();
     return () => {
