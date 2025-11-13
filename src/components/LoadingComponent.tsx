@@ -12,7 +12,7 @@ const Loading: React.FC<LoadingProps> = ({ message = "Loading..." }) => {
         className="flex flex-col items-center justify-center p-3 rounded-2xl bg-white/80 shadow-2xl w-[120px] max-w-[120px] h-[120px] max-h-[120px] overflow-hidden">
         <div className="inset-0 flex items-center justify-center bg-white/80 rounded-2xl">
           <div style={{ position: "absolute", padding: 20 }}>
-            <img src="/logo192.png" alt="logo" width={35} height={35} />
+            <img src="/assets/imgs/m3_logo.png" alt="logo" width={35} height={35} />
           </div>
 
           <div className="flex flex-col items-center justify-center w-full gap-4">

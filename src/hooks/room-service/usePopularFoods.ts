@@ -10,7 +10,7 @@ import post from "@/lib/Api";
 import type { ProductTypesResponse } from "@/types/room-service/roomServiceType";
 
 export function usePopularFoods() {
-  return useQuery<ProductTypesResponse>({
+  return useQuery({
     queryKey: ["popularFoods"],
     queryFn: () =>
       post({

@@ -22,6 +22,9 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { Icons } from "../../../../public/assets/icons";
+import { useMutation } from "@tanstack/react-query";
+import post from "@sfutureapps/req-sdk";
+import { useLoading } from "@/context/LoadingContext";
 
 type DisplayItem = CartItem & {
   originalIds?: string[];
@@ -35,6 +38,7 @@ export default function MainPage() {
   const [isClearDialogOpen, setIsClearDialogOpen] = useState(false);
   const navigate = useNavigate();
   // const setPendingItem = useCartStore((state) => state.setPendingItem);
+  const { setLoading, setMessage } = useLoading();
 
   const displayedItems = useMemo(() => {
     // Use a Map for efficient grouping. Key: item name, Value: DisplayItem
@@ -48,12 +52,10 @@ export default function MainPage() {
       if (groupedItems.has(key)) {
         const existing = groupedItems.get(key)!;
         existing.quantity = (existing.quantity || 0) + quantity;
-        existing.originalIds?.push(item.id);
       } else {
         groupedItems.set(key, {
           ...item,
           quantity: quantity,
-          originalIds: [item.id],
         });
       }
     }
@@ -97,35 +99,62 @@ export default function MainPage() {
   const serviceCharge = 0;
   const total = discountedSubtotal + serviceCharge;
 
+  const { mutate: onSubmitMutation } = useMutation({
+    mutationKey: ["submitOrder"],
+    mutationFn: async (formData: any) =>
+      await post({
+        endpoint: "telegram/sendTelegram",
+        data: formData,
+      }),
+  });
+
   const onSubmit = (data: CustomerFormData) => {
+    setLoading(true);
+    setMessage!("Proccessing...");
+
     const combinedData = {
-      ...data,
-      items: displayedItems,
+      name: data.customerName,
+      items: JSON.stringify(displayedItems),
       subTotal: getSubtotal(),
       finalTotal: total,
       total: total,
       totalDiscount: discountAmount,
       store_id: 12,
       table_id: localStorage.getItem("table_id"),
+      service_type: "restautant",
     };
 
     // Convert to FormData
-    const formData = new FormData();
-    Object.entries(combinedData).forEach(([key, value]) => {
-      if (value !== undefined && value !== null) {
-        if (typeof value === "object") {
-          formData.append(key, JSON.stringify(value));
-        } else {
-          formData.append(key, String(value));
+    // const formData = new FormData();
+    // Object.entries(combinedData).forEach(([key, value]) => {
+    //   if (value !== undefined && value !== null) {
+    //     if (typeof value === "object") {
+    //       formData.append(key, JSON.stringify(value));
+    //     } else {
+    //       formData.append(key, String(value));
+    //     }
+    //   }
+    // });
+
+    // console.log("FormData prepared:", combinedData);
+
+    onSubmitMutation(combinedData, {
+      onSuccess: (data, params, ctx) => {
+        if (!data.status) {
+          throw new Error(data.message);
         }
-      }
+        localStorage.setItem("customer_name", params.name);
+        confirmPendingItem?.();
+        setLoading(false);
+        clearCart();
+        setMessage!("");
+        navigate({ to: "/success", replace: true });
+      },
+      onError: (error) => {
+        toast.error(error?.message);
+        console.error("Order submission error:", error);
+      },
     });
-
-    console.log("FormData prepared:", combinedData);
-
-    // confirmPendingItem?.();
-    // clearCart();
-    // navigate({ to: "/success" });
   };
 
   const handleClearCart = () => {

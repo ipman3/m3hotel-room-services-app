@@ -5,24 +5,27 @@ export interface CartItem {
   serviceType?: string;
   id: string;
   name: string;
+  price: string;
+  image: string;
+  quantity: number;
+  discount?: string;
+
+  //additional for room service
+  description: string;
+  serviceName?: string;
   // packageName?: string;
   date?: Date;
   time?: string;
-  price: string;
-  category: number;
   message: string;
-  image: string;
-  description: string;
-  quantity: number;
-  serviceName?: string;
+  category: number;
 }
 
 interface CartState {
   items: CartItem[];
-  pendingItem: Omit<CartItem, "id"> | null;
-  setPendingItem: (item: Omit<CartItem, "id"> | null) => void;
+  pendingItem: Partial<CartItem> | null;
+  setPendingItem: (item: Partial<CartItem> | null) => void;
   confirmPendingItem: () => void;
-  addItem: (item: Omit<CartItem, "id">) => void;
+  addItem: (item: Partial<CartItem>) => void;
   removeItem: (itemId: string) => void;
   updateQuantity: (itemId: string, newQuantity: number) => void;
   clearCart: () => void;
@@ -38,16 +41,28 @@ export const useCartStore = create<CartState>()(
       confirmPendingItem: () =>
         set((state) => {
           if (!state.pendingItem) return {};
-          const newItem = { ...state.pendingItem, id: crypto.randomUUID() };
+          const newItem = { ...state.pendingItem } as CartItem;
           return {
             items: [...state.items, newItem],
             // pendingItem: null,
           };
         }),
       addItem: (item) =>
-        set((state) => ({
-          items: [...state.items, { ...item, id: crypto.randomUUID() }],
-        })),
+        set((state: any) => {
+          const existingItemIndex = state.items.findIndex((i: any) => i.id === item.id && i.serviceType === item.serviceType);
+          if (existingItemIndex !== -1) {
+            // Item exists, update quantity
+            const updatedItems = [...state.items];
+            const existingItem = updatedItems[existingItemIndex];
+            updatedItems[existingItemIndex] = {
+              ...existingItem,
+              quantity: existingItem.quantity + (item.quantity || 1),
+            };
+            return { items: updatedItems };
+          } else {
+            return { items: [...state.items, item] };
+          }
+        }),
       removeItem: (itemId) =>
         set((state) => ({
           items: state.items.filter((item) => item.id !== itemId),

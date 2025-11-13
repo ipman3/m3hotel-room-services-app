@@ -15,7 +15,7 @@ import ErrorState from "@/components/ErrorState";
 import { useCategoryStore } from "@/store/CategoryStore";
 
 export default function PopularServiceSection() {
-  const serviceType = "room-service";
+  const serviceType = "restautant";
   const navigate = useNavigate();
   const { data: popularFoods, isLoading, isError } = usePopularFoods();
   const addItem = useCartStore((state) => state.addItem);
@@ -23,11 +23,16 @@ export default function PopularServiceSection() {
   const popularProducts = popularFoods?.data || [];
   const roomId = usePathId("/room-service/");
 
-  const filteredPopular = activeCategory === null ? popularProducts : popularProducts.filter((item) => item.category_id === activeCategory);
+  const filteredPopular = activeCategory === null ? popularProducts : popularProducts.filter((item: any) => item.category_id === activeCategory);
 
   const handleAddToCart = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, id: string) => {
-    const item = popularProducts.find((i) => i.id === parseInt(id));
+    const item = popularProducts.find((i: any) => i.id === parseInt(id));
     if (!item) return;
+
+    console.log(item);
+    // console.log(id);
+
+    // return;
 
     const card = (e.currentTarget.closest(".card-container") as HTMLElement)!;
     const rect = card.getBoundingClientRect();
@@ -46,8 +51,10 @@ export default function PopularServiceSection() {
       quantity: 1,
       image: item.photothumb,
       description: item.description,
-      category_id: item.category_id,
       message: "",
+      discount: item.discount,
+      category: item.category_id,
+      id: item.id.toString(),
     };
     addItem(newItem);
 
@@ -77,7 +84,7 @@ export default function PopularServiceSection() {
         ) : isError ? (
           <ErrorState />
         ) : (
-          filteredPopular.slice(0, 5).map((item) => (
+          filteredPopular?.map((item: any) => (
             <motion.div key={item.id} variants={itemVariants}>
               <div className="relative snap-start card-container">
                 <Link to="/room-service/$serviceId" params={{ serviceId: item.id.toString() }}>
