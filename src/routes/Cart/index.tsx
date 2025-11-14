@@ -2,7 +2,7 @@ import HeaderComponent from "@/components/layout/HeaderComponent";
 import MainPage from "@/components/Pages/CartPage/MainPage";
 import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/cart/")({
+export const Route = createFileRoute("/Cart/")({
   component: RouteComponent,
 });
 
