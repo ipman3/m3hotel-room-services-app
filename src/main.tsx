@@ -6,6 +6,10 @@ import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import LoadingProvider from "./context/LoadingContext";
 
+
+
+
+
 const router = createRouter({
   routeTree,
   context: {},
