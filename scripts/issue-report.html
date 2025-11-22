@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>{{projectName}} - {{summary}}</title>
+  <style>
+    html,
+    body {
+      height: auto;
+      font-family: Arial,
+        sans-serif;
+      font-size: 14px;
+    }
+
+    * {
+      page-break-before: avoid;
+      page-break-after: avoid;
+      page-break-inside: avoid;
+    }
+
+
+    table.issue {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    table.issue td {
+      border: 1px solid #b5b5b5;
+      padding: 3px 6px;
+      vertical-align: top;
+    }
+
+    .issue-header {
+      background: #f4f4f4;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .label-cell {
+      background: #e6e6e6;
+      font-weight: bold;
+      width: 15%;
+      white-space: nowrap;
+    }
+
+    .section-header {
+      background: #d9d9d9;
+      font-weight: bold;
+    }
+
+    a {
+      color: #0000ff;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+  <table class="issue">
+    <!-- Header line -->
+    <tr class="issue-header">
+      <td colspan="4">
+        [BUG{{key}}]
+        <a href="{{issueUrl}}">
+          {{projectName}} - {{summary}}
+        </a>
+        <div style="font-weight:normal;font-size: 12px;color: #333;margin-top: 7px;">
+          Created: {{created}}
+        </div>
+      </td>
+    </tr>
+
+    <!-- Status / Type / Priority row -->
+    <tr>
+      <td class="label-cell">Status:</td>
+      <td>{{status}}</td>
+      <td class="label-cell">Priority:</td>
+      <td>{{priority}}</td>
+    </tr>
+
+    <tr>
+      <td class="label-cell">Type:</td>
+      <td>{{type}}</td>
+      <td class="label-cell">Assignee:</td>
+      <td>{{assignee}}</td>
+    </tr>
+
+    <!-- Description section -->
+    <tr>
+      <td colspan="4" class="section-header">Description</td>
+    </tr>
+    <tr>
+      <td colspan="4">
+        {{{descriptionHtml}}}
+        <!-- Example image inside description -->
+        <!-- <p><img src="screenshot.png" style="max-width:100%;"></p> -->
+      </td>
+    </tr>
+  </table>
+</body>
+
+</html>

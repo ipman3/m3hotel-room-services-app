@@ -1,0 +1,40 @@
+name: Generate Issue Report
+
+on:
+  workflow_dispatch: {} # manual trigger in Actions tab
+
+jobs:
+  build-report:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Use Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: "22"
+
+    - name: Install marked
+      run: npm install marked
+
+    - name: Generate issue report HTML
+      id: set-date
+      env:
+        GITHUB_TOKEN: ${{ secrets.SERVER_GITHUB_TOKEN }}
+      run: |
+        node scripts/generate-issue-report.js
+        REPORT_DATE=$(date +%Y%m%d-%H%M%S)
+        mv scripts/issue-report.html scripts/issue-report-${REPORT_DATE}.html
+        echo "date=${REPORT_DATE}" >> $GITHUB_OUTPUT
+
+    - name: Upload reports as artifact
+      env:
+        REPORT_DATE: ${{ steps.set-date.outputs.date }}
+      uses: actions/upload-artifact@v4
+      with:
+        name: jira-style-report-${{ env.REPORT_DATE }}
+        path: |
+          scripts/issue-report-*.html
+          scripts/issue-report-*.pdf

@@ -1,0 +1,61 @@
+name: Notify Telegram on Issues
+
+on:
+  issues:
+    types: [ opened, closed, reopened ]
+
+# Enforce least privilege; no token permissions needed for this job
+permissions: {}
+
+jobs:
+  notify-telegram:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Send Telegram message
+      env:
+        TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+        TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+
+        # From GitHub context
+        ISSUE_TITLE: ${{ github.event.issue.title }}
+        ISSUE_URL: ${{ github.event.issue.html_url }}
+        ACTION: ${{ github.event.action }}
+        USER: ${{ github.actor }}
+        REPO: ${{ github.repository }}
+      run: |
+        # Skip if secrets are not configured
+        if [ -z "$TELEGRAM_TOKEN" ] || [ -z "$TELEGRAM_CHAT_ID" ]; then
+          echo "TELEGRAM_TOKEN or TELEGRAM_CHAT_ID not set; skipping notification."
+          exit 0
+        fi
+
+        # Derive assignees and labels from event payload using jq
+        ASSIGNEES=$(jq -r 'if (.issue.assignees | length) > 0 then [.issue.assignees[].login] | join(", ") else "None" end' "$GITHUB_EVENT_PATH")
+        LABELS=$(jq -r 'if (.issue.labels | length) > 0 then [.issue.labels[].name] | join(", ") else "None" end' "$GITHUB_EVENT_PATH")
+
+        # Escape for Telegram MarkdownV2
+        escape_mdv2() {
+          perl -CS -pe 's/([_*\[\]()~`>#+\-=|{}\.!\\])/\\$1/g'
+        }
+
+        SAFE_REPO=$(printf "%s" "$REPO" | escape_mdv2)
+        SAFE_TITLE=$(printf "%s" "$ISSUE_TITLE" | escape_mdv2)
+        SAFE_URL=$(printf "%s" "$ISSUE_URL")
+        SAFE_ACTION=$(printf "%s" "$ACTION" | escape_mdv2)
+        SAFE_USER=$(printf "%s" "$USER" | escape_mdv2)
+        SAFE_ASSIGNEES=$(printf "%s" "$ASSIGNEES" | escape_mdv2)
+        SAFE_LABELS=$(printf "%s" "$LABELS" | escape_mdv2)
+
+        TEXT="$(printf '*%s*\nIssue: [%s](%s)\nStatus: %s\nBy: %s\nAssignees: %s\nLabels: %s\\.\n' \
+          "$SAFE_REPO" "$SAFE_TITLE" "$SAFE_URL" "$SAFE_ACTION" "$SAFE_USER" "$SAFE_ASSIGNEES" "$SAFE_LABELS")"
+
+        resp=$(curl -sS -X POST "https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage" \
+          -d chat_id="${TELEGRAM_CHAT_ID}" \
+          --data-urlencode "text=${TEXT}" \
+          -d parse_mode="MarkdownV2")
+
+        if [ "$(echo "$resp" | jq -r '.ok')" != "true" ]; then
+          echo "Telegram API error: $resp" >&2
+          exit 1
+        fi
