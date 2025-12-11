@@ -1,6 +1,5 @@
 import { createRootRoute } from "@tanstack/react-router";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import LoadingProvider from "@/context/LoadingContext";
 import AppLayout from "@/components/layout/AppLayout";
 
@@ -16,7 +15,6 @@ function RootComponent() {
       <LoadingProvider>
         <AppLayout />
       </LoadingProvider>
-      {/* <ReactQueryDevtools /> */}
     </QueryClientProvider>
   );
 }

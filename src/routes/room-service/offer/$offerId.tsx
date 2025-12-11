@@ -1,15 +1,13 @@
 import HeaderComponent from "@/components/layout/HeaderComponent";
-import OfferDetails from "@/components/Pages/roomservice/Offer/OfferDetails";
-import useNavbarStore from "@/store/Navbar";
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect } from "react";
+
 
 export const Route = createFileRoute("/room-service/offer/$offerId")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const { offerId } = Route.useParams();
+  // const { offerId } = Route.useParams();
   // const offerData =
   //   OfferServiceItem.find((item) => item.id === offerId) ||
   //   OfferServiceItem[0];

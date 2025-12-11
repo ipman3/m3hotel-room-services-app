@@ -1,6 +1,4 @@
 import HeaderComponent from "@/components/layout/HeaderComponent";
-import ServiceForm from "@/components/Pages/thing-to-do/ServiceForm";
-import { useThingDetail } from "@/hooks/thing-to-do/useThingDetail";
 import useNavbarStore from "@/store/Navbar";
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect } from "react";
@@ -10,9 +8,9 @@ export const Route = createFileRoute("/thing-to-do/booking/$serviceId")({
 });
 
 function RouteComponent() {
-  const serviceType = "thing-to-do";
+  // const serviceType = "thing-to-do";
   const { hide, show } = useNavbarStore((state) => state);
-  const { serviceId } = Route.useParams();
+  // const { serviceId } = Route.useParams();
 
   useEffect(() => {
     hide();
@@ -21,8 +19,8 @@ function RouteComponent() {
     };
   }, [hide, show]);
 
-  const { data: thingDetail } = useThingDetail(Number(serviceId));
-  const serviceData = thingDetail?.data;
+  // const { data: thingDetail } = useThingDetail(Number(serviceId));
+  // const serviceData:any = thingDetail?.data;
 
   return (
     <div>

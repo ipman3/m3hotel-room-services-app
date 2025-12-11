@@ -1,7 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { Card, CardContent } from "@/components/ui/card";
 import CategoryFilters from "../roomservice/CategoryFilters";
-import { useProductsByStore } from "@/hooks/room-service/useProductsByStore";
 import SkeletonVerticalLoader from "@/components/SkeletonVerticalLoader";
 import ErrorState from "@/components/ErrorState";
 import { useCategoryStore } from "@/store/CategoryStore";

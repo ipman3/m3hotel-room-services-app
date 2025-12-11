@@ -70,7 +70,7 @@ export default function ServiceForm({ id, name, short_desc, price, category_id, 
     confirmPendingItem?.();
     toast.success("Item added to cart!", {
       duration: 8000,
-      action: { label: "View Cart", onClick: () => navigate({ to: "/cart" }) },
+      action: { label: "View Cart", onClick: () => navigate({ to: "/Cart" }) },
     });
     // navigate({ to: "/thing-to-do/confirm-booking" });
     // navigate({ to: "/thing-to-do" });

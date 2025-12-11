@@ -10,6 +10,8 @@ export interface CartItem {
   quantity: number;
   discount?: string;
 
+  priceOption?: string;
+
   //additional for room service
   description: string;
   serviceName?: string;

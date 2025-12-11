@@ -6,6 +6,7 @@ interface CustomButtonSubmitProps {
   textBtn: string;
   isLoading?: boolean;
   className?: string;
+  disabled?: boolean;
   onClick?: () => void;
 }
 
@@ -14,6 +15,7 @@ export function CustomButtonSubmit({
   isLoading,
   className,
   onClick,
+  disabled
 }: CustomButtonSubmitProps) {
   return (
     <Button
@@ -21,7 +23,7 @@ export function CustomButtonSubmit({
       size="lg"
       onClick={onClick}
       className={`w-full h-12 mt-4 bg-base-primary text-card ${className}`}
-      disabled={isLoading}
+      disabled={isLoading || disabled}
     >
       {isLoading ? (
         <span className="flex items-center gap-1">

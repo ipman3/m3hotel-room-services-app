@@ -24,7 +24,7 @@ function RouteComponent() {
   }, [hide, show]);
 
   const { data: thingDetail, isLoading } = useThingDetail(Number(thingId));
-  const serviceData = thingDetail?.data;
+  const serviceData:any = thingDetail?.data;
 
   return (
     <div>

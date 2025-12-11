@@ -17,7 +17,7 @@ export const Route = createFileRoute("/view-all/$thingId")({
 });
 
 function RouteComponent() {
-  const { thingId } = Route.useLoaderData();
+  // const { thingId } = Route.useLoaderData();
 
   const { hide, show } = useNavbarStore((state) => state);
 

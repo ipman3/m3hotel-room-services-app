@@ -60,7 +60,7 @@ export default function PopularServiceSection() {
 
     toast.success("Item added to cart!", {
       duration: 3000,
-      action: { label: "View Cart", onClick: () => navigate({ to: "/cart" }) },
+      action: { label: "View Cart", onClick: () => navigate({ to: "/Cart" }) },
       id: "add-to-cart-success",
     });
   };

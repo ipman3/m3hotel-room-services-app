@@ -1,5 +1,4 @@
 import HeaderComponent from "@/components/layout/HeaderComponent";
-import OrderDetailsPage from "@/components/Pages/OrdersPage/OrderDetailsPage";
 import useNavbarStore from "@/store/Navbar";
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect } from "react";
@@ -9,7 +8,7 @@ export const Route = createFileRoute("/orders/$orderId")({
 });
 
 function RouteComponent() {
-  const { orderId } = Route.useParams();
+
   const { hide, show } = useNavbarStore((state) => state);
 
   useEffect(() => {

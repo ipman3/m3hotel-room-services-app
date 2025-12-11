@@ -21,7 +21,7 @@ export function FloatingCartButton() {
   return (
     <motion.button
       ref={cartFabRef}
-      onClick={() => navigate({ to: "/cart" })}
+      onClick={() => navigate({ to: "/Cart" })}
       className="fixed z-50 flex items-center justify-center w-12 h-12 rounded-full shadow-lg bg-base-primary/80 text-card bottom-4 right-4"
       initial={{ opacity: 0, scale: 0.5 }}
       animate={{ opacity: 1, scale: 1 }}

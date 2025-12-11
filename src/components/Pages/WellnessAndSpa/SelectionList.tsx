@@ -5,8 +5,6 @@ import { usePathId } from "@/hooks/usePathId";
 import { useTopSelectionSpas } from "@/hooks/wellness-spa/useTopSelectionSpa";
 import { containerVariants, itemVariants } from "@/lib/variantsAnimation";
 import { useCategoryStore } from "@/store/CategoryStore";
-import post from "@sfutureapps/req-sdk";
-import { useQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 
@@ -59,11 +57,7 @@ export default function SelectionList() {
                     />
                     <div className="flex-grow">
                       <h3 className="font-bold">{item.name.replace("_", " ")}</h3>
-                      <p className="text-sm text-muted-foreground">
-                        {item.desc.length > 30
-                          ? item.desc.slice(0, 30) + "..."
-                          : item.desc}
-                      </p>
+                      <p className="text-sm text-muted-foreground leading-5 line-clamp-3">{item?.short_desc}</p>
                       <p className="mt-1 font-bold">
                         ${parseFloat(item.price).toFixed(2)}
                       </p>

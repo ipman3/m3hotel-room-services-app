@@ -5,9 +5,6 @@ import { usePathId } from "@/hooks/usePathId";
 import { usePopularSpas } from "@/hooks/wellness-spa/usePopularSpa";
 import { containerVariants, itemVariants } from "@/lib/variantsAnimation";
 import { useCategoryStore } from "@/store/CategoryStore";
-import { useQuery } from "@tanstack/react-query";
-import post from "@sfutureapps/req-sdk";
-import { useMemo } from "react";
 import { Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 

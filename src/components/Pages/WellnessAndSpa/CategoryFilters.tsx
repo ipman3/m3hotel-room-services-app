@@ -9,7 +9,7 @@ import { useQuery } from "@tanstack/react-query";
 export default function CategoryFilters() {
   const type = "spa";
   const { activeCategory, setActiveCategory } = useCategoryStore();
-  const { data, isLoading, isError } = useCategories(type);
+  const { isLoading, isError } = useCategories(type);
   // const categories = [{ id: null, name: "All" }, ...(data?.data || [])];
 
   const { data: categories } = useQuery({

@@ -41,7 +41,7 @@ export default function ServiceDetailSheet({ service }: Props) {
     addItem(newItem);
     toast.success("Item added to cart!", {
       duration: 8000,
-      action: { label: "View Cart", onClick: () => navigate({ to: "/cart" }) },
+      action: { label: "View Cart", onClick: () => navigate({ to: "/Cart" }) },
     });
     navigate({ to: "/room-service" });
   };
