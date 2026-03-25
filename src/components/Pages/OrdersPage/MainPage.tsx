@@ -3,8 +3,8 @@ import { Button } from "@/components/ui/button";
 import CardItemComponent from "../../CardItemComponent";
 import { Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import post from "@sfutureapps/req-sdk";
 import moment from "moment-timezone";
+import post from "@/lib/Api";
 
 export default function MainPage() {
   const [activeTab, setActiveTab] = useState("all");
@@ -14,7 +14,7 @@ export default function MainPage() {
     queryKey: ["ordersList"],
     queryFn: async () =>
       await post({
-        endpoint: "sales/index",
+        endpoint: "/sales/index",
         data: {
           cus_name: localStorage.getItem("customer_name"),
           table_name: localStorage.getItem("table_name"),

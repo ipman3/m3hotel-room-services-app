@@ -5,8 +5,8 @@ import SkeletonVerticalLoader from "@/components/SkeletonVerticalLoader";
 import ErrorState from "@/components/ErrorState";
 import { useCategoryStore } from "@/store/CategoryStore";
 import { useQuery } from "@tanstack/react-query";
-import post from "@sfutureapps/req-sdk";
 import { ImageAssets } from "../../../../public/assets/imgs";
+import post from "@/lib/Api";
 
 export default function ViewAllRoomService() {
   const storeId = 12;
@@ -24,7 +24,7 @@ export default function ViewAllRoomService() {
     queryKey: ["productsByStore", storeId],
     queryFn: async () =>
       await post({
-        endpoint: "products/search",
+        endpoint: "/products/search",
       }),
   });
 

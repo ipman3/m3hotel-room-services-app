@@ -1,9 +1,9 @@
 import HeaderComponent from "@/components/layout/HeaderComponent";
 import OrderDetailsPage from "@/components/Pages/OrdersPage/OrderDetailsPage";
 import { Skeleton } from "@/components/ui/skeleton";
+import post from "@/lib/Api";
 import useNavbarStore from "@/store/Navbar";
 import type { OrderItems } from "@/types/orderItem";
-import post from "@sfutureapps/req-sdk";
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect } from "react";
@@ -19,7 +19,7 @@ function RouteComponent() {
     queryKey: ["orderDetail", orderId],
     queryFn: async () =>
       await post({
-        endpoint: "sales/get_sale_detail",
+        endpoint: "/sales/get_sale_detail",
         data: {
           id: orderId,
         },

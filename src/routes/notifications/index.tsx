@@ -1,6 +1,6 @@
 import HeaderComponent from "@/components/layout/HeaderComponent";
 import MainPage from "@/components/Pages/NotificationsPage/MainPage";
-import post from "@sfutureapps/req-sdk";
+import post from "@/lib/Api";
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 
@@ -14,7 +14,7 @@ function RouteComponent() {
     queryKey: ["notifications"],
     queryFn: async () =>
       await post({
-        endpoint: "Notification/index",
+        endpoint: "/notification/index",
         data: {
           name: cust_name,
           tableId: localStorage.getItem("table_id"),

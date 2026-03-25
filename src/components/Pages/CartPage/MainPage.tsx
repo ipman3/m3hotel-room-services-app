@@ -23,8 +23,9 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Icons } from "../../../../public/assets/icons";
 import { useMutation } from "@tanstack/react-query";
-import post from "@sfutureapps/req-sdk";
+
 import { useLoading } from "@/context/LoadingContext";
+import post from "@/lib/Api";
 
 type DisplayItem = CartItem & {
   originalIds?: string[];
@@ -105,7 +106,7 @@ export default function MainPage() {
     mutationKey: ["submitOrder"],
     mutationFn: async (formData: any) =>
       await post({
-        endpoint: "telegram/sendTelegram",
+        endpoint: "/telegram/sendTelegram",
         data: formData,
       }),
   });
