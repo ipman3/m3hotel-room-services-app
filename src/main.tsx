@@ -1,14 +1,10 @@
 import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
-import { RouterProvider, createRouter } from "@tanstack/react-router";
+import { RouterProvider, createHashHistory, createRouter } from "@tanstack/react-router";
 import { routeTree } from "./routeTree.gen";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import LoadingProvider from "./context/LoadingContext";
-
-
-
-
 
 const router = createRouter({
   routeTree,
@@ -17,11 +13,8 @@ const router = createRouter({
   scrollRestoration: true,
   defaultStructuralSharing: true,
   defaultPreloadStaleTime: 0,
+  history: createHashHistory(),
 });
-
-
-
-
 
 declare module "@tanstack/react-router" {
   interface Register {
@@ -37,7 +30,7 @@ if (rootElement && !rootElement.innerHTML) {
       <LoadingProvider>
         <RouterProvider router={router} />
       </LoadingProvider>
-    </StrictMode>
+    </StrictMode>,
   );
 }
 

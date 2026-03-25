@@ -54,7 +54,7 @@ export default function AppLayout() {
             onSuccess(data) {
               if (data && data.code == 1) {
                 // Table info fetched successfully
-                // console.log("Table info:", data.data);
+                console.log("Table info:", data.data);
                 localStorage.setItem("store_id", data?.data?.store_id);
                 localStorage.setItem("table_id", data?.data?.id);
                 localStorage.setItem("table_name", data?.data?.name);
@@ -63,14 +63,16 @@ export default function AppLayout() {
                 return;
               }
             },
-            onSettled() {
-              checkTableInfo();
-            },
-          }
+            // onSettled() {
+            //   checkTableInfo();
+            // },
+          },
         );
-      } else {
-        checkTableInfo();
       }
+
+      // else {
+      checkTableInfo();
+      // }
     }, 2000);
 
     return () => clearTimeout(timer);

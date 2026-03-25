@@ -9,27 +9,24 @@ export const Route = createFileRoute("/notifications/")({
 });
 
 function RouteComponent() {
-
-
-  const {data: notifications} = useQuery({
-    queryKey: ['notifications'],
-    queryFn: async () => await post({
-      endpoint: 'Notification/index',
-      data: {
-        name: 'dsfsdfds',
-        tableId: 74
-      }
-    }),
-    refetchInterval:1000
-  })
-
+  const cust_name = localStorage.getItem("customer_name") || "";
+  const { data: notifications } = useQuery({
+    queryKey: ["notifications"],
+    queryFn: async () =>
+      await post({
+        endpoint: "Notification/index",
+        data: {
+          name: cust_name,
+          tableId: localStorage.getItem("table_id"),
+        },
+      }),
+    refetchInterval: 1000,
+  });
 
   return (
     <div>
       <HeaderComponent title="Notifications" showBack={false} />
-      <main className="mt-12 max-w-md mx-auto w-full">
-        {notifications && <MainPage notifications={notifications?.data} />}
-      </main>
+      <main className="mt-12 max-w-md mx-auto w-full">{notifications && <MainPage notifications={notifications?.data} />}</main>
     </div>
   );
 }

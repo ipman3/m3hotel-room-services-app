@@ -5,12 +5,16 @@ interface OrderDetailsPageProps {
 }
 
 export default function OrderDetailsPage({ orderData }: OrderDetailsPageProps) {
-  const subTotal: number = parseFloat(orderData.items.reduce((acc: any, item: any) => acc + item.price, 0));
+  const subTotal = orderData.items.reduce((acc: number, item: any) => {
+    const price = Number(item?.price ?? 0);
+    const quantity = Number(item?.quantity ?? item?.qt ?? 1);
+    return acc + price * quantity;
+  }, 0);
   const discount = 0;
 
   const serviceChargePercent = 7;
   const serviceCharge = (subTotal * serviceChargePercent) / 100;
-  const total = subTotal - discount + serviceCharge;
+  const total = orderData.totalAmount || subTotal - discount + serviceCharge;
 
   return (
     <div className="relative z-10 px-4 py-8 mt-12 rounded-t-4xl">
@@ -47,14 +51,14 @@ export default function OrderDetailsPage({ orderData }: OrderDetailsPageProps) {
                   <div className="flex flex-col justify-start">
                     <h3 className="font-semibold text-xs">Type: </h3>
                     <h3 className="font-semibold text-xs">Package: </h3>
-                    <h3 className="font-semibold text-xs">Hour: </h3>
+                    <h3 className="font-semibold text-xs">Qty: </h3>
                     <h3 className="font-semibold text-xs">Price: </h3>
                   </div>
 
                   <div className="flex flex-col justify-start">
                     <p className="text-start text-xs">{item.serviceType}</p>
-                    <p className="text-start text-xs">{item.packageName}</p>
-                    <p className="text-start text-xs">{item.time}</p>
+                    <p className="text-start text-xs">{item.packageName || "-"}</p>
+                    <p className="text-start text-xs">{item.quantity || item.qt || 1}</p>
                     <p className="text-start text-xs">${parseFloat(item.price).toFixed(2)}</p>
                   </div>
                 </div>
