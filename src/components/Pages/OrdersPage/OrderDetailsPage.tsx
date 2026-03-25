@@ -12,7 +12,7 @@ export default function OrderDetailsPage({ orderData }: OrderDetailsPageProps) {
   }, 0);
   const discount = 0;
 
-  const serviceChargePercent = 7;
+  const serviceChargePercent = 0;
   const serviceCharge = (subTotal * serviceChargePercent) / 100;
   const total = orderData.totalAmount || subTotal - discount + serviceCharge;
 

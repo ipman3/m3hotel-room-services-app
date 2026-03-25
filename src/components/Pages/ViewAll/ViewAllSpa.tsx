@@ -5,6 +5,7 @@ import { useCategoryStore } from "@/store/CategoryStore";
 import SkeletonVerticalLoader from "@/components/SkeletonVerticalLoader";
 import ErrorState from "@/components/ErrorState";
 import { useGetAllSpas } from "@/hooks/wellness-spa/useGetAllSpa";
+import { ImageAssets } from "../../../../public/assets/imgs";
 
 export default function ViewAllSpa() {
   const { data: allSpaItems, isLoading, isError } = useGetAllSpas(true);
@@ -37,10 +38,13 @@ export default function ViewAllSpa() {
               <Card className="py-4 mb-4 overflow-hidden border-none customShadowSm rounded-xl">
                 <CardContent className="flex items-center gap-4 px-4">
                   <img
-                    src={item.image}
+                    src={item.image || ImageAssets.placeholderService}
                     alt={item.name}
                     className="object-cover w-24 h-24 rounded-xl"
                     loading="lazy"
+                    onError={(event) => {
+                      event.currentTarget.src = ImageAssets.placeholderService;
+                    }}
                   />
                   <div className="flex-grow">
                     <h3 className="font-bold">{item.name}</h3>

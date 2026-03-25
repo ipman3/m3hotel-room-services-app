@@ -25,6 +25,9 @@ function RouteComponent() {
   const { data: spaDetail, isLoading } = useSpaDetail(Number(serviceId));
   const serviceData: any = spaDetail?.data;
 
+  console.log(serviceData);
+  
+
   return (
     <div>
       <HeaderComponent title="Selected items" />

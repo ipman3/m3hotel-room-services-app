@@ -1,136 +1,129 @@
-import {useForm} from "react-hook-form";
-import {format} from "date-fns";
-import {Calendar as CalendarIcon, Clock} from "lucide-react";
-import {toast} from "sonner";
+import { useForm } from "react-hook-form";
+import { format } from "date-fns";
+import { Calendar as CalendarIcon, Clock } from "lucide-react";
+import { toast } from "sonner";
 
-import {cn} from "@/lib/utils";
-import {Button} from "@/components/ui/button";
-import {Calendar} from "@/components/ui/calendar";
-import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form";
-import {Input} from "@/components/ui/input";
-import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
-import {Textarea} from "@/components/ui/textarea";
-import {useNavigate} from "@tanstack/react-router";
-import {useCartStore} from "@/store/CartStore";
-import {CustomButtonSubmit} from "@/components/CustomSubmitButtonCom";
-import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select.tsx";
-import {useMemo, useState} from "react";
+import { Textarea } from "@/components/ui/textarea";
+import { useNavigate } from "@tanstack/react-router";
+import { useCartStore } from "@/store/CartStore";
+import { CustomButtonSubmit } from "@/components/CustomSubmitButtonCom";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select.tsx";
+import { useMemo, useState } from "react";
 
 interface SpaFormProps {
-    id: number;
-    name: string;
-    short_desc: string;
-    desc: string;
-    image: string;
-    images: string[];
-    price: string;
-    unit: string;
-    category_id: number;
-    serviceType: string;
-    priceOptions?: { duration: number; price: number, description: string }[];
+  id: number;
+  name: string;
+  short_desc: string;
+  desc: string;
+  image: string;
+  images: string[];
+  price: string;
+  unit: string;
+  category_id: number;
+  serviceType: string;
+  priceOptions?: { duration: number; price: number; description: string }[];
 }
 
-export default function SpaForm({
-                                    id,
-                                    name,
-                                    price,
-                                    category_id,
-                                    serviceType,
-                                    image,
-                                    desc,
-                                    unit,
-                                    priceOptions
-                                }: SpaFormProps) {
-    const navigate = useNavigate();
-    const {setPendingItem, confirmPendingItem} = useCartStore();
-    const [isDisabled, setIsDisabled] = useState(true);
+export default function SpaForm({ id, name, price, category_id, serviceType, image, desc, unit, priceOptions }: SpaFormProps) {
+  const navigate = useNavigate();
+  const { setPendingItem, confirmPendingItem } = useCartStore();
+  const [isDisabled, setIsDisabled] = useState(true);
 
-    const form = useForm<any>({
-        // resolver: zodResolver(spaSchema),
-        defaultValues: {
-            name: name,
-            serviceType: serviceType,
-            price: price,
-            category_id: category_id,
-            date: new Date(),
-            time: "10:30",
-            message: "",
-            option_price: "0", // default selection
-        },
-    });
+  const form = useForm<any>({
+    // resolver: zodResolver(spaSchema),
+    defaultValues: {
+      id: id,
+      name: name,
+      serviceType: serviceType,
+      price: price,
+      category_id: category_id,
+      date: new Date(),
+      time: "10:30",
+      message: "",
+      option_price: "0", // default selection
+    },
+  });
 
+  // // TypeScript
+  // function extractPrice(input: string): number | null {
+  //     const m = input.match(/USD\s*([0-9]+(?:\.[0-9]{1,2})?)/i);
+  //     return m ? parseFloat(m[1]) : null;
+  // }
 
-    // // TypeScript
-    // function extractPrice(input: string): number | null {
-    //     const m = input.match(/USD\s*([0-9]+(?:\.[0-9]{1,2})?)/i);
-    //     return m ? parseFloat(m[1]) : null;
-    // }
+  function onSubmit(values: any) {
+    console.log("Form Submitted:", values);
 
-    function onSubmit(values: any) {
-        console.log("Form Submitted:", values);
-
-
-        const selectedOption: any = priceItems?.find(option => option.duration.toString() === values.option_price);
-
-        // const priceValue = extractPrice(selectedOption ? `${selectedOption.duration} - USD ${selectedOption.price}` : "");
-
-        // Add the validated form data to the global cart store
-        const formValues = {
-            name: values.name,
-            date: values.date,
-            time: values.time,
-            price: selectedOption.price,
-            category: values.category_id,
-            serviceType: serviceType,
-            message: values.message || "",
-            image: image,
-            description: desc,
-            priceOption: selectedOption ? `${selectedOption.duration} - USD ${selectedOption.price}` : "",
-        }
-        setPendingItem(formValues);
-        // console.log(formValues)
-        confirmPendingItem?.();
-        toast.success("Item added to cart!", {
-            id: "spa-form-cart",
-            duration: 8000,
-            action: {label: "View Cart", onClick: () => navigate({to: "/Cart"})},
-        });
-        // navigate({ to: "/wellness-spa/confirm-appointment" });
-        navigate({to: "/wellness-spa"});
+    const selectedOption: any = priceItems?.find((option) => option.duration.toString() === values.option_price);
+    if (!selectedOption) {
+      toast.error("Please select a duration.");
+      return;
     }
 
+    // const priceValue = extractPrice(selectedOption ? `${selectedOption.duration} - USD ${selectedOption.price}` : "");
 
-    const priceItems = useMemo(() => {
-        console.log("Parsing priceOptions:", priceOptions);
-        if (!priceOptions) return [];
-        if (Array.isArray(priceOptions)) return priceOptions;
-        if (typeof priceOptions === "string") {
-            try {
-                const parsed = JSON.parse(priceOptions);
-                return Array.isArray(parsed) ? parsed : [];
-            } catch (err) {
-                console.warn("Failed to parse priceOptions JSON:", err);
-                return [];
-            }
-        }
+    // Add the validated form data to the global cart store
+    const formValues = {
+      id: id.toString(),
+      name,
+      date: values.date,
+      time: values.time,
+      price: selectedOption.price.toString(),
+      quantity: 1,
+      category: category_id,
+      serviceType,
+      message: values.message || "",
+      image,
+      description: desc,
+      priceOption: selectedOption ? `${selectedOption.duration} - USD ${selectedOption.price}` : "",
+    };
+    setPendingItem(formValues);
+    // console.log(formValues)
+    confirmPendingItem?.();
+    toast.success("Item added to cart!", {
+      id: "spa-form-cart",
+      duration: 8000,
+      action: { label: "View Cart", onClick: () => navigate({ to: "/Cart" }) },
+    });
+    // navigate({ to: "/wellness-spa/confirm-appointment" });
+    navigate({ to: "/wellness-spa" });
+  }
+
+  const priceItems = useMemo(() => {
+    console.log("Parsing priceOptions:", priceOptions);
+    if (!priceOptions) return [];
+    if (Array.isArray(priceOptions)) return priceOptions;
+    if (typeof priceOptions === "string") {
+      try {
+        const parsed = JSON.parse(priceOptions);
+        return Array.isArray(parsed) ? parsed : [];
+      } catch (err) {
+        console.warn("Failed to parse priceOptions JSON:", err);
         return [];
-    }, [priceOptions]);
+      }
+    }
+    return [];
+  }, [priceOptions]);
 
-    console.log("Rendering SpaForm with priceOptions:", priceItems);
+  console.log("Rendering SpaForm with priceOptions:", priceItems);
 
+  return (
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="mt-6 space-y-4">
+        <input type="hidden" value={id} />
+        <input type="hidden" value={name} />
+        <input type="hidden" value={unit} />
+        <input type="hidden" value={serviceType} />
+        <input type="hidden" value={price} />
+        <input type="hidden" value={category_id} />
 
-    return (
-        <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="mt-6 space-y-4">
-                <input type="hidden" value={id}/>
-                <input type="hidden" value={name}/>
-                <input type="hidden" value={unit}/>
-                <input type="hidden" value={serviceType}/>
-                <input type="hidden" value={price}/>
-                <input type="hidden" value={category_id}/>
-
-                {/* <FormField
+        {/* <FormField
           control={form.control}
           name="package"
           render={({ field }) => (
@@ -157,112 +150,107 @@ export default function SpaForm({
           )}
         /> */}
 
-                <FormField
-                    control={form.control}
-                    name="date"
-                    render={({field}) => (
-                        <FormItem className="flex flex-col">
-                            <FormLabel className="text-sm font-semibold uppercase text-foreground">Date</FormLabel>
-                            <Popover>
-                                <PopoverTrigger asChild>
-                                    <FormControl>
-                                        <Button
-                                            variant={"outline"}
-                                            className={cn("w-full justify-start text-left font-normal mt-1 bg-base-input border-none h-12", !field.value && "text-muted-foreground")}>
-                                            <CalendarIcon className="w-4 h-4 mr-2"/>
-                                            {field.value ? format(field.value, "PPP") : <span>Pick a date</span>}
-                                        </Button>
-                                    </FormControl>
-                                </PopoverTrigger>
-                                <PopoverContent className="w-auto p-0">
-                                    <Calendar mode="single" selected={field.value} onSelect={field.onChange}
-                                              initialFocus disabled={{before: new Date()}}/>
-                                </PopoverContent>
-                            </Popover>
-                            <FormMessage/>
-                        </FormItem>
-                    )}
-                />
+        <FormField
+          control={form.control}
+          name="date"
+          render={({ field }) => (
+            <FormItem className="flex flex-col">
+              <FormLabel className="text-sm font-semibold uppercase text-foreground">Date</FormLabel>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <FormControl>
+                    <Button
+                      variant={"outline"}
+                      className={cn("w-full justify-start text-left font-normal mt-1 bg-base-input border-none h-12", !field.value && "text-muted-foreground")}>
+                      <CalendarIcon className="w-4 h-4 mr-2" />
+                      {field.value ? format(field.value, "PPP") : <span>Pick a date</span>}
+                    </Button>
+                  </FormControl>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0">
+                  <Calendar mode="single" selected={field.value} onSelect={field.onChange} initialFocus disabled={{ before: new Date() }} />
+                </PopoverContent>
+              </Popover>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-                <FormField
-                    control={form.control}
-                    name="time"
-                    render={({field}) => (
-                        <FormItem>
-                            <FormLabel className="text-sm font-semibold uppercase text-foreground">Hours</FormLabel>
-                            <div className="relative mt-1">
-                                <Clock className="absolute w-4 h-4 text-black -translate-y-1/2 left-3 top-1/2"/>
-                                <FormControl>
-                                    <Input type="time" {...field}
-                                           className="w-full h-12 py-2 pl-10 pr-3 text-black border-none bg-base-input"/>
-                                </FormControl>
-                            </div>
-                            <FormMessage/>
-                        </FormItem>
-                    )}
-                />
+        <FormField
+          control={form.control}
+          name="time"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-sm font-semibold uppercase text-foreground">Hours</FormLabel>
+              <div className="relative mt-1">
+                <Clock className="absolute w-4 h-4 text-black -translate-y-1/2 left-3 top-1/2" />
+                <FormControl>
+                  <Input type="time" {...field} className="w-full h-12 py-2 pl-10 pr-3 text-black border-none bg-base-input" />
+                </FormControl>
+              </div>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-                <FormField
-                    control={form.control}
-                    name="option_price"
-                    render={({field}) => (
-                        <FormItem>
-                            <FormLabel
-                                className="text-sm font-semibold uppercase text-foreground">Duration &amp; Price</FormLabel>
-                            <div className="relative mt-1">
-                                <FormControl>
-                                    <Select value={field.value} onValueChange={(value) => {
+        <FormField
+          control={form.control}
+          name="option_price"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-sm font-semibold uppercase text-foreground">Duration &amp; Price</FormLabel>
+              <div className="relative mt-1">
+                <FormControl>
+                  <Select
+                    value={field.value}
+                    onValueChange={(value) => {
+                      if (value === "0") {
+                        setIsDisabled(true);
+                      } else {
+                        setIsDisabled(false);
+                      }
+                      field.onChange(value);
+                    }}>
+                    <SelectTrigger className="w-full !h-12 mt-1 border-none bg-base-input">
+                      <SelectValue placeholder="Select duration" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="0">Please select duration</SelectItem>
+                      {priceItems &&
+                        priceItems?.map((option: any, index: number) => (
+                          <SelectItem key={index} value={option.duration.toString()}>
+                            {option.duration} - USD {parseFloat(option.price).toFixed(2)}
+                          </SelectItem>
+                        ))}
+                    </SelectContent>
+                  </Select>
+                </FormControl>
+              </div>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-                                        if (value === "0") {
-                                            setIsDisabled(true);
-                                        } else {
-                                            setIsDisabled(false);
-                                        }
-                                        field.onChange(value)
-                                    }}>
-                                        <SelectTrigger className="w-full !h-12 mt-1 border-none bg-base-input">
-                                            <SelectValue placeholder="Select duration"/>
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            <SelectItem value="0">Please select duration</SelectItem>
-                                            {
-                                                priceItems && priceItems?.map((option: any, index: number) => (
-                                                    <SelectItem key={index}
-                                                                value={option.duration.toString()}>
-                                                        {option.duration} -
-                                                        USD {parseFloat(option.price).toFixed(2)}
-                                                    </SelectItem>
-                                                ))
-                                            }
+        <FormField
+          control={form.control}
+          name="message"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-sm font-semibold uppercase text-foreground">Message</FormLabel>
+              <FormControl>
+                <Textarea placeholder="Type here" className="mt-1 border-none bg-base-input" rows={3} {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-                                        </SelectContent>
-                                    </Select>
-                                </FormControl>
-                            </div>
-                            <FormMessage/>
-                        </FormItem>
-                    )}
-                />
-
-                <FormField
-                    control={form.control}
-                    name="message"
-                    render={({field}) => (
-                        <FormItem>
-                            <FormLabel className="text-sm font-semibold uppercase text-foreground">Message</FormLabel>
-                            <FormControl>
-                                <Textarea placeholder="Type here" className="mt-1 border-none bg-base-input"
-                                          rows={3} {...field} />
-                            </FormControl>
-                            <FormMessage/>
-                        </FormItem>
-                    )}
-                />
-
-                <CustomButtonSubmit disabled={(priceItems && priceItems.length > 0 ? false : true) || isDisabled}
-                                    textBtn="Add to cart"
-                                    isLoading={form.formState.isSubmitting}/>
-            </form>
-        </Form>
-    );
+        <CustomButtonSubmit
+          disabled={(priceItems && priceItems.length > 0 ? false : true) || isDisabled}
+          textBtn="Add to cart"
+          isLoading={form.formState.isSubmitting}
+        />
+      </form>
+    </Form>
+  );
 }

@@ -6,6 +6,7 @@ import ErrorState from "@/components/ErrorState";
 import { useCategoryStore } from "@/store/CategoryStore";
 import { useQuery } from "@tanstack/react-query";
 import post from "@sfutureapps/req-sdk";
+import { ImageAssets } from "../../../../public/assets/imgs";
 
 export default function ViewAllRoomService() {
   const storeId = 12;
@@ -46,7 +47,15 @@ export default function ViewAllRoomService() {
             <Link key={item.id} to="/room-service/$serviceId" params={{ serviceId: item.id.toString() }}>
               <Card className="py-4 mb-4 overflow-hidden border-none customShadowSm rounded-xl">
                 <CardContent className="flex items-center gap-4 px-4">
-                  <img src={item.photo} alt={item.name} className="object-cover w-24 h-24 rounded-xl" loading="lazy" />
+                  <img
+                    src={item.photo || ImageAssets.placeholderCarousalTwo}
+                    alt={item.name}
+                    className="object-cover w-24 h-24 rounded-xl"
+                    loading="lazy"
+                    onError={(event) => {
+                      event.currentTarget.src = ImageAssets.placeholderCarousalTwo;
+                    }}
+                  />
                   <div className="flex-grow">
                     <h3 className="font-bold">{item.name}</h3>
                     <p className="!text-sm text-muted-foreground" dangerouslySetInnerHTML={{ __html: item.description }} />

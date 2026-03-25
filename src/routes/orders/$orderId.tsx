@@ -46,7 +46,7 @@ function RouteComponent() {
         name: customer?.name ?? sale.customer ?? "",
         roomNumber: table?.name ?? sale.table_name ?? "",
         orderDate: sale.createtime ? new Date(Number(sale.createtime) * 1000).toLocaleString() : "",
-        orderId: String(sale.id ?? orderId),
+        orderId: String(sale.ref_id ?? orderId),
         totalAmount: Number(sale.total ?? 0),
         category: sale.service_type ?? "",
         imageUrl: rawItems[0]?.image ?? "",

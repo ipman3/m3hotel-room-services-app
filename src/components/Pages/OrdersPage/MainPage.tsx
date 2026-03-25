@@ -95,7 +95,7 @@ export default function MainPage() {
                     <p className="text-start">{item?.customer}</p>
                     <p className="text-start">{item?.table_name}</p>
                     <p className="text-start">{moment(item?.orderDate).format("YYYY-MM-DD HH:mm")}</p>
-                    <p className="text-start">#{item?.id}</p>
+                    <p className="text-start">#{item?.ref_id}</p>
                     <p className="text-start">${parseFloat(item.total).toFixed(2)}</p>
                   </div>
                 </div>
