@@ -28,7 +28,7 @@ interface SpaFormProps {
   unit: string;
   category_id: number;
   serviceType: string;
-  priceOptions?: { duration: number; price: number; description: string }[];
+  priceOptions?: { id?: string | number; duration: number; price: number; description: string }[] | string;
 }
 
 export default function SpaForm({ id, name, price, category_id, serviceType, image, desc, unit, priceOptions }: SpaFormProps) {
@@ -60,7 +60,7 @@ export default function SpaForm({ id, name, price, category_id, serviceType, ima
   function onSubmit(values: any) {
     console.log("Form Submitted:", values);
 
-    const selectedOption: any = priceItems?.find((option) => option.duration.toString() === values.option_price);
+    const selectedOption: any = priceItems?.find((option) => option.id.toString() === values.option_price);
     if (!selectedOption) {
       toast.error("Please select a duration.");
       return;
@@ -98,11 +98,27 @@ export default function SpaForm({ id, name, price, category_id, serviceType, ima
   const priceItems = useMemo(() => {
     console.log("Parsing priceOptions:", priceOptions);
     if (!priceOptions) return [];
-    if (Array.isArray(priceOptions)) return priceOptions;
+    if (Array.isArray(priceOptions)) {
+      return priceOptions.map((option, index) => ({
+        id: option.id ?? `${option.duration}-${option.price}-${index}`,
+        duration: option.duration,
+        price: option.price,
+        description: option.description,
+      }));
+    }
     if (typeof priceOptions === "string") {
       try {
         const parsed = JSON.parse(priceOptions);
-        return Array.isArray(parsed) ? parsed : [];
+        if (!Array.isArray(parsed)) return [];
+
+        const _finalParse = parsed.map((option: any, index: number) => ({
+          id: option.id ?? `${option.duration}-${option.price}-${index}`,
+          duration: option.duration,
+          price: option.price,
+          description: option.description,
+        }));
+        console.log("Parsed priceOptions:", _finalParse);
+        return _finalParse;
       } catch (err) {
         console.warn("Failed to parse priceOptions JSON:", err);
         return [];
@@ -217,8 +233,8 @@ export default function SpaForm({ id, name, price, category_id, serviceType, ima
                     <SelectContent>
                       <SelectItem value="0">Please select duration</SelectItem>
                       {priceItems &&
-                        priceItems?.map((option: any, index: number) => (
-                          <SelectItem key={index} value={option.duration.toString()}>
+                        priceItems?.map((option: any) => (
+                          <SelectItem key={option.id} value={option.id.toString()}>
                             {option.duration} - USD {parseFloat(option.price).toFixed(2)}
                           </SelectItem>
                         ))}
